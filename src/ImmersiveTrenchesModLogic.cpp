@@ -7,6 +7,7 @@
 #include <cstddef>
 
 #include "GemTrenchSnap.h"
+#include "GemBranchRelay.h"
 
 static_assert(sizeof(void*) == 8, "Build the mod logic for x64.");
 
@@ -97,7 +98,7 @@ constexpr ConstructionLayout constructionLayouts[]{
      0x1404120, 0x1399f7, 0x671b00, 0xf4e030, 0x770260, 0x80d9e0, 0x8a5169, 0x8a2fb0},
 };
 
-bool HasEntityName(const void* object, SIZE_T offset, const char* expected) noexcept {
+bool ReadEntityName(const void* object, SIZE_T offset, char (&actual)[64]) noexcept {
     if (object == nullptr) {
         return false;
     }
@@ -108,29 +109,35 @@ bool HasEntityName(const void* object, SIZE_T offset, const char* expected) noex
         SIZE_T capacity;
     };
     EntityName name{};
-    char actual[64];
-    const SIZE_T length = std::strlen(expected);
     const auto* field = static_cast<const unsigned char*>(object) + offset;
     const HANDLE process = GetCurrentProcess();
     if (!ReadProcessMemory(process, field, &name, sizeof(name), nullptr) ||
-        name.size != length || name.capacity < name.size || length > sizeof(actual)) {
+        name.size == 0 || name.capacity < name.size || name.size >= sizeof(actual)) {
         return false;
     }
     if (name.capacity < sizeof(name.storage)) {
-        return std::memcmp(name.storage, expected, length) == 0;
+        std::memcpy(actual, name.storage, name.size);
+    } else {
+        const char* data = nullptr;
+        std::memcpy(&data, name.storage, sizeof(data));
+        if (!ReadProcessMemory(process, data, actual, name.size, nullptr)) {
+            return false;
+        }
     }
-    const char* data = nullptr;
-    std::memcpy(&data, name.storage, sizeof(data));
-    return ReadProcessMemory(process, data, actual, length, nullptr) &&
-           std::memcmp(actual, expected, length) == 0;
+    actual[name.size] = '\0';
+    return true;
 }
 
 constexpr char straightTrench[] = "it_trench_straight_with_exits";
 #include "GemTrenchCatalog.inc"
 
 const TrenchModule* FindTrenchModule(const void* object, SIZE_T nameOffset) noexcept {
+    char actual[64];
+    if (!ReadEntityName(object, nameOffset, actual)) {
+        return nullptr;
+    }
     for (const auto& module : trenchModules) {
-        if (HasEntityName(object, nameOffset, nameOffset == 0x890 ? module.previewName : module.entityName)) {
+        if (std::strcmp(actual, nameOffset == 0x890 ? module.previewName : module.entityName) == 0) {
             return &module;
         }
     }
@@ -145,16 +152,19 @@ static_assert(offsetof(GemPreviewBounds, min) == 0x08 && offsetof(GemPreviewBoun
 using ReadBounds = GemPreviewBounds* (*)(GemPreviewBounds*, const void*);
 ReadBounds readPreviewBounds = nullptr;
 
-float PreviewYawOffset(const void* action) {
+float PreviewBoundsYawOffset(const void* modelName) {
     GemPreviewBounds bounds{};
+    readPreviewBounds(&bounds, modelName);
+    // eFortify adds a quarter turn when the model's Y extent exceeds its X extent.
+    return bounds.max.y - bounds.min.y > bounds.max.x - bounds.min.x ? 90.0f : 0.0f;
+}
+
+float PreviewYawOffset(const void* action) {
     const auto* bytes = static_cast<const unsigned char*>(action);
-    readPreviewBounds(&bounds, bytes + 0x890);
     float rotation = 0.0f;
     std::memcpy(&rotation, bytes + 0x8bc, sizeof(rotation));
     constexpr float degreesPerRadian = 57.2957795f;
-    // eFortify adds a quarter turn when the model's Y extent exceeds its X extent.
-    const float quarterTurn = bounds.max.y - bounds.min.y > bounds.max.x - bounds.min.x ? 90.0f : 0.0f;
-    return rotation * degreesPerRadian + quarterTurn;
+    return rotation * degreesPerRadian + PreviewBoundsYawOffset(bytes + 0x890);
 }
 
 void InstallPlacementTrace(unsigned char* image, const ConstructionLayout& layout) noexcept {
@@ -263,6 +273,264 @@ void LogPlacement(const char* stage, bool preview, const TrenchModule* module,
     WriteLog(message);
 }
 
+using WriteNetworkCommand = void (*)(const void*, void*);
+using WriteNetworkTarget = void (*)(const TrenchTarget*, void*);
+using AddSceneEntity = void (*)(void*, bool, bool);
+struct FortifyPreviewKey {
+    std::uint64_t id;
+    unsigned char local;
+};
+using AddFortifyPreview = void (*)(const FortifyPreviewKey*, void*);
+using RemoveFortifyPreview = void (*)(const FortifyPreviewKey*);
+WriteNetworkCommand originalWriteNetworkCommand = nullptr;
+WriteNetworkTarget originalWriteNetworkTarget = nullptr;
+AddSceneEntity originalAddSceneEntity = nullptr;
+AddFortifyPreview originalAddFortifyPreview = nullptr;
+RemoveFortifyPreview originalRemoveFortifyPreview = nullptr;
+bool (*isNetworkClient)() = nullptr;
+bool networkSnapEnabled = false;
+bool networkPreviewEnabled = false;
+
+struct NetworkTargetOverride {
+    const TrenchTarget* original;
+    const TrenchTarget* adjusted;
+};
+thread_local const NetworkTargetOverride* networkTargetOverride = nullptr;
+
+void WriteSnappedNetworkTarget(const TrenchTarget* target, void* stream) {
+    const auto* replacement = networkTargetOverride;
+    originalWriteNetworkTarget(replacement != nullptr && replacement->original == target
+                                   ? replacement->adjusted : target, stream);
+}
+
+void TraceNetworkCommand(const void* command, void* stream) {
+    const DWORD lastError = GetLastError();
+    const auto* bytes = static_cast<const unsigned char*>(command);
+    TrenchTarget adjusted{};
+    NetworkTargetOverride replacement{};
+    // GEM's command writer serializes the target at +0x50 when flag 0x10 is set.
+    const auto flags = *reinterpret_cast<const WORD*>(bytes + 0x18);
+    if (bytes[8] == 1 && bytes[0x42] != 1 && bytes[0x42] != 2 && (flags & 0x18) == 0x18) {
+        const auto* action = *reinterpret_cast<const void* const*>(bytes + 0x48);
+        const auto* module = FindTrenchModule(action, 0x890);
+        const auto* target = reinterpret_cast<const TrenchTarget*>(bytes + 0x50);
+        const unsigned char mode = (flags & 0x80) != 0 ? bytes[0xf8] : 0;
+        TrenchPlacement placement;
+        const char* blocked = nullptr;
+        if (module != nullptr && networkSnapEnabled && isNetworkClient()) {
+            std::memcpy(&adjusted, target, sizeof(adjusted));
+            if (PrepareTrenchPlacement(*module, PreviewYawOffset(action), &mode, adjusted, placement) &&
+                placement.jointCount != 0) {
+                blocked = CheckTrenchPlacement(placement);
+                if (blocked == nullptr) {
+                    replacement = {target, &adjusted};
+                }
+            }
+        }
+        LogPlacement(replacement.adjusted != nullptr ? "net_send_snap" : "net_send", false, module,
+                     replacement.adjusted != nullptr ? replacement.adjusted : target, &mode, nullptr, blocked);
+    }
+    const auto* previousOverride = networkTargetOverride;
+    networkTargetOverride = replacement.adjusted != nullptr ? &replacement : nullptr;
+    SetLastError(lastError);
+    originalWriteNetworkCommand(command, stream);
+    networkTargetOverride = previousOverride;
+}
+
+bool ReadTrenchTransform(const void* entity, TrenchTransform& transform) noexcept {
+    const auto finite = [](const TrenchVector& vector) {
+        return std::isfinite(vector.x) && std::isfinite(vector.y) && std::isfinite(vector.z);
+    };
+    return ReadProcessMemory(GetCurrentProcess(), static_cast<const unsigned char*>(entity) + 0x50,
+                             &transform, sizeof(transform), nullptr) &&
+           finite(transform.origin) && finite(transform.xAxis) && finite(transform.yAxis) &&
+           (transform.xAxis.x != 0.0f || transform.xAxis.y != 0.0f || transform.xAxis.z != 0.0f);
+}
+
+void TraceSceneEntity(void* entity, bool add, bool flag) {
+    // GEM's third argument selects its client-local ID pool for a new entity.
+    const bool clientCap = add && TakeClientTrenchCapRegistration();
+    originalAddSceneEntity(entity, add, flag || clientCap);
+    const DWORD lastError = GetLastError();
+    const auto* module = FindTrenchModule(entity, 0xf0);
+    TrenchTransform transform{};
+    DWORD id = 0xffffffff;
+    if (module != nullptr && ReadTrenchTransform(entity, transform) &&
+        ReadProcessMemory(GetCurrentProcess(), static_cast<const unsigned char*>(entity) + 0xc0,
+                          &id, sizeof(id), nullptr)) {
+        unsigned joined = 0;
+        const bool tracked = networkSnapEnabled && isNetworkClient();
+        const unsigned open = tracked
+            ? TrackTrenchSection(*module, transform, entity, joined, module->entityName == straightTrench, true)
+            : 0;
+        const auto& origin = transform.origin;
+        const auto& axis = transform.xAxis;
+        char message[256];
+        std::snprintf(message, sizeof(message),
+                      "[GEM network] scene_add %s pid=%lu tid=%lu id=%08lx "
+                      "position=(%.3f,%.3f,%.3f) entity_yaw=%.2f sockets=%u tracked=%u open=%u joined=%u\r\n",
+                      module->entityName, GetCurrentProcessId(), GetCurrentThreadId(), id,
+                      origin.x, origin.y, origin.z, std::atan2(axis.y, axis.x) * 57.2957795f,
+                      module->socketCount, static_cast<unsigned>(tracked), open, joined);
+        WriteLog(message);
+    }
+    SetLastError(lastError);
+}
+
+struct FortifyPreviewSample {
+    TrenchVector position;
+    DWORD state;
+};
+
+void (*originalClearFortifyPreviews)() = nullptr;
+
+void ClearNetworkTrenchCaps() {
+    originalClearFortifyPreviews();
+    const DWORD lastError = GetLastError();
+    ClearNetworkTrenches();
+    SetLastError(lastError);
+}
+
+void TrackReceivedFortifyPreview(const FortifyPreviewKey* key, void* visual) {
+    const DWORD lastError = GetLastError();
+    const TrenchModule* module = nullptr;
+    const auto id = key->id;
+    FortifyPreviewSample samples[64];
+    SIZE_T count = 0;
+    float yaw = 0.0f;
+    float wireYaw = 0.0f;
+    if (networkPreviewEnabled && key->local == 0 && visual != nullptr && isNetworkClient()) {
+        // The received visualizer begins with the model name and stores its
+        // decoded positions and final model yaw at +0x70 and +0x88.
+        char name[64];
+        if (ReadEntityName(visual, 0, name)) {
+            for (const auto& candidate : trenchModules) {
+                if (std::strcmp(name, candidate.previewName) == 0 ||
+                    std::strcmp(name, candidate.entityName) == 0) {
+                    module = &candidate;
+                    break;
+                }
+            }
+        }
+        if (module != nullptr) {
+            auto* bytes = static_cast<unsigned char*>(visual);
+            std::uintptr_t positions[2]{};
+            if (ReadProcessMemory(GetCurrentProcess(), bytes + 0x70, positions, sizeof(positions), nullptr) &&
+                positions[1] > positions[0] && positions[1] - positions[0] <= sizeof(samples) &&
+                (positions[1] - positions[0]) % sizeof(samples[0]) == 0 &&
+                ReadProcessMemory(GetCurrentProcess(), bytes + 0x88, &wireYaw, sizeof(wireYaw), nullptr) &&
+                std::isfinite(wireYaw) &&
+                ReadProcessMemory(GetCurrentProcess(), reinterpret_cast<const void*>(positions[0]),
+                                  samples, positions[1] - positions[0], nullptr)) {
+                count = (positions[1] - positions[0]) / sizeof(samples[0]);
+                // The dedicated server sends the queued visualizer without the
+                // bounds-based turn used by the client and the finished entity.
+                constexpr float radiansPerDegree = 0.01745329252f;
+                yaw = wireYaw + PreviewBoundsYawOffset(visual) * radiansPerDegree;
+                std::memcpy(bytes + 0x88, &yaw, sizeof(yaw));
+            }
+        }
+    }
+    SetLastError(lastError);
+    originalAddFortifyPreview(key, visual);
+    const DWORD originalLastError = GetLastError();
+    for (SIZE_T i = 0; i < count; ++i) {
+        const auto position = samples[i].position;
+        const auto open = TrackNetworkTrenchPreview(id, *module, position, yaw);
+        char message[256];
+        std::snprintf(message, sizeof(message),
+                      "[GEM network] preview_received %s pid=%lu key=%016llx "
+                      "position=(%.3f,%.3f,%.3f) wire_yaw=%.2f yaw=%.2f open=%u\r\n",
+                      module->entityName, GetCurrentProcessId(), static_cast<unsigned long long>(id),
+                      position.x, position.y, position.z, wireYaw * 57.2957795f, yaw * 57.2957795f, open);
+        WriteLog(message);
+    }
+    SetLastError(originalLastError);
+}
+
+void ReleaseReceivedFortifyPreview(const FortifyPreviewKey* key) {
+    const auto id = key->id;
+    const bool remote = key->local == 0;
+    originalRemoveFortifyPreview(key);
+    const DWORD lastError = GetLastError();
+    if (networkPreviewEnabled && remote && RemoveNetworkTrenchPreview(id)) {
+        char message[128];
+        std::snprintf(message, sizeof(message), "[GEM network] preview_removed pid=%lu key=%016llx\r\n",
+                      GetCurrentProcessId(), static_cast<unsigned long long>(id));
+        WriteLog(message);
+    }
+    SetLastError(lastError);
+}
+
+template <typename Hook>
+bool InstallNetworkCall(unsigned char* image, DWORD callRva, DWORD originalRva, Hook hook,
+                        Hook& original) noexcept {
+    auto* call = image + callRva;
+    const auto displacement = static_cast<std::int32_t>(originalRva) - static_cast<std::int32_t>(callRva + 5);
+    if (*call != 0xe8 || std::memcmp(call + 1, &displacement, sizeof(displacement)) != 0) {
+        return false;
+    }
+    auto* relay = AllocateGemRelayNear(call + 5);
+    if (relay == nullptr) {
+        return false;
+    }
+    constexpr unsigned char jump[]{0xff, 0x25, 0, 0, 0, 0};
+    std::memcpy(relay, jump, sizeof(jump));
+    std::memcpy(relay + sizeof(jump), &hook, sizeof(hook));
+    DWORD oldProtection = 0;
+    DWORD callProtection = 0;
+    if (!VirtualProtect(relay, sizeof(jump) + sizeof(hook), PAGE_EXECUTE_READ, &oldProtection) ||
+        !FlushInstructionCache(GetCurrentProcess(), relay, sizeof(jump) + sizeof(hook)) ||
+        !VirtualProtect(call, 5, PAGE_EXECUTE_READWRITE, &callProtection)) {
+        VirtualFree(relay, 0, MEM_RELEASE);
+        return false;
+    }
+    original = reinterpret_cast<Hook>(image + originalRva);
+    const auto relative = static_cast<std::int32_t>(reinterpret_cast<std::intptr_t>(relay) -
+                                                    reinterpret_cast<std::intptr_t>(call + 5));
+    std::memcpy(call + 1, &relative, sizeof(relative));
+    FlushInstructionCache(GetCurrentProcess(), call, 5);
+    VirtualProtect(call, 5, callProtection, &oldProtection);
+    return true;
+}
+
+void InstallNetworkTrace(unsigned char* image) noexcept {
+    void* const writer = image + 0xb78a90;
+    originalWriteNetworkCommand = reinterpret_cast<WriteNetworkCommand>(writer);
+    unsigned installed = 0;
+    constexpr DWORD writerSlots[]{0x1024e90, 0x104ff48};
+    for (const DWORD rva : writerSlots) {
+        auto** slot = reinterpret_cast<void**>(image + rva);
+        DWORD protection = 0;
+        if (*slot != writer || !VirtualProtect(slot, sizeof(*slot), PAGE_READWRITE, &protection)) {
+            continue;
+        }
+        installed += InterlockedCompareExchangePointer(
+            slot, reinterpret_cast<void*>(&TraceNetworkCommand), writer) == writer;
+        DWORD ignored = 0;
+        VirtualProtect(slot, sizeof(*slot), protection, &ignored);
+    }
+    // This predicate selects the multiplayer client branch in GEM's spawn path.
+    isNetworkClient = reinterpret_cast<decltype(isNetworkClient)>(image + 0xc0b630);
+    const bool sceneTrace = InstallNetworkCall(image, 0x7063ef, 0xa60150, &TraceSceneEntity, originalAddSceneEntity);
+    networkSnapEnabled = installed == ARRAYSIZE(writerSlots) && sceneTrace &&
+        InstallNetworkCall(image, 0xb78b6b, 0x794320, &WriteSnappedNetworkTarget, originalWriteNetworkTarget);
+    // eOrderFortifyVisualizingCommand receives type 0 (positions) and type 2 (remove).
+    networkPreviewEnabled = networkSnapEnabled &&
+        InstallNetworkCall(image, 0xae717, 0xb76450, &TrackReceivedFortifyPreview, originalAddFortifyPreview) &&
+        InstallNetworkCall(image, 0xae57c, 0xb76590, &ReleaseReceivedFortifyPreview, originalRemoveFortifyPreview);
+    const bool networkCaps = networkSnapEnabled &&
+        InstallNetworkCall(image, 0xaf5ca7, 0xb768b0, &ClearNetworkTrenchCaps, originalClearFortifyPreviews) &&
+        EnableNetworkTrenchCaps();
+    WriteLog(networkCaps ? "[GEM caps] Client-only scene entities enabled.\r\n"
+                         : "[GEM caps] Client-only scene entities skipped.\r\n");
+    char message[180];
+    std::snprintf(message, sizeof(message), "[GEM network] pid=%lu writers=%u/2 scene_add=%s snap=%s previews=%s.\r\n",
+                  GetCurrentProcessId(), installed, sceneTrace ? "enabled" : "skipped",
+                  networkSnapEnabled ? "enabled" : "skipped", networkPreviewEnabled ? "enabled" : "skipped");
+    WriteLog(message);
+}
+
 void InstallExitSpawnTrace(unsigned char* image, const ConstructionLayout& layout) noexcept {
     // eAction_Spawn's ia:spawn implementation is on a separate vtable page.
     auto** slot = reinterpret_cast<void**>(image + layout.spawnSlot);
@@ -290,14 +558,7 @@ void InstallExitSpawnTrace(unsigned char* image, const ConstructionLayout& layou
 
 bool LogCompletedPlacement(const void* entity, const TrenchModule& module,
                            TrenchTransform& transform) noexcept {
-    // ia:spawn uses the entity's basis at +0x50 and origin at +0x74 in both verified hosts.
-    const auto* address = static_cast<const unsigned char*>(entity) + 0x50;
-    const auto finite = [](const TrenchVector& v) {
-        return std::isfinite(v.x) && std::isfinite(v.y) && std::isfinite(v.z);
-    };
-    if (!ReadProcessMemory(GetCurrentProcess(), address, &transform, sizeof(transform), nullptr) ||
-        !finite(transform.origin) || !finite(transform.xAxis) || !finite(transform.yAxis) ||
-        (transform.xAxis.x == 0.0f && transform.xAxis.y == 0.0f && transform.xAxis.z == 0.0f)) {
+    if (!ReadTrenchTransform(entity, transform)) {
         WriteLog("[GEM placement] Completion transform unavailable.\r\n");
         return false;
     }
@@ -411,6 +672,9 @@ void InstallConstructionTrace() noexcept {
         WriteLog(message);
         InstallExitSpawnTrace(image, *layout);
         InstallPlacementTrace(image, *layout);
+        if (std::strcmp(layout->host, "call_to_arms.exe") == 0) {
+            InstallNetworkTrace(image);
+        }
     } else {
         WriteLog("[GEM construction] Trace skipped: instruction table changed during setup.\r\n");
     }
@@ -437,7 +701,8 @@ extern "C" void LogGemConstruction(unsigned instruction, void* self, void* arg2,
     constexpr const char* names[]{"install", "install_begin", "install_end"};
     char message[256];
     if (instruction == 4) {
-        if (arg2 != nullptr && HasEntityName(self, 0x50, "it_trench_exit")) {
+        char name[64];
+        if (arg2 != nullptr && ReadEntityName(self, 0x50, name) && std::strcmp(name, "it_trench_exit") == 0) {
             void* parent = nullptr;
             if (ReadProcessMemory(GetCurrentProcess(), arg2, &parent, sizeof(parent), nullptr)) {
                 std::snprintf(message, sizeof(message),

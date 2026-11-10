@@ -40,6 +40,7 @@ struct Anchor {
     bool completed = false;
     bool hasBoneOffset = false;
     float boneOffset = 0.0f;
+    bool replicated = false;
 };
 
 struct EndCap {
@@ -66,6 +67,7 @@ struct Section {
     Footprint cut;
     ULONGLONG registeredAt;
     unsigned heightSamplesRemaining = 0;
+    bool replicated = false;
 };
 
 struct Reservation {
@@ -74,6 +76,7 @@ struct Reservation {
     TrenchPlacement placement;
     Footprint cut;
     bool accepted;
+    std::uint64_t networkKey = 0;
 };
 
 struct Joint {
@@ -106,6 +109,9 @@ std::vector<Joint> joints;
 std::vector<EndCap> endCaps;
 bool capSyncRunning = false;
 bool capSyncRequested = false;
+bool networkCapsEnabled = false;
+bool networkCapsDirty = false;
+ULONGLONG nextNetworkCapCheck = 0;
 std::uint64_t nextOwner = 1;
 
 
@@ -183,6 +189,36 @@ bool IsClaimed(const Anchor& anchor) noexcept {
     return std::any_of(joints.begin(), joints.end(), [&](const Joint& joint) { return joint.Contains(anchor); });
 }
 
+bool IsNetworkPreviewLive(std::uint64_t key) noexcept {
+    // The GEM visualizer map orders nodes by (local flag, preview key).
+    constexpr DWORD treeRva = 0x15a2700;
+    struct Node {
+        const Node* left;
+        const Node* parent;
+        const Node* right;
+        unsigned char color, nil, padding[6];
+        std::uint64_t key;
+        unsigned char local;
+    };
+    static_assert(offsetof(Node, key) == 0x20 && offsetof(Node, local) == 0x28);
+    const Node* head = nullptr;
+    Node node{};
+    if (!Read(hostImage + treeRva, head) || !Read(head, node)) {
+        return false;
+    }
+    auto* current = node.parent;
+    for (unsigned depth = 0; current != head && depth < 64; ++depth) {
+        if (!Read(current, node) || node.nil) {
+            return false;
+        }
+        if (node.local == 0 && node.key == key) {
+            return true;
+        }
+        current = node.local != 0 || key < node.key ? node.left : node.right;
+    }
+    return false;
+}
+
 bool IsFree(const Anchor& anchor) noexcept {
     if (IsClaimed(anchor)) {
         return false;
@@ -194,7 +230,8 @@ bool IsFree(const Anchor& anchor) noexcept {
         return IsAt(section->entity, section->origin);
     }
     return std::any_of(reservations.begin(), reservations.end(), [&](const Reservation& entry) {
-        return entry.owner == anchor.owner && entry.accepted;
+        return entry.owner == anchor.owner && entry.accepted &&
+               (entry.order != nullptr || IsNetworkPreviewLive(entry.networkKey));
     });
 }
 
@@ -362,7 +399,8 @@ const char* PlacementBlocker(const TrenchPlacement& placement, const Footprint& 
         }
     }
     for (const auto& reservation : reservations) {
-        if (FootprintsOverlap(cut, reservation.cut, FindJoint(placement, reservation.owner))) {
+        if (FootprintsOverlap(cut, reservation.cut, FindJoint(placement, reservation.owner)) &&
+            (reservation.order != nullptr || IsNetworkPreviewLive(reservation.networkKey))) {
             return "queued_overlap";
         }
     }
@@ -382,11 +420,13 @@ bool SameCapPose(const Anchor& a, const Anchor& b) noexcept {
 
 void LogCap(const char* event, const Anchor& anchor, Entity entity, bool measureHeight = false) {
     if (writeCapLog != nullptr) {
-        char message[256];
+        char message[320];
         const int length = std::snprintf(message, sizeof(message),
-                      "[GEM caps] %s pid=%lu anchor=%llu:%u entity=%p position=(%.2f,%.2f,%.2f)",
+                      "[GEM caps] %s pid=%lu anchor=%llu:%u entity=%p id=%08lx client_only=%u "
+                      "position=(%.2f,%.2f,%.2f)",
                       event, GetCurrentProcessId(), static_cast<unsigned long long>(anchor.owner), anchor.side,
-                      entity.pointer, anchor.seam.x, anchor.seam.y, anchor.seam.z);
+                      entity.pointer, entity.id, static_cast<unsigned>(anchor.replicated),
+                      anchor.seam.x, anchor.seam.y, anchor.seam.z);
         if (length < 0 || static_cast<std::size_t>(length) >= sizeof(message)) {
             return;
         }
@@ -396,8 +436,9 @@ void LogCap(const char* event, const Anchor& anchor, Entity entity, bool measure
             const float pitch = std::atan2(actual.xAxis.z, std::hypot(actual.xAxis.x, actual.xAxis.y));
             const char* source = !anchor.completed ? "preview" : anchor.hasBoneOffset ? "bones" : "rim";
             std::snprintf(message + length, sizeof(message) - length,
-                          " actual_z=%.2f pitch=%.1f height_offset=%.2f height_source=%s\r\n",
-                          actual.origin.z, pitch / radiansPerDegree, actual.origin.z - anchor.seam.z, source);
+                          " actual_position=(%.2f,%.2f,%.2f) pitch=%.1f height_offset=%.2f height_source=%s\r\n",
+                          actual.origin.x, actual.origin.y, actual.origin.z, pitch / radiansPerDegree,
+                          actual.origin.z - anchor.seam.z, source);
         } else {
             std::snprintf(message + length, sizeof(message) - length, "\r\n");
         }
@@ -425,13 +466,18 @@ void SyncTrenchCaps() {
         capSyncRequested = false;
         std::vector<Anchor> desired;
         for (const auto& anchor : anchors) {
+            if (anchor.replicated && !networkCapsEnabled) {
+                continue;
+            }
             // Pending anchors only exist after acceptance. Completed sections
             // may spend their first tick waiting for insertion in the entity tree.
             const auto section = std::find_if(sections.begin(), sections.end(), [&](const Section& entry) {
                 return entry.owner == anchor.owner;
             });
-            if (!IsClaimed(anchor) && (section == sections.end() ||
-                GetTickCount64() - section->registeredAt <= 1000 || IsAt(section->entity, section->origin))) {
+            const bool open = anchor.replicated ? IsFree(anchor) : !IsClaimed(anchor) &&
+                (section == sections.end() || GetTickCount64() - section->registeredAt <= 1000 ||
+                 IsAt(section->entity, section->origin));
+            if (open) {
                 desired.push_back(anchor);
             }
         }
@@ -439,13 +485,18 @@ void SyncTrenchCaps() {
         // while the engine mutates the scene, then take a fresh snapshot if needed.
         lock.unlock();
         EraseIf(endCaps, [&](const EndCap& cap) {
+            const bool live = IsLive(cap.entity);
+            if (cap.anchor.replicated && !live) {
+                LogCap("lost", cap.anchor, cap.entity);
+                return true;
+            }
             if (std::any_of(desired.begin(), desired.end(), [&](const Anchor& anchor) {
                     return SameCapPose(anchor, cap.anchor);
                 })) {
                 return false;
             }
-            if (IsLive(cap.entity)) {
-                DeleteTrenchCap(hostImage, hostTimestamp, cap.entity.pointer);
+            if (live) {
+                DeleteTrenchCap(hostImage, hostTimestamp, cap.entity.pointer, cap.anchor.replicated);
                 LogCap("removed", cap.anchor, cap.entity);
             }
             return true;
@@ -456,7 +507,8 @@ void SyncTrenchCaps() {
             });
             if (cap == endCaps.end()) {
                 const auto inward = Offset({}, anchor.outward, -1.0f);
-                const auto entity = Identify(SpawnTrenchCap(hostImage, hostTimestamp, anchor.seam, inward));
+                const auto entity = Identify(SpawnTrenchCap(hostImage, hostTimestamp, anchor.seam, inward,
+                                                            anchor.replicated));
                 if (entity.id != 0xffffffff) {
                     if (anchor.completed) {
                         SeatCap(anchor, entity);
@@ -509,7 +561,8 @@ void RefreshCompletedCapHeights() {
             updated.boneOffset = offsets[anchor.side];
             if (CapHeightChanged(anchor, updated)) {
                 anchor = updated;
-                changed = true;
+                networkCapsDirty |= anchor.replicated;
+                changed |= !anchor.replicated;
             }
         }
     }
@@ -522,6 +575,21 @@ void SceneQuantWithCapRefresh(void* scene) {
     originalSceneQuant(scene);
     const DWORD lastError = GetLastError();
     RefreshCompletedCapHeights();
+    bool sync = false;
+    {
+        std::lock_guard<std::mutex> lock(anchorMutex);
+        const auto now = GetTickCount64();
+        sync = networkCapsEnabled && (networkCapsDirty ||
+            (now >= nextNetworkCapCheck && std::any_of(anchors.begin(), anchors.end(),
+                [](const Anchor& anchor) { return anchor.replicated; })));
+        if (sync) {
+            networkCapsDirty = false;
+            nextNetworkCapCheck = now + 500;
+        }
+    }
+    if (sync) {
+        SyncTrenchCaps();
+    }
     SetLastError(lastError);
 }
 
@@ -531,10 +599,11 @@ void DropAnchors(std::uint64_t owner) {
 }
 
 void AddAnchors(std::uint64_t owner, const TrenchModule& module, const TrenchTransform& transform,
-                bool completed = false, const float* boneOffsets = nullptr) {
+                bool completed = false, const float* boneOffsets = nullptr, bool replicated = false) {
     for (unsigned side = 0; side < module.socketCount; ++side) {
         auto anchor = ModuleAnchor(owner, module, transform, side);
         anchor.completed = completed;
+        anchor.replicated = replicated;
         if (boneOffsets != nullptr) {
             anchor.hasBoneOffset = true;
             anchor.boneOffset = boneOffsets[side];
@@ -548,15 +617,20 @@ TrenchJoint MakeJoint(const Anchor& neighbor, unsigned side, float overlap, floa
             overlap + (std::max)(0.0f, -axialOffset), neighbor.overlap};
 }
 
-void FindOtherJoints(TrenchPlacement& placement, unsigned primarySide) noexcept {
+void FindOtherJoints(TrenchPlacement& placement, unsigned primarySide,
+                     std::uint64_t replicatedOwner = 0) noexcept {
     const auto& module = *placement.module;
+    const bool replicated = replicatedOwner != 0;
     for (unsigned side = 0; side < module.socketCount; ++side) {
         if (side == primarySide) {
             continue;
         }
-        const auto candidate = ModuleAnchor(0, module, placement.transform, side);
+        const auto candidate = ModuleAnchor(replicatedOwner, module, placement.transform, side);
+        if (replicated && IsClaimed(candidate)) {
+            continue;
+        }
         const Anchor* best = nullptr;
-        float bestDistance = 100.0f;
+        float bestDistance = replicated ? 22.0f * 22.0f : 100.0f;
         float bestAxial = 0.0f;
         for (const auto& anchor : anchors) {
             const float dx = candidate.seam.x - anchor.seam.x;
@@ -565,10 +639,15 @@ void FindOtherJoints(TrenchPlacement& placement, unsigned primarySide) noexcept 
             const float lateral = dx * anchor.outward.y - dy * anchor.outward.x;
             const float facing = candidate.outward.x * anchor.outward.x + candidate.outward.y * anchor.outward.y;
             const float distance = dx * dx + dy * dy;
-            // A secondary socket must already meet the other bank after the primary snap.
+            // Remote clients infer joints from the final pose. The host can use
+            // any configured axial offset, and terrain settling can move Z.
+            const float minAxial = replicated ? -21.0f : -candidate.overlap - anchor.overlap;
+            const float maxAxial = replicated ? 21.0f : 3.0f;
+            const float heightTolerance = replicated ? 40.0f : 8.0f;
             if (distance < bestDistance && facing <= -0.9848f && std::fabs(lateral) <= 3.0f &&
-                axial >= -candidate.overlap - anchor.overlap && axial <= 3.0f &&
-                std::fabs(candidate.seam.z - anchor.seam.z) <= 8.0f &&
+                axial >= minAxial && axial <= maxAxial &&
+                std::fabs(candidate.seam.z - anchor.seam.z) <= heightTolerance &&
+                anchor.owner != replicatedOwner &&
                 FindJoint(placement, anchor.owner) == nullptr && IsFree(anchor)) {
                 best = &anchor;
                 bestDistance = distance;
@@ -578,6 +657,14 @@ void FindOtherJoints(TrenchPlacement& placement, unsigned primarySide) noexcept 
         if (best != nullptr) {
             placement.joints[placement.jointCount++] = MakeJoint(*best, side, candidate.overlap, bestAxial);
         }
+    }
+}
+
+void AddNetworkJoints(std::uint64_t owner, TrenchPlacement& placement) {
+    FindOtherJoints(placement, noTrenchSocket, owner);
+    for (unsigned i = 0; i < placement.jointCount; ++i) {
+        const auto& joint = placement.joints[i];
+        joints.push_back({owner, joint.neighbor, joint.socket, joint.neighborSide});
     }
 }
 
@@ -862,8 +949,78 @@ const char* CheckTrenchPlacement(const TrenchPlacement& placement) noexcept {
     return PlacementBlocker(placement, cut);
 }
 
+unsigned TrackNetworkTrenchPreview(std::uint64_t key, const TrenchModule& module,
+                                   TrenchVector position, float yaw) {
+    if (hostImage == nullptr || !std::isfinite(position.x) || !std::isfinite(position.y) ||
+        !std::isfinite(position.z) || !std::isfinite(yaw)) {
+        return 0;
+    }
+    std::lock_guard<std::mutex> lock(anchorMutex);
+    networkCapsDirty = true;
+    EraseIf(reservations, [](const Reservation& entry) {
+        if (entry.order != nullptr || IsNetworkPreviewLive(entry.networkKey)) {
+            return false;
+        }
+        DropAnchors(entry.owner);
+        return true;
+    });
+    if (!IsNetworkPreviewLive(key) || std::any_of(reservations.begin(), reservations.end(), [&](const Reservation& entry) {
+            return entry.order == nullptr && entry.networkKey == key && entry.placement.module == &module &&
+                   DistanceSquared(entry.placement.transform.origin, position) < 1.0f;
+        })) {
+        return 0;
+    }
+    const auto owner = nextOwner++;
+    TrenchPlacement placement{&module, LevelPose(position, yaw)};
+    AddNetworkJoints(owner, placement);
+    reservations.push_back({owner, nullptr, placement, WorldCut(module, placement.transform), true, key});
+    AddAnchors(owner, module, placement.transform, false, nullptr, true);
+    return module.socketCount - placement.jointCount;
+}
+
+bool RemoveNetworkTrenchPreview(std::uint64_t key) {
+    std::lock_guard<std::mutex> lock(anchorMutex);
+    const auto before = reservations.size();
+    EraseIf(reservations, [key](const Reservation& entry) {
+        if (entry.order != nullptr || entry.networkKey != key) {
+            return false;
+        }
+        DropAnchors(entry.owner);
+        return true;
+    });
+    const bool removed = reservations.size() != before;
+    networkCapsDirty |= removed;
+    return removed;
+}
+
+bool EnableNetworkTrenchCaps() noexcept {
+    std::lock_guard<std::mutex> lock(anchorMutex);
+    networkCapsEnabled = originalSceneQuant != nullptr;
+    return networkCapsEnabled;
+}
+
+void ClearNetworkTrenches() {
+    std::lock_guard<std::mutex> lock(anchorMutex);
+    networkCapsDirty = true;
+    EraseIf(reservations, [](const Reservation& entry) {
+        if (entry.order != nullptr) {
+            return false;
+        }
+        DropAnchors(entry.owner);
+        return true;
+    });
+    EraseIf(sections, [](const Section& section) {
+        if (!section.replicated) {
+            return false;
+        }
+        DropAnchors(section.owner);
+        return true;
+    });
+}
+
 unsigned TrackTrenchSection(const TrenchModule& module, const TrenchTransform& transform,
-                            const void* section, unsigned& joinedCount, bool useStraightBones) {
+                            const void* section, unsigned& joinedCount, bool useStraightBones,
+                            bool replicated) {
     joinedCount = 0;
     if (hostImage == nullptr) {
         return 0;
@@ -885,23 +1042,33 @@ unsigned TrackTrenchSection(const TrenchModule& module, const TrenchTransform& t
         DropAnchors(existing.owner);
         return true;
     });
+    if (std::any_of(sections.begin(), sections.end(), [&](const Section& existing) {
+            return existing.entity.pointer == identity.pointer && existing.entity.id == identity.id;
+        })) {
+        return 0;
+    }
 
     const auto reservation = std::find_if(reservations.begin(), reservations.end(), [&](const Reservation& entry) {
         const auto& pose = entry.placement.transform;
-        return entry.placement.module == &module && DistanceSquared(pose.origin, transform.origin) < 1.0f &&
+        return (entry.order == nullptr) == replicated && entry.placement.module == &module &&
+               DistanceSquared(pose.origin, transform.origin) < 1.0f &&
                pose.xAxis.x * transform.xAxis.x + pose.xAxis.y * transform.xAxis.y > 0.999f;
     });
     const auto owner = reservation != reservations.end() ? reservation->owner : nextOwner++;
     if (reservation != reservations.end()) {
         reservations.erase(reservation);
     }
+    if (replicated) {
+        TrenchPlacement placement{&module, transform};
+        AddNetworkJoints(owner, placement);
+    }
     EraseIf(anchors, [owner](const Anchor& anchor) { return anchor.owner == owner; });
-    AddAnchors(owner, module, transform, true, hasBoneOffsets ? boneOffsets : nullptr);
+    AddAnchors(owner, module, transform, true, hasBoneOffsets ? boneOffsets : nullptr, replicated);
     // Terrain alignment may arrive in a later scene update than install's callback.
     constexpr unsigned heightSamples = 8;
     const unsigned pendingSamples = useStraightBones && module.socketCount == ARRAYSIZE(boneOffsets)
         ? heightSamples : 0;
-    sections.push_back({owner, identity, transform.origin, WorldCut(module, transform), now, pendingSamples});
+    sections.push_back({owner, identity, transform.origin, WorldCut(module, transform), now, pendingSamples, replicated});
     EraseIf(joints, [&](const Joint& joint) {
         if (joint.owner != owner && joint.neighbor != owner) {
             return false;
@@ -917,7 +1084,10 @@ unsigned TrackTrenchSection(const TrenchModule& module, const TrenchTransform& t
     const auto tracked = static_cast<unsigned>(std::count_if(anchors.begin(), anchors.end(), [owner](const Anchor& anchor) {
         return anchor.owner == owner;
     }));
+    networkCapsDirty |= replicated;
     lock.unlock();
-    SyncTrenchCaps();
+    if (!replicated) {
+        SyncTrenchCaps();
+    }
     return tracked;
 }

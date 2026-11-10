@@ -70,6 +70,7 @@ Testing/
 
 .vs/
 *.vcxproj.user
+/AGENTS.md
 examples/
 gameFiles/
 out/

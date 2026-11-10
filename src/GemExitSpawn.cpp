@@ -8,6 +8,8 @@
 #include "GemTrenchSnap.h"
 
 namespace {
+thread_local bool registerClientTrenchCap = false;
+
 struct NativeString {
     char text[16];
     size_t length;
@@ -153,7 +155,7 @@ bool ReadOffsetPose(const unsigned char* image, const SpawnLayout& layout, void*
 }
 
 void* SpawnEntity(const unsigned char* image, const SpawnLayout& layout, const NativeString& type,
-                  void* section, void* bone, const ExitPose* pose) {
+                  void* section, void* bone, const ExitPose* pose, bool clientOnly = false) {
     using Init = void (*)(void*);
     using SetType = void (*)(SpawnRequest*, const NativeString*);
     using SetSource = void (*)(SpawnRequest*, void*, bool);
@@ -180,7 +182,15 @@ void* SpawnEntity(const unsigned char* image, const SpawnLayout& layout, const N
         constexpr int boneXAxis = 1;
         reinterpret_cast<SetBone>(image + layout.setBone)(&request, bone, boneXAxis);
     }
+    if (clientOnly) {
+        // The game's local spawn setter bypasses the multiplayer spawn path.
+        using SetLocal = SpawnRequest* (*)(SpawnRequest*);
+        reinterpret_cast<SetLocal>(image + 0x705cc0)(&request);
+    }
+    const bool previousRegistration = registerClientTrenchCap;
+    registerClientTrenchCap = clientOnly;
     void* exit = reinterpret_cast<Execute>(image + layout.execute)(&request);
+    registerClientTrenchCap = previousRegistration;
 
     // GEM calls finalize again before destroying these fields. The execute bit
     // makes this second call a no-op after the request has been consumed.
@@ -190,6 +200,12 @@ void* SpawnEntity(const unsigned char* image, const SpawnLayout& layout, const N
     reinterpret_cast<Init>(image + layout.stringDestructor)(&request.type);
     return exit;
 }
+}
+
+bool TakeClientTrenchCapRegistration() noexcept {
+    const bool clientOnly = registerClientTrenchCap;
+    registerClientTrenchCap = false;
+    return clientOnly;
 }
 
 unsigned SpawnTrenchExits(const unsigned char* image, DWORD timestamp, void* section,
@@ -242,7 +258,7 @@ unsigned SpawnTrenchExits(const unsigned char* image, DWORD timestamp, void* sec
 }
 
 void* SpawnTrenchCap(const unsigned char* image, DWORD timestamp, TrenchVector position,
-                    TrenchVector inward) {
+                    TrenchVector inward, bool clientOnly) {
     for (const auto& layout : layouts) {
         if (layout.timestamp == timestamp) {
             constexpr char name[] = "it_trench_end_cap";
@@ -251,18 +267,19 @@ void* SpawnTrenchCap(const unsigned char* image, DWORD timestamp, TrenchVector p
             // SetType copies the input string. A name longer than 15 bytes uses the pointer slot.
             CopyMemory(type.text, &text, sizeof(text));
             const ExitPose pose{{position.x, position.y, position.z}, {inward.x, inward.y, inward.z}};
-            return SpawnEntity(image, layout, type, nullptr, nullptr, &pose);
+            return SpawnEntity(image, layout, type, nullptr, nullptr, &pose, clientOnly);
         }
     }
     return nullptr;
 }
 
-void DeleteTrenchCap(const unsigned char* image, DWORD timestamp, const void* entity) {
+void DeleteTrenchCap(const unsigned char* image, DWORD timestamp, const void* entity, bool clientOnly) {
     for (const auto& layout : layouts) {
         if (layout.timestamp == timestamp) {
             // The entity removal routine called by ia:delete with mode zero.
             using Delete = void (*)(const void*, unsigned);
-            reinterpret_cast<Delete>(image + layout.deleteEntity)(entity, 0);
+            const DWORD entry = clientOnly ? 0x6febc0 : layout.deleteEntity;
+            reinterpret_cast<Delete>(image + entry)(entity, 0);
             return;
         }
     }

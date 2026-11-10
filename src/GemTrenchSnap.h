@@ -46,6 +46,7 @@ struct TrenchTransform {
     TrenchVector xAxis, yAxis, zAxis, origin;
 };
 
+
 struct TrenchJoint {
     std::uint64_t neighbor = 0;
     unsigned neighborSide = noTrenchSocket;
@@ -75,8 +76,10 @@ const char* InitializeTrenchSnap(unsigned char* image, DWORD timestamp, DWORD en
                                 DWORD queueEntry, DWORD orderVtable, DWORD orderDestructor,
                                 void (*log)(const char*)) noexcept;
 bool InstallTrenchHeightRefresh(unsigned char* image, DWORD sceneQuantJump, DWORD sceneQuantEntry) noexcept;
-void* SpawnTrenchCap(const unsigned char* image, DWORD timestamp, TrenchVector position, TrenchVector inward);
-void DeleteTrenchCap(const unsigned char* image, DWORD timestamp, const void* entity);
+void* SpawnTrenchCap(const unsigned char* image, DWORD timestamp, TrenchVector position, TrenchVector inward,
+                    bool clientOnly);
+bool TakeClientTrenchCapRegistration() noexcept;
+void DeleteTrenchCap(const unsigned char* image, DWORD timestamp, const void* entity, bool clientOnly);
 void SeatCompletedTrenchCap(const unsigned char* image, DWORD timestamp, const void* entity,
                             TrenchVector position, TrenchVector outward, const float* boneOffset);
 bool ReadStraightTrenchLandPose(const unsigned char* image, DWORD timestamp, const void* section,
@@ -86,5 +89,11 @@ bool ReadStraightTrenchCapOffsets(const unsigned char* image, DWORD timestamp, c
 bool PrepareTrenchPlacement(const TrenchModule& module, float modelYawOffset, const void* options, TrenchTarget& target,
                             TrenchPlacement& placement) noexcept;
 const char* CheckTrenchPlacement(const TrenchPlacement& placement) noexcept;
+unsigned TrackNetworkTrenchPreview(std::uint64_t key, const TrenchModule& module,
+                                   TrenchVector position, float yaw);
+bool RemoveNetworkTrenchPreview(std::uint64_t key);
+bool EnableNetworkTrenchCaps() noexcept;
+void ClearNetworkTrenches();
 unsigned TrackTrenchSection(const TrenchModule& module, const TrenchTransform& transform,
-                            const void* section, unsigned& joinedCount, bool useStraightBones = false);
+                            const void* section, unsigned& joinedCount, bool useStraightBones,
+                            bool replicated = false);
