@@ -1,1 +1,88 @@
-# GoH-Immersive-trenches
+# ImmersiveTrenchesMod
+
+Нативный мод для Call to Arms – Gates of Hell: Ostfront загружается через Miles Sound System.
+
+- `ImmersiveTrenchesMod.asi` экспортирует `RIB_Main` для Miles. При `upDown == 1` загрузчик определяет корень игры по пути к ASI, открывает `mods\ImmersiveTrenches\ImmersiveTrenchesModLogic.dll` по полному пути и вызывает её экспорт `GoHModInitialize`.
+- `ImmersiveTrenchesModLogic.dll` содержит логику мода и остаётся загруженной до выхода из процесса. Инициализация выполняется один раз за процесс, даже если Miles перезагружает ASI. Сейчас она записывает PID редактора в `%TEMP%\GoH\ImmersiveTrenchesMod.log` и в окно Output отладчика.
+
+`RIB_Main` возвращает `1`. Ошибки загрузки DLL видны в окне Output отладчика. `DllMain` обоих модулей сразу возвращает `TRUE`.
+
+## Установка из релиза
+
+1. Закройте игру и GEM Editor.
+2. Скачайте ZIP для Windows x64 из раздела [Releases](https://github.com/SirWirtFrog/GoH-Immersive-trenches/releases) и распакуйте его. Скопируйте папки `binaries` и `mods` из архива в корень игры, где уже находятся одноимённые папки.
+3. Запустите игру и активируйте **Immersive Trenches** в списке модов. Выберите инженера и нажмите **Модовые окопы** на основной панели, под кнопкой **Развернуть**.
+
+Релиз собран для версии игры **1.067.0 x64** (сборка `aaa36ed4d`). При обновлении сохраните свой `mods\ImmersiveTrenches\ImmersiveTrenchesMod.ini`, если меняли настройки.
+
+## Build → Deploy → F5
+
+Нужны Visual Studio 2026 с компонентом **Desktop development with C++** для F5, набор инструментов MSVC v145 и Windows SDK. Сборку и развёртывание также можно выполнить через Build Tools 2026.
+
+1. Откройте `ImmersiveTrenchesMod.sln`, выберите `Debug|x64` и соберите решение. Оба модуля и их PDB появятся в `out\x64\Debug\`. Выходной каталог для `Release|x64` — `out\x64\Release\`.
+2. Остановите предыдущую отладочную сессию и закройте открытый GEM Editor, предварительно сохранив свою работу. Из корня проекта выполните в Developer PowerShell for VS 2026:
+
+   ```powershell
+   MSBuild.exe .\ImmersiveTrenchesMod.vcxproj /t:Deploy /p:Configuration=Debug /p:Platform=x64
+   ```
+
+   `Deploy` проверяет установку игры и копирует уже собранный `ImmersiveTrenchesMod.asi` в `binaries\x64\mss`, а `ImmersiveTrenchesModLogic.dll` — в `mods\ImmersiveTrenches`. PDB остаются в каталоге сборки.
+3. Выберите `ImmersiveTrenchesMod` запускаемым проектом, поставьте точку останова на вызов `LogInitialization()` в `src\ImmersiveTrenchesModLogic.cpp` и нажмите F5. Профиль Local Windows Debugger запускает `call_to_arms_ed.exe` с рабочим каталогом `binaries\x64`. После продолжения выполнения проверьте свежую строку в логе.
+
+   ```powershell
+   Get-Content "$env:TEMP\GoH\ImmersiveTrenchesMod.log" -Tail 5
+   ```
+
+Корень игры по умолчанию — `E:\SteamLibrary\steamapps\common\Call to Arms - Gates of Hell`. Для другой установки задайте переменную окружения `GoHGameRoot` до запуска Visual Studio и Developer PowerShell. Один параметр задаёт каталог и для Deploy, и для F5.
+
+## Диагностика строительства GEM
+
+После Deploy и перезапуска игры или редактора в `%TEMP%\GoH\ImmersiveTrenchesMod.log` появится строка `[GEM construction] Trace enabled`. При вызове `install`, `install_begin` или `install_end` туда же записываются имя инструкции, PID, TID и значения регистров с аргументами. Оригинальная инструкция выполняется с теми же аргументами.
+
+Диагностика проверяет PE-заголовок и адреса оригинальных функций для игры и редактора сборки `1.0.6.7-aaa36ed4d`. При несовпадении пишет `Trace skipped`. Для остановки в Visual Studio поставьте точку останова в `LogGemConstruction`.
+
+Для модовой прямой секции ожидается дополнительная строка `section_created` с указателем на созданную сущность. Следующая строка `exit_anchors` содержит исходные позиции точек стыка без смещения и направление локальной оси X левого выхода. Правый выход развёрнут на 180° относительно левого.
+
+DLL отслеживает точки стыка модовых секций и ставит заглушки `it_trench_end_cap` на свободных торцах. После выравнивания костей прямой секции обновляется высота заглушек. При занятии стыка заглушка убирается.
+
+Чтобы видеть тот же лог в PowerShell во время игры:
+
+```powershell
+Get-Content -LiteralPath "$env:TEMP\GoH\ImmersiveTrenchesMod.log" -Tail 30 -Wait
+```
+
+Прямая секция использует инструкцию `install`. Для проверки `install_begin` и `install_end` можно построить штатную пулемётную позицию, например `heavy_mg_mg34`.
+
+## Ресурсный мод
+
+Из корня проекта выполните команду в Developer PowerShell for VS 2026 при закрытой игре.
+
+```powershell
+MSBuild.exe .\ImmersiveTrenchesMod.vcxproj /t:DeployResources /p:Platform=x64
+```
+
+На странице **Модовые окопы** доступны прямые секции, изгибы, огневые позиции и другие модули. При наведении рядом со свободной точкой стыка новая секция прилипает к ней и разворачивается.
+
+## Смещение стыков
+
+В `mods\ImmersiveTrenches\ImmersiveTrenchesMod.ini` рядом с DLL задайте:
+
+```ini
+[TrenchSnap]
+OutwardOffset=-8
+```
+
+Смещение действует вдоль оси стыка для всех модовых секций при прилипании. Отрицательное значение сдвигает новую секцию к существующей, положительное отодвигает её. При `0` точки стыка совпадают. Допустимы значения от `-20` до `20` с точкой в дробной части. В INI из релиза задано `-8`. Если настройки нет или значение неверно, применяется `-5`.
+
+DLL читает INI при запуске игры или редактора. Deploy сохраняет уже существующий INI.
+
+## Сборка и проверка экспорта из консоли
+
+
+```powershell
+MSBuild.exe .\ImmersiveTrenchesMod.sln /t:Build /p:Configuration=Debug /p:Platform=x64
+dumpbin.exe /headers /exports .\out\x64\Debug\ImmersiveTrenchesMod.asi
+dumpbin.exe /headers /exports .\out\x64\Debug\ImmersiveTrenchesModLogic.dll
+```
+
+В выводе для обоих модулей должна быть архитектура `8664 machine (x64)`, для ASI — экспорт `RIB_Main`, для DLL — `GoHModInitialize`. Проверенный ProductVersion редактора — `1.0.6.7-aaa36ed4d`. Перед будущими перехватами GEM сверяйте фактическую сборку редактора.

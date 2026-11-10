@@ -1,0 +1,5 @@
+{game_entity
+	{Extension "it_trench_pillbox_preview.mdl"}
+	{obstacleID "nothing"}
+	{collider "nothing"}
+}

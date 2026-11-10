@@ -1,0 +1,6 @@
+{material simple
+	{diffuse "trench_dirt"}
+	{alpharef 127}
+	{blend test}
+	{alphatocoverage}
+}

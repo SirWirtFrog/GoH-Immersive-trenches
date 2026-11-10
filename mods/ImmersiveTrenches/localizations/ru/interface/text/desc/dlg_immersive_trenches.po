@@ -1,0 +1,204 @@
+msgid ""
+msgstr ""
+"Language: ru\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgctxt "actionbar/it_trench_menu"
+msgid "Modded trenches"
+msgstr "Модовые окопы"
+
+msgctxt "actionbar/it_trench_menu/usage"
+msgid "Open the modular trench construction menu."
+msgstr "Открыть меню строительства модульных окопов."
+
+msgctxt "actionbar/it_trench_straight"
+msgid "Modded trenches - Straight section"
+msgstr "Модовые окопы — прямая секция"
+
+msgctxt "actionbar/it_trench_straight/action"
+msgid "Dig straight trench section"
+msgstr "Выкопать прямую секцию окопа"
+
+msgctxt "actionbar/it_trench_straight/usage"
+msgid "Choose a position and orientation for the straight trench section."
+msgstr "Выберите место и направление для строительства прямой секции окопа."
+
+msgctxt "actionbar/it_trench_fire_position1"
+msgid "Through firing position"
+msgstr "Проходная огневая позиция"
+
+msgctxt "actionbar/it_trench_fire_position1/action"
+msgid "Build through firing position"
+msgstr "Построить огневую позицию с двумя выходами"
+
+msgctxt "actionbar/it_trench_fire_position1/usage"
+msgid "Choose a location and direction for a firing position with two exits."
+msgstr "Выберите место и направление для огневой позиции с двумя выходами."
+
+msgctxt "actionbar/it_trench_fire_position2"
+msgid "Dead-end firing position"
+msgstr "Тупиковая огневая позиция"
+
+msgctxt "actionbar/it_trench_fire_position2/action"
+msgid "Build dead-end firing position"
+msgstr "Построить огневую позицию с одним выходом"
+
+msgctxt "actionbar/it_trench_fire_position2/usage"
+msgid "Choose a location and direction for a firing position with one exit."
+msgstr "Выберите место и направление для огневой позиции с одним выходом."
+
+msgctxt "actionbar/it_trench_straight_short"
+msgid "Short straight trench"
+msgstr "Короткая прямая"
+
+msgctxt "actionbar/it_trench_straight_short/action"
+msgid "Build short straight trench"
+msgstr "Построить: короткая прямая"
+
+msgctxt "actionbar/it_trench_straight_short/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_turn"
+msgid "Shallow trench bend"
+msgstr "Пологий изгиб"
+
+msgctxt "actionbar/it_trench_turn/action"
+msgid "Build shallow trench bend"
+msgstr "Построить: пологий изгиб"
+
+msgctxt "actionbar/it_trench_turn/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_turn2"
+msgid "Offset trench bend"
+msgstr "Смещённый изгиб"
+
+msgctxt "actionbar/it_trench_turn2/action"
+msgid "Build offset trench bend"
+msgstr "Построить: смещённый изгиб"
+
+msgctxt "actionbar/it_trench_turn2/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_turn3"
+msgid "Wide trench bend"
+msgstr "Широкий изгиб"
+
+msgctxt "actionbar/it_trench_turn3/action"
+msgid "Build wide trench bend"
+msgstr "Построить: широкий изгиб"
+
+msgctxt "actionbar/it_trench_turn3/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_turn_90"
+msgid "90° trench corner"
+msgstr "Поворот на 90°"
+
+msgctxt "actionbar/it_trench_turn_90/action"
+msgid "Build 90° trench corner"
+msgstr "Построить: поворот на 90°"
+
+msgctxt "actionbar/it_trench_turn_90/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_intersection"
+msgid "Trench junction"
+msgstr "Развилка окопа"
+
+msgctxt "actionbar/it_trench_intersection/action"
+msgid "Build trench junction"
+msgstr "Построить: развилка окопа"
+
+msgctxt "actionbar/it_trench_intersection/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_end"
+msgid "Closed trench end"
+msgstr "Закрытый торец"
+
+msgctxt "actionbar/it_trench_end/action"
+msgid "Build closed trench end"
+msgstr "Построить: закрытый торец"
+
+msgctxt "actionbar/it_trench_end/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_exit"
+msgid "Trench exit ramp"
+msgstr "Выход из окопа"
+
+msgctxt "actionbar/it_trench_exit/action"
+msgid "Build trench exit ramp"
+msgstr "Построить: выход из окопа"
+
+msgctxt "actionbar/it_trench_exit/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_bridge"
+msgid "Trench with a footbridge"
+msgstr "Окоп с мостиком"
+
+msgctxt "actionbar/it_trench_bridge/action"
+msgid "Build trench with a footbridge"
+msgstr "Построить: окоп с мостиком"
+
+msgctxt "actionbar/it_trench_bridge/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_mg_nest"
+msgid "Machine-gun nest"
+msgstr "Пулемётное гнездо"
+
+msgctxt "actionbar/it_trench_mg_nest/action"
+msgid "Build machine-gun nest"
+msgstr "Построить: пулемётное гнездо"
+
+msgctxt "actionbar/it_trench_mg_nest/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_emplacement"
+msgid "Gun emplacement"
+msgstr "Орудийная позиция"
+
+msgctxt "actionbar/it_trench_emplacement/action"
+msgid "Build gun emplacement"
+msgstr "Построить: орудийная позиция"
+
+msgctxt "actionbar/it_trench_emplacement/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_pillbox"
+msgid "Earth pillbox"
+msgstr "Земляной ДОТ"
+
+msgctxt "actionbar/it_trench_pillbox/action"
+msgid "Build earth pillbox"
+msgstr "Построить: земляной дот"
+
+msgctxt "actionbar/it_trench_pillbox/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_depot"
+msgid "Trench depot"
+msgstr "Окопное депо"
+
+msgctxt "actionbar/it_trench_depot/action"
+msgid "Build trench depot"
+msgstr "Построить: окопное депо"
+
+msgctxt "actionbar/it_trench_depot/usage"
+msgid "Choose the position and orientation."
+msgstr "Выбери место и направление строительства."

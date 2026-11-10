@@ -1,0 +1,56 @@
+;Exported by:	 guita
+;Date:			 21.04.2025 10:43:39
+;File:			 G:\SVN\Working Resources\GatesOfHell\GoH_3d_environment_ostfront\3d_landscape\cut_entity\trenches\dirt\trench_dirt_straight_v2_v07.max
+{skeleton
+	{bone "trench"
+		{parameters "commonmesh;"}
+		{orientation
+			1 	 0 	 0
+			0 	 -1 	 0
+			0 	 0 	 1
+		}
+		{VolumeView "trench.ply"
+			{DecalTargetDynamic}
+		}
+		{bone "point8"
+			{Position 83.1338 	 -15.3822 	 -3.6684}
+		}
+		{bone "point7"
+			{Position 30.5051 	 -11.0276 	 -3.6684}
+		}
+		{bone "point6"
+			{Position -29.3715 	 -7.8178 	 -3.6684}
+		}
+		{bone "point5"
+			{Position -72.558 	 -13.5111 	 -3.6684}
+		}
+		{bone "point2"
+			{Position -31.1875 	 19.2657 	 -3.6684}
+		}
+		{bone "point3"
+			{Position 33.4742 	 15.5924 	 -3.6684}
+		}
+		{bone "point1"
+			{Position -75.0445 	 12.8509 	 -3.6684}
+		}
+		{bone "point4"
+			{Position 75.0252 	 14.4702 	 -3.6684}
+		}
+		{bone "wood"
+			{parameters "align;"}
+			{VolumeView "wood.ply"}
+		}
+	}
+	; Straight mesh ends at X = +/-100. The deep edge of the exit is at X = +23.5509.
+	{bone "it_exit_left"
+		{Position -123.5509 0 0}
+	}
+	{bone "it_exit_right"
+		{matrix34
+			-1 0 0
+			0 -1 0
+			0 0 1
+			123.5509 0 0
+		}
+	}
+}

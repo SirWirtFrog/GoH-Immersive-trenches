@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{732CD568-F884-4762-A7EA-8943F7F440D1}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ImmersiveTrenchesMod</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v145</PlatformToolset>
+    <UseDebugLibraries Condition="'$(Configuration)' == 'Debug'">true</UseDebugLibraries>
+    <UseDebugLibraries Condition="'$(Configuration)' == 'Release'">false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="ImmersiveTrenchesMod.Build.props" />
+  <PropertyGroup>
+    <TargetName>ImmersiveTrenchesMod</TargetName>
+    <TargetExt>.asi</TargetExt>
+    <GoHGameRoot Condition="'$(GoHGameRoot)' == ''">E:\SteamLibrary\steamapps\common\Call to Arms - Gates of Hell</GoHGameRoot>
+    <GoHBinDir>$(GoHGameRoot)\binaries\x64</GoHBinDir>
+    <GoHModDir>$(GoHGameRoot)\mods\ImmersiveTrenches</GoHModDir>
+    <TrenchResourceSource>$(MSBuildProjectDirectory)\mods\ImmersiveTrenches</TrenchResourceSource>
+    <LocalDebuggerCommand>$(GoHBinDir)\call_to_arms_ed.exe</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(GoHBinDir)</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerDebuggerType>NativeOnly</LocalDebuggerDebuggerType>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ImmersiveTrenchesModLoader.cpp" />
+    <ProjectReference Include="ImmersiveTrenchesModLogic.vcxproj">
+      <Project>{28C96A1A-8B53-4E37-BDB6-D52AD8BC4F9E}</Project>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Target Name="Deploy">
+    <Error Condition="!Exists('$(GoHBinDir)\call_to_arms_ed.exe') Or !Exists('$(GoHBinDir)\mss64.dll') Or !Exists('$(GoHBinDir)\mss\.')"
+           Text="GEM Editor or Miles plugin directory not found. Check GoHGameRoot: $(GoHGameRoot)" />
+    <Error Condition="!Exists('$(TargetPath)')"
+           Text="Build $(Configuration)|$(Platform) before Deploy. Missing file: $(TargetPath)" />
+    <Error Condition="!Exists('$(OutDir)ImmersiveTrenchesModLogic.dll')"
+           Text="Build $(Configuration)|$(Platform) before Deploy. Missing file: $(OutDir)ImmersiveTrenchesModLogic.dll" />
+    <CallTarget Targets="_DeployTrenchConfig" />
+    <Copy SourceFiles="$(OutDir)ImmersiveTrenchesModLogic.dll" DestinationFolder="$(GoHModDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GoHBinDir)\mss" />
+    <Message Importance="high" Text="Deployed $(Configuration)|$(Platform) loader to $(GoHBinDir)\mss and logic DLL to $(GoHModDir)" />
+  </Target>
+  <Target Name="DeployResources">
+    <Error Condition="!Exists('$(GoHBinDir)\call_to_arms_ed.exe')"
+           Text="GEM Editor not found. Check GoHGameRoot: $(GoHGameRoot)" />
+    <Error Condition="!Exists('$(TrenchResourceSource)\mod.info')"
+           Text="Resource mod not found at $(TrenchResourceSource)" />
+    <ItemGroup>
+      <TrenchResourceFile Include="$(TrenchResourceSource)\**\*"
+                          Exclude="$(TrenchResourceSource)\ImmersiveTrenchesMod.ini" />
+    </ItemGroup>
+    <Copy SourceFiles="@(TrenchResourceFile)"
+          DestinationFiles="@(TrenchResourceFile->'$(GoHModDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <CallTarget Targets="_DeployTrenchConfig" />
+    <Message Importance="high" Text="Deployed resource mod to $(GoHModDir)" />
+  </Target>
+  <Target Name="_DeployTrenchConfig" Condition="!Exists('$(GoHModDir)\ImmersiveTrenchesMod.ini')">
+    <Copy SourceFiles="$(TrenchResourceSource)\ImmersiveTrenchesMod.ini" DestinationFolder="$(GoHModDir)" />
+  </Target>
+</Project>

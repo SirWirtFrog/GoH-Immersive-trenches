@@ -1,0 +1,12 @@
+{
+	(include "/properties/trench.inc")
+	{extension "it_trench_straight_short.mdl"}
+	{DynCmpPersistent}
+	{props "sand"}
+	("boneLand"  args "trench")
+	("volume" args "body1")
+	("volume" args "body2")
+	("volume" args "body3")
+	("volume" args "body4")
+	
+}

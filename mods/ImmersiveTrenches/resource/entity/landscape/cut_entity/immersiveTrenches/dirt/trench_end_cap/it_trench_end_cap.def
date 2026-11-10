@@ -1,0 +1,5 @@
+{game_entity
+	{extension "it_trench_end_cap.mdl"}
+	{obstacleID "nothing"}
+	{collider "nothing"}
+}

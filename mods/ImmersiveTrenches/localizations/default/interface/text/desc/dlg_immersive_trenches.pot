@@ -1,0 +1,204 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgctxt "actionbar/it_trench_menu"
+msgid "Modded trenches"
+msgstr ""
+
+msgctxt "actionbar/it_trench_menu/usage"
+msgid "Open the modular trench construction menu."
+msgstr ""
+
+msgctxt "actionbar/it_trench_straight"
+msgid "Modded trenches - Straight section"
+msgstr ""
+
+msgctxt "actionbar/it_trench_straight/action"
+msgid "Dig straight trench section"
+msgstr ""
+
+msgctxt "actionbar/it_trench_straight/usage"
+msgid "Choose a position and orientation for the straight trench section."
+msgstr ""
+
+msgctxt "actionbar/it_trench_fire_position1"
+msgid "Through firing position"
+msgstr ""
+
+msgctxt "actionbar/it_trench_fire_position1/action"
+msgid "Build through firing position"
+msgstr ""
+
+msgctxt "actionbar/it_trench_fire_position1/usage"
+msgid "Choose a location and direction for a firing position with two exits."
+msgstr ""
+
+msgctxt "actionbar/it_trench_fire_position2"
+msgid "Dead-end firing position"
+msgstr ""
+
+msgctxt "actionbar/it_trench_fire_position2/action"
+msgid "Build dead-end firing position"
+msgstr ""
+
+msgctxt "actionbar/it_trench_fire_position2/usage"
+msgid "Choose a location and direction for a firing position with one exit."
+msgstr ""
+
+msgctxt "actionbar/it_trench_straight_short"
+msgid "Short straight trench"
+msgstr ""
+
+msgctxt "actionbar/it_trench_straight_short/action"
+msgid "Build short straight trench"
+msgstr ""
+
+msgctxt "actionbar/it_trench_straight_short/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn"
+msgid "Shallow trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn/action"
+msgid "Build shallow trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn2"
+msgid "Offset trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn2/action"
+msgid "Build offset trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn2/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn3"
+msgid "Wide trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn3/action"
+msgid "Build wide trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn3/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn_90"
+msgid "90° trench corner"
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn_90/action"
+msgid "Build 90° trench corner"
+msgstr ""
+
+msgctxt "actionbar/it_trench_turn_90/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_intersection"
+msgid "Trench junction"
+msgstr ""
+
+msgctxt "actionbar/it_trench_intersection/action"
+msgid "Build trench junction"
+msgstr ""
+
+msgctxt "actionbar/it_trench_intersection/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_end"
+msgid "Closed trench end"
+msgstr ""
+
+msgctxt "actionbar/it_trench_end/action"
+msgid "Build closed trench end"
+msgstr ""
+
+msgctxt "actionbar/it_trench_end/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_exit"
+msgid "Trench exit ramp"
+msgstr ""
+
+msgctxt "actionbar/it_trench_exit/action"
+msgid "Build trench exit ramp"
+msgstr ""
+
+msgctxt "actionbar/it_trench_exit/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_bridge"
+msgid "Trench with a footbridge"
+msgstr ""
+
+msgctxt "actionbar/it_trench_bridge/action"
+msgid "Build trench with a footbridge"
+msgstr ""
+
+msgctxt "actionbar/it_trench_bridge/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest"
+msgid "Machine-gun nest"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest/action"
+msgid "Build machine-gun nest"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_emplacement"
+msgid "Gun emplacement"
+msgstr ""
+
+msgctxt "actionbar/it_trench_emplacement/action"
+msgid "Build gun emplacement"
+msgstr ""
+
+msgctxt "actionbar/it_trench_emplacement/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_pillbox"
+msgid "Earth pillbox"
+msgstr ""
+
+msgctxt "actionbar/it_trench_pillbox/action"
+msgid "Build earth pillbox"
+msgstr ""
+
+msgctxt "actionbar/it_trench_pillbox/usage"
+msgid "Choose the position and orientation."
+msgstr ""
+
+msgctxt "actionbar/it_trench_depot"
+msgid "Trench depot"
+msgstr ""
+
+msgctxt "actionbar/it_trench_depot/action"
+msgid "Build trench depot"
+msgstr ""
+
+msgctxt "actionbar/it_trench_depot/usage"
+msgid "Choose the position and orientation."
+msgstr ""

@@ -1,0 +1,24 @@
+{skeleton
+	{bone "trench"
+		{parameters "commonmesh;"}
+		{orientation
+			1 	 0 	 0
+			0 	 -1 	 0
+			0 	 0 	 1
+		}
+		{VolumeView "trench.ply"
+			{DecalTargetDynamic}
+		}
+		{bone "point1"
+			{Position 11.5774 	 -14.7956 	 -3}
+		}
+		{bone "point2"
+			{matrix34
+				-1 	 0 	 0
+				0 	 -1 	 0
+				0 	 0 	 1
+				11.4622 	 12.4964 	 -3
+			}
+		}
+	}
+}

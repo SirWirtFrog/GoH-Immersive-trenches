@@ -21,6 +21,7 @@
 *.so
 *.dylib
 *.dll
+*.asi
 *.so.*
 
 # Fortran module files
@@ -66,3 +67,9 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+.vs/
+*.vcxproj.user
+examples/
+gameFiles/
+out/
