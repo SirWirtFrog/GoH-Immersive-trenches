@@ -12,6 +12,22 @@
 		{VolumeView "trench.ply"
 			{DecalTargetDynamic}
 		}
+		{bone "it_mg_mount"
+			{matrix34
+				0 1 0
+				-1 0 0
+				0 0 1
+				0 12 -10
+			}
+		}
+		{bone "it_mg_mount_maxim"
+			{matrix34
+				0 1 0
+				-1 0 0
+				0 0 1
+				0 12 0
+			}
+		}
 		{bone "point8"
 			{matrix34
 				0.9962 	 0.0872 	 0

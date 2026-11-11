@@ -14,7 +14,7 @@
 	{"resources" "10%"}
 )
 
-(define "engineer"
+(define "it_engineer_base"
 	{fortification}
 	{barricade
 		{"fortifications" "barricade_sq"}
@@ -37,7 +37,7 @@
 		{"fortifications" "it_trench_bridge"}
 		{"fortifications" "it_trench_fire_position1"}
 		{"fortifications" "it_trench_fire_position2"}
-		{"fortifications" "it_trench_mg_nest"}
+		{"fortifications" "%mg_nest"}
 		{"fortifications" "it_trench_emplacement"}
 		{"fortifications" "it_trench_pillbox"}
 		{"fortifications" "it_trench_depot"}
@@ -54,7 +54,7 @@
 	{mechanic factor 1.0}
 )
 
-(define "engineer_heavy_fin"
+(define "it_engineer_heavy_fin_base"
 	{fortification}
 	{barricade
 		{"fortifications" "barricade_sq"}
@@ -77,7 +77,7 @@
 		{"fortifications" "it_trench_bridge"}
 		{"fortifications" "it_trench_fire_position1"}
 		{"fortifications" "it_trench_fire_position2"}
-		{"fortifications" "it_trench_mg_nest"}
+		{"fortifications" "%mg_nest"}
 		{"fortifications" "it_trench_emplacement"}
 		{"fortifications" "it_trench_pillbox"}
 		{"fortifications" "it_trench_depot"}
@@ -99,6 +99,14 @@
 	{mechanic factor 1.0}
 )
 
+; Faction-specific nest selection; all other engineer perks stay shared.
+(define "engineer" ("it_engineer_base" mg_nest(it_trench_mg_nest)))
+(define "engineer_heavy_fin" ("it_engineer_heavy_fin_base" mg_nest(it_trench_mg_nest_fin)))
+(define "it_engineer_ger" ("it_engineer_base" mg_nest(it_trench_mg_nest_ger)))
+(define "it_engineer_rus" ("it_engineer_base" mg_nest(it_trench_mg_nest_rus)))
+(define "it_engineer_fin" ("it_engineer_base" mg_nest(it_trench_mg_nest_fin)))
+(define "it_engineer_usa" ("it_engineer_base" mg_nest(it_trench_mg_nest_usa)))
+(define "it_engineer_eng" ("it_engineer_base" mg_nest(it_trench_mg_nest_eng)))
 
 ;/* - Repair Skills - */
 

@@ -2,7 +2,7 @@
 	(include "/properties/trench.inc")
 	{extension "it_trench_mg_nest.mdl"}
 	{DynCmpPersistent}
-	{props "sand"}
+	{props "sand" "it_mg_nest_ger"}
 	("boneLand"  args "trench")
 	("volume" args "body1")
 	("volume" args "body2")
@@ -12,6 +12,5 @@
 	("volume" args "body6")	
 	("volume" args "body7")	
 	("volume" args "body8")	
-	
 }
 

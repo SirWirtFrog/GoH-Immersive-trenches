@@ -1,0 +1,31 @@
+{breed
+	{behaviour soldier}
+	{skin "ger_heer_43_engi_rfl_1"}
+	{portrait "ger_engineer"}
+	{icon "tech"}
+	{icon_priority 0}
+	{nationality ger}
+	{armors
+		{head ger_m34_sidecap_radio}
+	}
+	{perks
+		(include "ability.inc")
+		("rifle_skill_rank_2")("tier2_standard") 
+		("it_engineer_ger")
+	}
+	{veterancy
+		(include "ability.inc")
+		("veterancy_lvl_0")
+	}
+	{inventory
+		{item "k98" filled}
+		{item "rifle_ger clip ammo" 60}
+		{item "m24 grenade" 1}
+		{item "mine_detector"}
+		{item "wirecutters"}
+		{item "shovel_ger"}
+		
+		{item "pickaxe"}
+		{in_hands 0}
+	}
+}

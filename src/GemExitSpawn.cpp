@@ -8,14 +8,19 @@
 #include "GemTrenchSnap.h"
 
 namespace {
+// One-shot marker consumed by the nested scene-registration hook. Keeping
+// it thread-local avoids changing IDs for unrelated concurrent spawns.
 thread_local bool registerClientTrenchCap = false;
 
+// ABI representation only: ownership and destruction use GEM helpers,
+// not this module's C++ runtime.
 struct NativeString {
     char text[16];
     size_t length;
     size_t capacity;
 };
 
+// Native helper RVAs selected only after the host PE build was validated.
 struct SpawnLayout {
     DWORD timestamp;
     DWORD boneNameConstructor;
@@ -60,6 +65,8 @@ struct ExitPose {
 
 using GroundHeight = float (*)(const TrenchVector*);
 
+// Sample the outer rim against terrain and lower the rigid cap only enough
+// to hide small gaps; do not pull the inner wall far below the socket.
 float TrenchCapDrop(const TrenchTransform& pose, GroundHeight groundHeight) {
     // Outer boundary of it_trench_end_cap.ply in entity coordinates,
     // including the Y reflection in the MDL. Exclude the edges inside the cut.
@@ -97,6 +104,8 @@ float TrenchCapDrop(const TrenchTransform& pose, GroundHeight groundHeight) {
     return (std::min)(maxDrop, clearance - clearanceTolerance);
 }
 
+// Reconstructed request layout passed directly to GEM. Offsets, alignment
+// and engine-side field initialization must match the supported executable.
 struct alignas(16) SpawnRequest {
     DWORD flags{};
     DWORD padding{};
@@ -116,6 +125,8 @@ static_assert(offsetof(SpawnRequest, firstName) == 0x80);
 static_assert(offsetof(SpawnRequest, secondName) == 0xe0);
 static_assert(sizeof(SpawnRequest) == 0x140);
 
+// Create the engine's bone-name wrapper temporarily and destroy it with
+// the matching native allocator after lookup.
 void* ResolveBone(const unsigned char* image, const SpawnLayout& layout, void* skeleton,
                   const NativeString& boneName) {
     using Construct = void (*)(void*, const NativeString*);
@@ -128,6 +139,8 @@ void* ResolveBone(const unsigned char* image, const SpawnLayout& layout, void* s
     return bone;
 }
 
+// Refresh a dirty bone cache before reading its world pose. Normalize
+// the offset distance so scaled bone axes do not change the requested shift.
 bool ReadOffsetPose(const unsigned char* image, const SpawnLayout& layout, void* bone,
                     float outwardOffset, ExitPose& pose) {
     const auto* bytes = static_cast<const unsigned char*>(bone);
@@ -154,6 +167,8 @@ bool ReadOffsetPose(const unsigned char* image, const SpawnLayout& layout, void*
            std::isfinite(pose.position.z);
 }
 
+// Reproduce the native request lifecycle: initialize owned fields, configure,
+// execute/finalize, then destroy fields with the same engine helpers.
 void* SpawnEntity(const unsigned char* image, const SpawnLayout& layout, const NativeString& type,
                   void* section, void* bone, const ExitPose* pose, bool clientOnly = false) {
     using Init = void (*)(void*);
@@ -202,12 +217,16 @@ void* SpawnEntity(const unsigned char* image, const SpawnLayout& layout, const N
 }
 }
 
+// Consume once: only the cap registration directly inside this spawn should
+// select the client-local ID pool.
 bool TakeClientTrenchCapRegistration() noexcept {
     const bool clientOnly = registerClientTrenchCap;
     registerClientTrenchCap = false;
     return clientOnly;
 }
 
+// Bone-based exit helper: resolve all requested anchors before spawning any
+// exit, avoiding a partial result when an expected bone is absent.
 unsigned SpawnTrenchExits(const unsigned char* image, DWORD timestamp, void* section,
                           float outwardOffset, bool hasLeftExit, unsigned joinedSide,
                           void* (&exits)[2]) {
@@ -257,6 +276,19 @@ unsigned SpawnTrenchExits(const unsigned char* image, DWORD timestamp, void* sec
     return 0;
 }
 
+// Use the same terrain query as completed-cap seating, with the verified host layout.
+bool ReadTrenchGroundHeight(const unsigned char* image, DWORD timestamp, TrenchVector position,
+                           float& height) {
+    for (const auto& layout : layouts) {
+        if (layout.timestamp == timestamp) {
+            height = reinterpret_cast<GroundHeight>(image + layout.groundHeight)(&position);
+            return std::isfinite(height);
+        }
+    }
+    return false;
+}
+
+// Caps use explicit world-space poses and can be local to a network client.
 void* SpawnTrenchCap(const unsigned char* image, DWORD timestamp, TrenchVector position,
                     TrenchVector inward, bool clientOnly) {
     for (const auto& layout : layouts) {
@@ -273,6 +305,8 @@ void* SpawnTrenchCap(const unsigned char* image, DWORD timestamp, TrenchVector p
     return nullptr;
 }
 
+// Client-only caps bypass authoritative deletion; callers check entity
+// identity/liveness before entering these native routines.
 void DeleteTrenchCap(const unsigned char* image, DWORD timestamp, const void* entity, bool clientOnly) {
     for (const auto& layout : layouts) {
         if (layout.timestamp == timestamp) {
@@ -285,6 +319,8 @@ void DeleteTrenchCap(const unsigned char* image, DWORD timestamp, const void* en
     }
 }
 
+// Once construction completes, use the section's seam height rather than
+// letting independent terrain alignment move the cap away from its socket.
 void SeatCompletedTrenchCap(const unsigned char* image, DWORD timestamp, const void* entity,
                             TrenchVector position, TrenchVector outward, const float* boneOffset) {
     for (const auto& layout : layouts) {
@@ -314,6 +350,8 @@ void SeatCompletedTrenchCap(const unsigned char* image, DWORD timestamp, const v
     }
 }
 
+// Average each end's deformed tip heights relative to its bind pose.
+// This follows terrain-adjusted bones without tilting the rigid cap mesh.
 bool ReadStraightTrenchCapOffsets(const unsigned char* image, DWORD timestamp, const void* section,
                                   const TrenchTransform& transform, float (&offsets)[2]) {
     struct ReferenceBone {
@@ -360,6 +398,8 @@ bool ReadStraightTrenchCapOffsets(const unsigned char* image, DWORD timestamp, c
     return false;
 }
 
+// Read the terrain-aligned trench bone for diagnostics; the entity transform
+// alone does not describe internal skeletal deformation.
 bool ReadStraightTrenchLandPose(const unsigned char* image, DWORD timestamp, const void* section,
                                 TrenchVector& origin, TrenchVector& xAxis) {
     for (const auto& layout : layouts) {

@@ -202,3 +202,83 @@ msgstr "Построить: окопное депо"
 msgctxt "actionbar/it_trench_depot/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
+
+msgctxt "actionbar/it_trench_mg_nest_ger"
+msgid "Machine-gun nest (MG 34)"
+msgstr "Пулемётное гнездо (MG 34)"
+
+msgctxt "actionbar/it_trench_mg_nest_ger/action"
+msgid "Build machine-gun nest"
+msgstr "Построить пулемётное гнездо"
+
+msgctxt "actionbar/it_trench_mg_nest_ger/usage"
+msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
+msgstr "После постройки выберите любого инженера и нажмите ПКМ по ящику: за 30 секунд он соберёт пулемёт этого пресета."
+
+msgctxt "actionbar/it_trench_mg_nest_rus"
+msgid "Machine-gun nest (Maxim)"
+msgstr "Пулемётное гнездо (Максим)"
+
+msgctxt "actionbar/it_trench_mg_nest_rus/action"
+msgid "Build machine-gun nest"
+msgstr "Построить пулемётное гнездо"
+
+msgctxt "actionbar/it_trench_mg_nest_rus/usage"
+msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
+msgstr "После постройки выберите любого инженера и нажмите ПКМ по ящику: за 30 секунд он соберёт пулемёт этого пресета."
+
+msgctxt "actionbar/it_trench_mg_nest_fin"
+msgid "Machine-gun nest (Maxim M/32–33)"
+msgstr "Пулемётное гнездо (Максим M/32–33)"
+
+msgctxt "actionbar/it_trench_mg_nest_fin/action"
+msgid "Build machine-gun nest"
+msgstr "Построить пулемётное гнездо"
+
+msgctxt "actionbar/it_trench_mg_nest_fin/usage"
+msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
+msgstr "После постройки выберите любого инженера и нажмите ПКМ по ящику: за 30 секунд он соберёт пулемёт этого пресета."
+
+msgctxt "actionbar/it_trench_mg_nest_usa"
+msgid "Machine-gun nest (Browning M1917)"
+msgstr "Пулемётное гнездо (Browning M1917)"
+
+msgctxt "actionbar/it_trench_mg_nest_usa/action"
+msgid "Build machine-gun nest"
+msgstr "Построить пулемётное гнездо"
+
+msgctxt "actionbar/it_trench_mg_nest_usa/usage"
+msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
+msgstr "После постройки выберите любого инженера и нажмите ПКМ по ящику: за 30 секунд он соберёт пулемёт этого пресета."
+
+msgctxt "actionbar/it_trench_mg_nest_eng"
+msgid "Machine-gun nest (Vickers)"
+msgstr "Пулемётное гнездо (Vickers)"
+
+msgctxt "actionbar/it_trench_mg_nest_eng/action"
+msgid "Build machine-gun nest"
+msgstr "Построить пулемётное гнездо"
+
+msgctxt "actionbar/it_trench_mg_nest_eng/usage"
+msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
+msgstr "После постройки выберите любого инженера и нажмите ПКМ по ящику: за 30 секунд он соберёт пулемёт этого пресета."
+
+msgctxt "desc/entity/it_trench_fixed_mg_ger"
+msgid "MG 34 (trench emplacement)"
+msgstr "MG 34 (окопная установка)"
+
+msgctxt "desc/entity/it_trench_fixed_mg_rus"
+msgid "Maxim (trench emplacement)"
+msgstr "Максим (окопная установка)"
+
+msgctxt "desc/entity/it_trench_fixed_mg_fin"
+msgid "Maxim M/32–33 (trench emplacement)"
+msgstr "Максим M/32–33 (окопная установка)"
+
+msgctxt "desc/entity/it_trench_fixed_mg_usa"
+msgid "Browning M1917 (trench emplacement)"
+msgstr "Browning M1917 (окопная установка)"
+
+msgctxt "desc/entity/it_trench_fixed_mg_eng"
+msgid "Vickers (trench emplacement)"
+msgstr "Vickers (окопная установка)"

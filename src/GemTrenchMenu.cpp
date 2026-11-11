@@ -12,6 +12,7 @@ constexpr unsigned buttonInitialize = 1;
 constexpr unsigned buttonClick = 9;
 constexpr unsigned buttonMethods = 14;
 
+// All entries are RVAs; the caller selects the supported game/editor layout.
 struct MenuLayout {
     DWORD pageNames, pages, loadPage, pageVtable, parserVtable, destroyPage;
     DWORD allocate, registerButton;
@@ -64,6 +65,8 @@ const MenuLayout* layout = nullptr;
 Log writeLog = nullptr;
 const char** pageNames = nullptr;
 PanelPage** pages = nullptr;
+// The stock page owns the lifetime of our additional reader. Neither the
+// global page array nor a temporary ScopedSlot owns the extra allocation.
 PanelPage* stockOwner = nullptr;
 PanelPage* trenchPage = nullptr;
 void* openButtonTable[1 + buttonMethods]{};
@@ -75,6 +78,8 @@ Function Gem(DWORD rva) noexcept {
     return reinterpret_cast<Function>(image + rva);
 }
 
+// Destroy the extra page with its stock owner and clear globals first,
+// so a nested callback cannot attempt to destroy it twice.
 void* OnDestroyPage(PanelPage* page, unsigned flags) {
     const auto destroy = Gem<DestroyPage>(layout->destroyPage);
     if (page == stockOwner) {
@@ -88,6 +93,8 @@ void* OnDestroyPage(PanelPage* page, unsigned flags) {
     return destroy(page, flags);
 }
 
+// Temporarily substitute one engine table entry for a synchronous call;
+// restore the previous value on scope exit, including C++ stack unwinding.
 template <typename T>
 class ScopedSlot {
 public:
@@ -101,6 +108,8 @@ private:
     T saved_;
 };
 
+// Reuse the stock parser with a separate reader so loading our resources
+// does not overwrite the stock emplacement page.
 bool LoadTrenchPage() {
     if (trenchPage != nullptr) {
         return true;
@@ -137,6 +146,8 @@ bool LoadTrenchPage() {
     return true;
 }
 
+// Resource activation is detected from the parsed main panel. Do not attach
+// the extra page when the active resource set does not contain its button.
 bool MainPanelHasTrenchButton() noexcept {
     const auto* main = pages[mainPage];
     if (main == nullptr) {
@@ -157,6 +168,7 @@ bool MainPanelHasTrenchButton() noexcept {
     return false;
 }
 
+// Preserve normal page attachment before conditionally attaching our reader.
 void AttachPanelPages(void* panel, PanelPage* stock, DWORD target) {
     const auto attach = Gem<void (*)(void*, PanelPage*)>(target);
     attach(panel, stock);
@@ -173,6 +185,8 @@ void AttachGuiPages(void* panel, PanelPage* stock) {
     AttachPanelPages(panel, stock, layout->attachGuiPage);
 }
 
+// Verify the original branch bytes before redirecting through a nearby relay;
+// legacy and GUI panel builders have separate attachment sites.
 bool HookPageAttachment(DWORD site, DWORD original, unsigned char opcode,
                         void (*hook)(void*, PanelPage*)) noexcept {
     auto* branch = image + site;
@@ -204,6 +218,8 @@ bool HookPageAttachment(DWORD site, DWORD original, unsigned char opcode,
     return true;
 }
 
+// Reuse native browse dispatch with a temporary page substitution; listeners
+// retain the selected reader after the global stock entry is restored.
 void OpenTrenchPage() {
     if (menuReady && trenchPage != nullptr) {
         // Browse dispatch is synchronous. Each listener caches the chosen
@@ -214,6 +230,7 @@ void OpenTrenchPage() {
     }
 }
 
+// Reuse native button setup, replacing only the label/icon for our factory.
 void InitializeOpenButton(void* button, void* parent, void* setup, void* slot, int flags) {
     using Initialize = void (*)(void*, void*, void*, void*, const char*, int);
     Gem<Initialize>(layout->initializeButton)(button, parent, setup, slot, "it_trench_menu", flags);
@@ -226,6 +243,8 @@ void InitializeOpenButton(void* button, void* parent, void* setup, void* slot, i
     Gem<AddIcon>(layout->addIcon)(host, &label, &detail);
 }
 
+// Construct with GEM's factory/allocator, then select the cloned vtable
+// whose initialize and click methods belong to this DLL.
 void* MakeOpenButton() {
     auto* button = Gem<ButtonFactory>(layout->openFactory)();
     if (button != nullptr) {
@@ -236,6 +255,8 @@ void* MakeOpenButton() {
 
 } // namespace
 
+// Validate stock tables, clone button methods/RTTI, register the factory,
+// and enable browsing only after both panel attachment hooks are available.
 void InstallTrenchMenu(unsigned char* host, bool isEditor, Log log) noexcept {
     image = host;
     layout = isEditor ? &editor : &game;

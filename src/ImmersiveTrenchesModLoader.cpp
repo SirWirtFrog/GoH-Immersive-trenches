@@ -14,6 +14,8 @@ void ReportLoadError(const char* operation, DWORD error) noexcept {
     OutputDebugStringA(message);
 }
 
+// Resolve paths from the ASI itself, not the current directory: Miles and F5
+// can start the process with different working directories.
 void LoadMod() noexcept {
     HMODULE loader = nullptr;
     if (!GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
@@ -48,6 +50,8 @@ void LoadMod() noexcept {
     }
     CopyMemory(gameRootEnd, logicPath, sizeof(logicPath));
 
+    // Restrict dependency lookup to the logic DLL directory and Windows system
+    // directory; the game root is already encoded in the absolute DLL path.
     const HMODULE logic = LoadLibraryExW(dllPath, nullptr, LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR |
                                                          LOAD_LIBRARY_SEARCH_SYSTEM32);
     if (logic == nullptr) {
@@ -62,14 +66,18 @@ void LoadMod() noexcept {
     } else if (!initialize()) {
         ReportLoadError("GoHModInitialize", GetLastError());
     }
+    // Release this load reference. Successful initialization pins the logic DLL,
+    // so installed callbacks remain valid even when Miles unloads the ASI.
     FreeLibrary(logic);
 }
 }
 
+// Keep loader-lock work empty; initialization belongs to the Miles callback.
 BOOL WINAPI DllMain(HINSTANCE, DWORD, LPVOID) noexcept {
     return TRUE;
 }
 
+// Miles calls this on attach/detach. Only attach loads and initializes logic.
 extern "C" __declspec(dllexport) int WINAPI RIB_Main(
     void*, unsigned int upDown, void*, void*, void*) noexcept {
     if (upDown == 1) {

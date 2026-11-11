@@ -48,9 +48,25 @@
 		{position 1 2}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_mg_nest
+	{it_trench_mg_nest_ger
 		{position 2 2}
-		{condition "human barricade disabled"}
+		{condition "human barricade"}
+	}
+	{it_trench_mg_nest_rus
+		{position 2 2}
+		{condition "human barricade"}
+	}
+	{it_trench_mg_nest_fin
+		{position 2 2}
+		{condition "human barricade"}
+	}
+	{it_trench_mg_nest_usa
+		{position 2 2}
+		{condition "human barricade"}
+	}
+	{it_trench_mg_nest_eng
+		{position 2 2}
+		{condition "human barricade"}
 	}
 	{it_trench_emplacement
 		{position 3 2}

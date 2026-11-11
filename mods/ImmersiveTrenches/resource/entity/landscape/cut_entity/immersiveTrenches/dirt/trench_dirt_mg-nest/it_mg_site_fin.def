@@ -1,0 +1,20 @@
+{actor
+	(include "/properties/building.inc")
+	{extension "mg_build_site/it_mg_site.mdl"}
+	{props "wood" "it_mg_build_site"}
+	{DynCmpPersistent}
+	{collider "nothing"}
+	{ObstacleId "nothing"}
+	{volume "body" {able clear {obstacle} {touch}}}
+	{extender "fortification"
+		{level
+			{steps 0}
+			{radius 0}
+			{buildTime 30}
+			{entity "it_trench_fixed_mg_fin"}
+			{actions
+				{call "it_mg_site_completed"}
+			}
+		}
+	}
+}

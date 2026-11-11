@@ -14,6 +14,8 @@ static_assert(sizeof(void*) == 8, "Build the mod logic for x64.");
 void InstallTrenchMenu(unsigned char* host, bool isEditor, void (*log)(const char*)) noexcept;
 
 extern "C" {
+// Shared with the ASM trampolines: indices must match TRACE_INSTALL entries
+// and the placement/spawn hooks below.
 void* GemConstructionOriginal[7]{};
 void GemTraceInstall();
 void GemTraceInstallBegin();
@@ -29,6 +31,8 @@ void GemTracePlacementOrder(void* action, void* selection, const TrenchTarget* t
 namespace {
 INIT_ONCE initializeOnce = INIT_ONCE_STATIC_INIT;
 
+// Append one diagnostic record per call. Logging failures must not prevent
+// the original engine operation; callers preserve Win32 last-error values.
 void WriteLog(const char* message) noexcept {
     OutputDebugStringA(message);
 
@@ -63,6 +67,8 @@ void LogInitialization() noexcept {
     WriteLog(message);
 }
 
+// Version-specific RVAs for each executable. Never reuse game offsets for
+// the editor; validate the PE identity before dereferencing these tables.
 struct ConstructionLayout {
     const char* host;
     DWORD timestamp;
@@ -98,6 +104,8 @@ constexpr ConstructionLayout constructionLayouts[]{
      0x1404120, 0x1399f7, 0x671b00, 0xf4e030, 0x770260, 0x80d9e0, 0x8a5169, 0x8a2fb0},
 };
 
+// Decode the verified MSVC string layout without assuming heap storage:
+// short names live inline, longer names use the first pointer slot.
 bool ReadEntityName(const void* object, SIZE_T offset, char (&actual)[64]) noexcept {
     if (object == nullptr) {
         return false;
@@ -131,6 +139,8 @@ bool ReadEntityName(const void* object, SIZE_T offset, char (&actual)[64]) noexc
 constexpr char straightTrench[] = "it_trench_straight_with_exits";
 #include "GemTrenchCatalog.inc"
 
+// Match only catalog entries so hooks also serving stock fortifications
+// leave unrelated actions on their original execution path.
 const TrenchModule* FindTrenchModule(const void* object, SIZE_T nameOffset) noexcept {
     char actual[64];
     if (!ReadEntityName(object, nameOffset, actual)) {
@@ -152,6 +162,7 @@ static_assert(offsetof(GemPreviewBounds, min) == 0x08 && offsetof(GemPreviewBoun
 using ReadBounds = GemPreviewBounds* (*)(GemPreviewBounds*, const void*);
 ReadBounds readPreviewBounds = nullptr;
 
+// Recover GEM's model-dependent quarter turn before calculating socket poses.
 float PreviewBoundsYawOffset(const void* modelName) {
     GemPreviewBounds bounds{};
     readPreviewBounds(&bounds, modelName);
@@ -159,6 +170,8 @@ float PreviewBoundsYawOffset(const void* modelName) {
     return bounds.max.y - bounds.min.y > bounds.max.x - bounds.min.x ? 90.0f : 0.0f;
 }
 
+// Combine the action rotation with the bounds correction to match the
+// orientation ultimately used by the native preview.
 float PreviewYawOffset(const void* action) {
     const auto* bytes = static_cast<const unsigned char*>(action);
     float rotation = 0.0f;
@@ -167,6 +180,8 @@ float PreviewYawOffset(const void* action) {
     return rotation * degreesPerRadian + PreviewBoundsYawOffset(bytes + 0x890);
 }
 
+// Install queue guards before exposing placement hooks. If guard setup
+// fails, keep native placement rather than enabling an unguarded snap path.
 void InstallPlacementTrace(unsigned char* image, const ConstructionLayout& layout) noexcept {
     // eFortify::Action vtable, shared by the three modded fortification actions.
     auto** preview = reinterpret_cast<void**>(image + layout.previewSlot);
@@ -220,6 +235,8 @@ void InstallPlacementTrace(unsigned char* image, const ConstructionLayout& layou
     }
 }
 
+// Preview runs repeatedly while the cursor moves; throttle those records
+// per module, but retain individual order and completion records.
 void LogPlacement(const char* stage, bool preview, const TrenchModule* module,
                   const void* target, const void* options, const void* output = nullptr,
                   const char* blocked = nullptr) noexcept {
@@ -291,18 +308,24 @@ bool (*isNetworkClient)() = nullptr;
 bool networkSnapEnabled = false;
 bool networkPreviewEnabled = false;
 
+// Borrow a corrected target only during synchronous command serialization.
+// The command object itself remains unchanged.
 struct NetworkTargetOverride {
     const TrenchTarget* original;
     const TrenchTarget* adjusted;
 };
 thread_local const NetworkTargetOverride* networkTargetOverride = nullptr;
 
+// Replace only the exact target selected by the enclosing command hook;
+// other target writes on the same thread retain their native input.
 void WriteSnappedNetworkTarget(const TrenchTarget* target, void* stream) {
     const auto* replacement = networkTargetOverride;
     originalWriteNetworkTarget(replacement != nullptr && replacement->original == target
                                    ? replacement->adjusted : target, stream);
 }
 
+// Client commands travel through serialization before authoritative placement.
+// Apply snapping here so the coordinates sent to the server match the preview.
 void TraceNetworkCommand(const void* command, void* stream) {
     const DWORD lastError = GetLastError();
     const auto* bytes = static_cast<const unsigned char*>(command);
@@ -337,6 +360,7 @@ void TraceNetworkCommand(const void* command, void* stream) {
     networkTargetOverride = previousOverride;
 }
 
+// Validate the transform before using it to register world-space geometry.
 bool ReadTrenchTransform(const void* entity, TrenchTransform& transform) noexcept {
     const auto finite = [](const TrenchVector& vector) {
         return std::isfinite(vector.x) && std::isfinite(vector.y) && std::isfinite(vector.z);
@@ -347,6 +371,8 @@ bool ReadTrenchTransform(const void* entity, TrenchTransform& transform) noexcep
            (transform.xAxis.x != 0.0f || transform.xAxis.y != 0.0f || transform.xAxis.z != 0.0f);
 }
 
+// Observe the spawn registration call after GEM assigns the entity ID.
+// Remote clients learn completed sections here, outside the install callback.
 void TraceSceneEntity(void* entity, bool add, bool flag) {
     // GEM's third argument selects its client-local ID pool for a new entity.
     const bool clientCap = add && TakeClientTrenchCapRegistration();
@@ -384,6 +410,8 @@ struct FortifyPreviewSample {
 
 void (*originalClearFortifyPreviews)() = nullptr;
 
+// Let GEM clear its visualizer map first, then invalidate model-side remote
+// reservations and sections so later scene updates can remove their caps.
 void ClearNetworkTrenchCaps() {
     originalClearFortifyPreviews();
     const DWORD lastError = GetLastError();
@@ -391,6 +419,8 @@ void ClearNetworkTrenchCaps() {
     SetLastError(lastError);
 }
 
+// Capture decoded preview data before handing ownership to GEM. Register
+// its temporary sockets only after GEM has inserted the preview key.
 void TrackReceivedFortifyPreview(const FortifyPreviewKey* key, void* visual) {
     const DWORD lastError = GetLastError();
     const TrenchModule* module = nullptr;
@@ -448,6 +478,8 @@ void TrackReceivedFortifyPreview(const FortifyPreviewKey* key, void* visual) {
     SetLastError(originalLastError);
 }
 
+// Mirror native preview removal in the model; cap changes are deferred
+// to scene synchronization.
 void ReleaseReceivedFortifyPreview(const FortifyPreviewKey* key) {
     const auto id = key->id;
     const bool remote = key->local == 0;
@@ -462,6 +494,8 @@ void ReleaseReceivedFortifyPreview(const FortifyPreviewKey* key) {
     SetLastError(lastError);
 }
 
+// Patch a verified rel32 call through a nearby absolute-jump relay. The
+// original function address is published before redirecting execution.
 template <typename Hook>
 bool InstallNetworkCall(unsigned char* image, DWORD callRva, DWORD originalRva, Hook hook,
                         Hook& original) noexcept {
@@ -494,6 +528,8 @@ bool InstallNetworkCall(unsigned char* image, DWORD callRva, DWORD originalRva, 
     return true;
 }
 
+// Enable dependent features only when their required hooks succeeded.
+// The editor does not use these game-only network addresses.
 void InstallNetworkTrace(unsigned char* image) noexcept {
     void* const writer = image + 0xb78a90;
     originalWriteNetworkCommand = reinterpret_cast<WriteNetworkCommand>(writer);
@@ -531,6 +567,8 @@ void InstallNetworkTrace(unsigned char* image) noexcept {
     WriteLog(message);
 }
 
+// This spawn vtable is separate from the install instruction tables;
+// validate and change its slot independently.
 void InstallExitSpawnTrace(unsigned char* image, const ConstructionLayout& layout) noexcept {
     // eAction_Spawn's ia:spawn implementation is on a separate vtable page.
     auto** slot = reinterpret_cast<void**>(image + layout.spawnSlot);
@@ -556,6 +594,8 @@ void InstallExitSpawnTrace(unsigned char* image, const ConstructionLayout& layou
                        : "[GEM construction] Exit spawn trace skipped: spawn slot changed during setup.\r\n");
 }
 
+// Read the final entity pose rather than trusting the queued preview pose;
+// straight sections also expose bone diagnostics for terrain alignment.
 bool LogCompletedPlacement(const void* entity, const TrenchModule& module,
                            TrenchTransform& transform) noexcept {
     if (!ReadTrenchTransform(entity, transform)) {
@@ -601,6 +641,8 @@ bool LogCompletedPlacement(const void* entity, const TrenchModule& module,
     return true;
 }
 
+// Gate all native address use on a known PE build, then verify each
+// instruction slot before replacing it. Roll back a partially changed table.
 void InstallConstructionTrace() noexcept {
     auto* image = reinterpret_cast<unsigned char*>(GetModuleHandleW(nullptr));
     const auto* dos = reinterpret_cast<const IMAGE_DOS_HEADER*>(image);
@@ -680,6 +722,8 @@ void InstallConstructionTrace() noexcept {
     }
 }
 
+// InitOnce owns process-wide setup. Pin before installing callbacks because
+// Miles may unload and reload the small ASI loader independently.
 BOOL CALLBACK InitializeMod(PINIT_ONCE, PVOID, PVOID*) noexcept {
     // Miles can unload and reload the ASI. Keep the logic resident across those loads.
     HMODULE self = nullptr;
@@ -695,6 +739,8 @@ BOOL CALLBACK InitializeMod(PINIT_ONCE, PVOID, PVOID*) noexcept {
 }
 }
 
+// Called by ASM with captured native arguments; observe them without
+// changing the original instruction's arguments or Win32 last-error value.
 extern "C" void LogGemConstruction(unsigned instruction, void* self, void* arg2,
                                     void* arg3, void* arg4, const void* installArgs) noexcept {
     const DWORD lastError = GetLastError();
@@ -728,6 +774,8 @@ extern "C" void LogGemConstruction(unsigned instruction, void* self, void* arg2,
     SetLastError(lastError);
 }
 
+// Prepare the snapped pose, let GEM build its visual, then mark blocked
+// placements invalid in the native preview sample.
 extern "C" void GemTracePlacementPreview(void* action, void* output, void* selection,
                                           const TrenchTarget* target, const void* options) {
     using Preview = decltype(&GemTracePlacementPreview);
@@ -767,6 +815,8 @@ extern "C" void GemTracePlacementPreview(void* action, void* output, void* selec
     SetLastError(originalLastError);
 }
 
+// Check placement before native order creation. The thread-local scope
+// connects nested preview/enqueue calls to this exact placement.
 extern "C" void GemTracePlacementOrder(void* action, void* selection, const TrenchTarget* target,
                                         const void* options, void* context) {
     using Order = decltype(&GemTracePlacementOrder);
@@ -800,6 +850,8 @@ extern "C" void GemTracePlacementOrder(void* action, void* selection, const Tren
     SetLastError(originalLastError);
 }
 
+// Run the native completion callback first, then transfer queued state
+// to the final entity and synchronize its free-end caps.
 extern "C" void GemTraceSectionCreated(void* instruction, void* builder, void* entity) {
     using OnCreated = void (*)(void*, void*, void*);
     reinterpret_cast<OnCreated>(GemConstructionOriginal[3])(instruction, builder, entity);
@@ -833,10 +885,12 @@ extern "C" void GemTraceSectionCreated(void* instruction, void* builder, void* e
     SetLastError(lastError);
 }
 
+// No engine calls under the Windows loader lock.
 BOOL WINAPI DllMain(HINSTANCE, DWORD, LPVOID) noexcept {
     return TRUE;
 }
 
+// Repeated Miles loads share the same pinned DLL and initialization result.
 extern "C" __declspec(dllexport) BOOL WINAPI GoHModInitialize() noexcept {
     return InitOnceExecuteOnce(&initializeOnce, InitializeMod, nullptr, nullptr);
 }

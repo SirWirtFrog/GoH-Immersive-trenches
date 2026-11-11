@@ -1,0 +1,37 @@
+; The actor origin is the future MG position, set by it_mg_mount in the nest.
+; Move/rotate it_mg_crate to adjust only the crate and its clickable volume.
+{skeleton
+	{bone "it_mg_origin"
+		{orientation
+			1 0 0
+			0 1 0
+			0 0 1
+		}
+		{bone "it_mg_crate"
+			{matrix34
+				1 0 0
+				0 -1 0
+				0 0 1
+				0 0 0
+			}
+			{LODView
+				{VolumeView "box1.ply"}
+				{VolumeView "box1_lod1.ply"}
+			}
+		}
+	}
+}
+{obstacle "body"
+	{obb2
+		{center 0.314056 -0.962158}
+		{extent 17.5889 8.74506}
+		{axis 1 0}
+	}
+	{rotate}
+	{Tags "body" "fire"}
+}
+{volume "body"
+	{box 35.1779 17.4901 9.88142}
+	{bone "it_mg_crate"}
+	{Position 0.3141 0.9622 4.9407}
+}

@@ -4,6 +4,9 @@
 #include <algorithm>
 #include <cstdint>
 
+// A five-byte x64 call/jump reaches only a signed 32-bit displacement.
+// Find a nearby page for an indirect absolute jump to the DLL hook.
+// The caller writes the stub and changes this RW page to executable/read-only.
 inline unsigned char* AllocateGemRelayNear(const void* branchEnd) noexcept {
     SYSTEM_INFO info{};
     GetSystemInfo(&info);
@@ -21,6 +24,8 @@ inline unsigned char* AllocateGemRelayNear(const void* branchEnd) noexcept {
             break;
         }
         const auto end = reinterpret_cast<std::uintptr_t>(region.BaseAddress) + region.RegionSize;
+        // VirtualAlloc reservations require allocation-granularity alignment,
+        // which is coarser than the page size used for the relay itself.
         const auto aligned = (cursor + granularity - 1) & ~(granularity - 1);
         if (region.State == MEM_FREE && aligned < upper && aligned < end && end - aligned >= info.dwPageSize) {
             relay = static_cast<unsigned char*>(VirtualAlloc(reinterpret_cast<void*>(aligned), info.dwPageSize,

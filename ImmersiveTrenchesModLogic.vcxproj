@@ -32,6 +32,7 @@
     <ClCompile Include="src\ImmersiveTrenchesModLogic.cpp" />
     <ClCompile Include="src\GemExitSpawn.cpp" />
     <ClCompile Include="src\GemTrenchSnap.cpp" />
+    <ClCompile Include="src\TrenchState.cpp" />
     <ClCompile Include="src\GemTrenchMenu.cpp" />
     <MASM Include="src\GemConstructionTrace.asm" />
   </ItemGroup>

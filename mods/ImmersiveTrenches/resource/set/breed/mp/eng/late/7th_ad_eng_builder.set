@@ -1,0 +1,38 @@
+{breed
+	{behaviour soldier}
+	{skin "uk_7ad_res_rfl"}
+	{portrait "eng_7th_ad"}
+	{icon "rifle"}
+	{icon_priority 5}
+	{tags "soldier"}
+	{nationality eng}
+	{armors
+		{head uk_helm_brodie_beanie_mesh_torn}
+	}
+	{perks
+		(include "ability.inc")
+		("rifle_skill_rank_3")("tier3_defense")
+		("it_engineer_eng")
+	}
+	{veterancy
+		(include "ability.inc")
+		("veterancy_lvl_5")
+	}
+	{inventory
+		{item "enfield_no4_mk1" filling "rifle_eng clip ammo" 10}
+		{item "rifle_eng clip ammo" 50}
+
+		{item "no36m grenade" 1.75 0.5}
+		{item "no75 grenade" 1.75 0.5}
+		{item "tnt_eng" 1.75 0.5}
+		{item "no77_wp grenade" 0.75 0.5}
+
+		{item "bandage_eng" 4.5 0.5}
+		{item "wirecutters"}
+		{item "mine_detector"}
+		{item "shovel_eng"}
+		{item "pickaxe"}
+
+		{in_hands 0}
+	}
+}

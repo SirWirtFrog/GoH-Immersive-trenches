@@ -73,6 +73,9 @@ constexpr TrenchPoint cut_depot[]{
     {6.18794f, -42.0252f}, {79.6973f, -17.2058f}, {79.6973f, 20.5298f},
 };
 
+// Each socket describes a physical end in local XY coordinates. Array order
+// defines side IDs used by reservations and completed-section tracking.
+// defaultSocket selects the end used when the user clicks without a drag.
 constexpr TrenchModule trenchModules[]{
     {straightTrench, "it_trench_straight_preview", cut_straight, ARRAYSIZE(cut_straight),
      2, {{{-100.0f, 0.0f}, 180.0f}, {{100.0f, 0.0f}, 0.0f}}, nullptr, 0, 1},
@@ -99,6 +102,16 @@ constexpr TrenchModule trenchModules[]{
     {"it_trench_fire_position2", "it_trench_fire_position2_preview", cut_fire_position2, ARRAYSIZE(cut_fire_position2),
      1, {{{27.5415f, 0.0f}, 0.0f}}},
     {"it_trench_mg_nest", "it_trench_mg_nest_preview", cut_mg_nest, ARRAYSIZE(cut_mg_nest),
+     2, {{{-67.11f, -0.201f}, 180.0f}, {{62.739f, -0.201f}, 0.0f}}, nullptr, 0, 1},
+    {"it_trench_mg_nest_ger", "it_trench_mg_nest_ger_preview", cut_mg_nest, ARRAYSIZE(cut_mg_nest),
+     2, {{{-67.11f, -0.201f}, 180.0f}, {{62.739f, -0.201f}, 0.0f}}, nullptr, 0, 1},
+    {"it_trench_mg_nest_rus", "it_trench_mg_nest_rus_preview", cut_mg_nest, ARRAYSIZE(cut_mg_nest),
+     2, {{{-67.11f, -0.201f}, 180.0f}, {{62.739f, -0.201f}, 0.0f}}, nullptr, 0, 1},
+    {"it_trench_mg_nest_fin", "it_trench_mg_nest_fin_preview", cut_mg_nest, ARRAYSIZE(cut_mg_nest),
+     2, {{{-67.11f, -0.201f}, 180.0f}, {{62.739f, -0.201f}, 0.0f}}, nullptr, 0, 1},
+    {"it_trench_mg_nest_usa", "it_trench_mg_nest_usa_preview", cut_mg_nest, ARRAYSIZE(cut_mg_nest),
+     2, {{{-67.11f, -0.201f}, 180.0f}, {{62.739f, -0.201f}, 0.0f}}, nullptr, 0, 1},
+    {"it_trench_mg_nest_eng", "it_trench_mg_nest_eng_preview", cut_mg_nest, ARRAYSIZE(cut_mg_nest),
      2, {{{-67.11f, -0.201f}, 180.0f}, {{62.739f, -0.201f}, 0.0f}}, nullptr, 0, 1},
     {"it_trench_emplacement", "it_trench_emplacement_preview", cut_emplacement, ARRAYSIZE(cut_emplacement),
      1, {{{56.956f, -0.601f}, 0.0f}}},

@@ -3,9 +3,13 @@ EXTERN LogGemConstruction:PROC
 
 .code
 
+; Shared trampoline: preserve native arguments while inserting a diagnostic call.
+; The final tail jump keeps the original caller's return address and stack arguments.
 TRACE_INSTALL MACRO entryName, entryIndex
 PUBLIC entryName
 entryName PROC FRAME
+    ; Reserve shadow space, logger stack arguments and aligned register saves.
+    ; FRAME directives let Windows unwind through the temporary stack frame.
     sub rsp, 98h
     .allocstack 98h
     .endprolog
@@ -42,6 +46,7 @@ entryName PROC FRAME
     movaps xmm1, [rsp + 60h]
     movaps xmm2, [rsp + 70h]
     movaps xmm3, [rsp + 80h]
+    ; Restore entry RSP before tail-calling the original vtable method.
     add rsp, 98h
     jmp qword ptr [GemConstructionOriginal + 8 * entryIndex]
 entryName ENDP

@@ -202,3 +202,83 @@ msgstr ""
 msgctxt "actionbar/it_trench_depot/usage"
 msgid "Choose the position and orientation."
 msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_ger"
+msgid "Machine-gun nest (MG 34)"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_ger/action"
+msgid "Build machine-gun nest"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_ger/usage"
+msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_rus"
+msgid "Machine-gun nest (Maxim)"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_rus/action"
+msgid "Build machine-gun nest"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_rus/usage"
+msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_fin"
+msgid "Machine-gun nest (Maxim M/32–33)"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_fin/action"
+msgid "Build machine-gun nest"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_fin/usage"
+msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_usa"
+msgid "Machine-gun nest (Browning M1917)"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_usa/action"
+msgid "Build machine-gun nest"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_usa/usage"
+msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_eng"
+msgid "Machine-gun nest (Vickers)"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_eng/action"
+msgid "Build machine-gun nest"
+msgstr ""
+
+msgctxt "actionbar/it_trench_mg_nest_eng/usage"
+msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
+msgstr ""
+
+msgctxt "desc/entity/it_trench_fixed_mg_ger"
+msgid "MG 34 (trench emplacement)"
+msgstr ""
+
+msgctxt "desc/entity/it_trench_fixed_mg_rus"
+msgid "Maxim (trench emplacement)"
+msgstr ""
+
+msgctxt "desc/entity/it_trench_fixed_mg_fin"
+msgid "Maxim M/32–33 (trench emplacement)"
+msgstr ""
+
+msgctxt "desc/entity/it_trench_fixed_mg_usa"
+msgid "Browning M1917 (trench emplacement)"
+msgstr ""
+
+msgctxt "desc/entity/it_trench_fixed_mg_eng"
+msgid "Vickers (trench emplacement)"
+msgstr ""
