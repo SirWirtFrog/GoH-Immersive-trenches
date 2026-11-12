@@ -11,274 +11,206 @@ msgctxt "actionbar/it_trench_menu/usage"
 msgid "Open the modular trench construction menu."
 msgstr "Открыть меню строительства модульных окопов."
 
-msgctxt "actionbar/it_trench_straight"
+msgctxt "actionbar/it_trench_dirt_straight"
 msgid "Modded trenches - Straight section"
 msgstr "Модовые окопы — прямая секция"
 
-msgctxt "actionbar/it_trench_straight/action"
+msgctxt "actionbar/it_trench_dirt_straight/action"
 msgid "Dig straight trench section"
 msgstr "Выкопать прямую секцию окопа"
 
-msgctxt "actionbar/it_trench_straight/usage"
+msgctxt "actionbar/it_trench_dirt_straight/usage"
 msgid "Choose a position and orientation for the straight trench section."
 msgstr "Выберите место и направление для строительства прямой секции окопа."
 
-msgctxt "actionbar/it_trench_fire_position1"
+msgctxt "actionbar/it_trench_dirt_fire_position_through"
 msgid "Through firing position"
 msgstr "Проходная огневая позиция"
 
-msgctxt "actionbar/it_trench_fire_position1/action"
+msgctxt "actionbar/it_trench_dirt_fire_position_through/action"
 msgid "Build through firing position"
 msgstr "Построить огневую позицию с двумя выходами"
 
-msgctxt "actionbar/it_trench_fire_position1/usage"
+msgctxt "actionbar/it_trench_dirt_fire_position_through/usage"
 msgid "Choose a location and direction for a firing position with two exits."
 msgstr "Выберите место и направление для огневой позиции с двумя выходами."
 
-msgctxt "actionbar/it_trench_fire_position2"
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end"
 msgid "Dead-end firing position"
 msgstr "Тупиковая огневая позиция"
 
-msgctxt "actionbar/it_trench_fire_position2/action"
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end/action"
 msgid "Build dead-end firing position"
 msgstr "Построить огневую позицию с одним выходом"
 
-msgctxt "actionbar/it_trench_fire_position2/usage"
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end/usage"
 msgid "Choose a location and direction for a firing position with one exit."
 msgstr "Выберите место и направление для огневой позиции с одним выходом."
 
-msgctxt "actionbar/it_trench_straight_short"
+msgctxt "actionbar/it_trench_dirt_straight_short"
 msgid "Short straight trench"
 msgstr "Короткая прямая"
 
-msgctxt "actionbar/it_trench_straight_short/action"
+msgctxt "actionbar/it_trench_dirt_straight_short/action"
 msgid "Build short straight trench"
 msgstr "Построить: короткая прямая"
 
-msgctxt "actionbar/it_trench_straight_short/usage"
+msgctxt "actionbar/it_trench_dirt_straight_short/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_turn"
+msgctxt "actionbar/it_trench_dirt_turn_20"
 msgid "Shallow trench bend"
 msgstr "Пологий изгиб"
 
-msgctxt "actionbar/it_trench_turn/action"
+msgctxt "actionbar/it_trench_dirt_turn_20/action"
 msgid "Build shallow trench bend"
 msgstr "Построить: пологий изгиб"
 
-msgctxt "actionbar/it_trench_turn/usage"
+msgctxt "actionbar/it_trench_dirt_turn_20/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_turn2"
+msgctxt "actionbar/it_trench_dirt_turn_30"
 msgid "Offset trench bend"
 msgstr "Смещённый изгиб"
 
-msgctxt "actionbar/it_trench_turn2/action"
+msgctxt "actionbar/it_trench_dirt_turn_30/action"
 msgid "Build offset trench bend"
 msgstr "Построить: смещённый изгиб"
 
-msgctxt "actionbar/it_trench_turn2/usage"
+msgctxt "actionbar/it_trench_dirt_turn_30/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_turn3"
+msgctxt "actionbar/it_trench_dirt_turn_60"
 msgid "Wide trench bend"
 msgstr "Широкий изгиб"
 
-msgctxt "actionbar/it_trench_turn3/action"
+msgctxt "actionbar/it_trench_dirt_turn_60/action"
 msgid "Build wide trench bend"
 msgstr "Построить: широкий изгиб"
 
-msgctxt "actionbar/it_trench_turn3/usage"
+msgctxt "actionbar/it_trench_dirt_turn_60/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_turn_90"
+msgctxt "actionbar/it_trench_dirt_turn_90"
 msgid "90° trench corner"
 msgstr "Поворот на 90°"
 
-msgctxt "actionbar/it_trench_turn_90/action"
+msgctxt "actionbar/it_trench_dirt_turn_90/action"
 msgid "Build 90° trench corner"
 msgstr "Построить: поворот на 90°"
 
-msgctxt "actionbar/it_trench_turn_90/usage"
+msgctxt "actionbar/it_trench_dirt_turn_90/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_intersection"
+msgctxt "actionbar/it_trench_dirt_intersection_of_three"
 msgid "Trench junction"
 msgstr "Развилка окопа"
 
-msgctxt "actionbar/it_trench_intersection/action"
+msgctxt "actionbar/it_trench_dirt_intersection_of_three/action"
 msgid "Build trench junction"
 msgstr "Построить: развилка окопа"
 
-msgctxt "actionbar/it_trench_intersection/usage"
+msgctxt "actionbar/it_trench_dirt_intersection_of_three/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_end"
+msgctxt "actionbar/it_trench_dirt_intersection_of_four"
+msgid "Four-way trench junction (test)"
+msgstr "Четырёхсторонний перекрёсток (тест)"
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_four/action"
+msgid "Build four-way trench junction"
+msgstr "Построить четырёхсторонний перекрёсток"
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_four/usage"
+msgid "Test variant with four sockets. Geometry is still three-way; the fourth socket is provisional."
+msgstr "Тестовый вариант с четырьмя стыками. Геометрия пока трёхсторонняя; четвёртый стык предварительный."
+
+msgctxt "actionbar/it_trench_dirt_straight_end"
 msgid "Closed trench end"
 msgstr "Закрытый торец"
 
-msgctxt "actionbar/it_trench_end/action"
+msgctxt "actionbar/it_trench_dirt_straight_end/action"
 msgid "Build closed trench end"
 msgstr "Построить: закрытый торец"
 
-msgctxt "actionbar/it_trench_end/usage"
+msgctxt "actionbar/it_trench_dirt_straight_end/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_exit"
+msgctxt "actionbar/it_trench_dirt_exit"
 msgid "Trench exit ramp"
 msgstr "Выход из окопа"
 
-msgctxt "actionbar/it_trench_exit/action"
+msgctxt "actionbar/it_trench_dirt_exit/action"
 msgid "Build trench exit ramp"
 msgstr "Построить: выход из окопа"
 
-msgctxt "actionbar/it_trench_exit/usage"
+msgctxt "actionbar/it_trench_dirt_exit/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_bridge"
+msgctxt "actionbar/it_trench_dirt_straight_bridge"
 msgid "Trench with a footbridge"
 msgstr "Окоп с мостиком"
 
-msgctxt "actionbar/it_trench_bridge/action"
+msgctxt "actionbar/it_trench_dirt_straight_bridge/action"
 msgid "Build trench with a footbridge"
 msgstr "Построить: окоп с мостиком"
 
-msgctxt "actionbar/it_trench_bridge/usage"
+msgctxt "actionbar/it_trench_dirt_straight_bridge/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_mg_nest"
+msgctxt "actionbar/it_trench_dirt_mg_nest"
 msgid "Machine-gun nest"
 msgstr "Пулемётное гнездо"
 
-msgctxt "actionbar/it_trench_mg_nest/action"
+msgctxt "actionbar/it_trench_dirt_mg_nest/action"
 msgid "Build machine-gun nest"
 msgstr "Построить: пулемётное гнездо"
 
-msgctxt "actionbar/it_trench_mg_nest/usage"
+msgctxt "actionbar/it_trench_dirt_mg_nest/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_emplacement"
+msgctxt "actionbar/it_trench_dirt_emplacement"
 msgid "Gun emplacement"
 msgstr "Орудийная позиция"
 
-msgctxt "actionbar/it_trench_emplacement/action"
+msgctxt "actionbar/it_trench_dirt_emplacement/action"
 msgid "Build gun emplacement"
 msgstr "Построить: орудийная позиция"
 
-msgctxt "actionbar/it_trench_emplacement/usage"
+msgctxt "actionbar/it_trench_dirt_emplacement/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_pillbox"
+msgctxt "actionbar/it_trench_dirt_pillbox"
 msgid "Earth pillbox"
 msgstr "Земляной ДОТ"
 
-msgctxt "actionbar/it_trench_pillbox/action"
+msgctxt "actionbar/it_trench_dirt_pillbox/action"
 msgid "Build earth pillbox"
 msgstr "Построить: земляной дот"
 
-msgctxt "actionbar/it_trench_pillbox/usage"
+msgctxt "actionbar/it_trench_dirt_pillbox/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
 
-msgctxt "actionbar/it_trench_depot"
+msgctxt "actionbar/it_trench_dirt_depot"
 msgid "Trench depot"
 msgstr "Окопное депо"
 
-msgctxt "actionbar/it_trench_depot/action"
+msgctxt "actionbar/it_trench_dirt_depot/action"
 msgid "Build trench depot"
 msgstr "Построить: окопное депо"
 
-msgctxt "actionbar/it_trench_depot/usage"
+msgctxt "actionbar/it_trench_dirt_depot/usage"
 msgid "Choose the position and orientation."
 msgstr "Выбери место и направление строительства."
-
-msgctxt "actionbar/it_trench_mg_nest_ger"
-msgid "Machine-gun nest (MG 34)"
-msgstr "Пулемётное гнездо (MG 34)"
-
-msgctxt "actionbar/it_trench_mg_nest_ger/action"
-msgid "Build machine-gun nest"
-msgstr "Построить пулемётное гнездо"
-
-msgctxt "actionbar/it_trench_mg_nest_ger/usage"
-msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
-msgstr "После постройки выберите любого инженера и нажмите ПКМ по ящику: за 30 секунд он соберёт пулемёт этого пресета."
-
-msgctxt "actionbar/it_trench_mg_nest_rus"
-msgid "Machine-gun nest (Maxim)"
-msgstr "Пулемётное гнездо (Максим)"
-
-msgctxt "actionbar/it_trench_mg_nest_rus/action"
-msgid "Build machine-gun nest"
-msgstr "Построить пулемётное гнездо"
-
-msgctxt "actionbar/it_trench_mg_nest_rus/usage"
-msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
-msgstr "После постройки выберите любого инженера и нажмите ПКМ по ящику: за 30 секунд он соберёт пулемёт этого пресета."
-
-msgctxt "actionbar/it_trench_mg_nest_fin"
-msgid "Machine-gun nest (Maxim M/32–33)"
-msgstr "Пулемётное гнездо (Максим M/32–33)"
-
-msgctxt "actionbar/it_trench_mg_nest_fin/action"
-msgid "Build machine-gun nest"
-msgstr "Построить пулемётное гнездо"
-
-msgctxt "actionbar/it_trench_mg_nest_fin/usage"
-msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
-msgstr "После постройки выберите любого инженера и нажмите ПКМ по ящику: за 30 секунд он соберёт пулемёт этого пресета."
-
-msgctxt "actionbar/it_trench_mg_nest_usa"
-msgid "Machine-gun nest (Browning M1917)"
-msgstr "Пулемётное гнездо (Browning M1917)"
-
-msgctxt "actionbar/it_trench_mg_nest_usa/action"
-msgid "Build machine-gun nest"
-msgstr "Построить пулемётное гнездо"
-
-msgctxt "actionbar/it_trench_mg_nest_usa/usage"
-msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
-msgstr "После постройки выберите любого инженера и нажмите ПКМ по ящику: за 30 секунд он соберёт пулемёт этого пресета."
-
-msgctxt "actionbar/it_trench_mg_nest_eng"
-msgid "Machine-gun nest (Vickers)"
-msgstr "Пулемётное гнездо (Vickers)"
-
-msgctxt "actionbar/it_trench_mg_nest_eng/action"
-msgid "Build machine-gun nest"
-msgstr "Построить пулемётное гнездо"
-
-msgctxt "actionbar/it_trench_mg_nest_eng/usage"
-msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
-msgstr "После постройки выберите любого инженера и нажмите ПКМ по ящику: за 30 секунд он соберёт пулемёт этого пресета."
-
-msgctxt "desc/entity/it_trench_fixed_mg_ger"
-msgid "MG 34 (trench emplacement)"
-msgstr "MG 34 (окопная установка)"
-
-msgctxt "desc/entity/it_trench_fixed_mg_rus"
-msgid "Maxim (trench emplacement)"
-msgstr "Максим (окопная установка)"
-
-msgctxt "desc/entity/it_trench_fixed_mg_fin"
-msgid "Maxim M/32–33 (trench emplacement)"
-msgstr "Максим M/32–33 (окопная установка)"
-
-msgctxt "desc/entity/it_trench_fixed_mg_usa"
-msgid "Browning M1917 (trench emplacement)"
-msgstr "Browning M1917 (окопная установка)"
-
-msgctxt "desc/entity/it_trench_fixed_mg_eng"
-msgid "Vickers (trench emplacement)"
-msgstr "Vickers (окопная установка)"

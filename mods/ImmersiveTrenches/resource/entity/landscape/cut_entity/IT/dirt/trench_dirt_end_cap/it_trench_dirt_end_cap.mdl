@@ -1,0 +1,11 @@
+{Skeleton
+	{bone "trench"
+		{parameters "commonmesh;"}
+		{Orientation
+			1	0	0
+			0	-1	0
+			0	0	1
+		}
+		{VolumeView "it_trench_dirt_end_cap.ply"}
+	}
+}

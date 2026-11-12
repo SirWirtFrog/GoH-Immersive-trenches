@@ -11,8 +11,6 @@ using trench::Anchor;
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
-#include <cwchar>
-#include <locale.h>
 
 static_assert(sizeof(TrenchTarget) == 0xa8);
 static_assert(offsetof(TrenchTarget, first) == 4);
@@ -23,7 +21,6 @@ static_assert(offsetof(TrenchTarget, second) == 0x10);
 thread_local TrenchOrderScope* activeTrenchOrder = nullptr;
 
 namespace {
-constexpr float defaultSnapOutwardOffset = -5.0f;
 constexpr float radiansPerDegree = 0.01745329252f;
 
 using Enqueue = void* (*)(void*, void*, const void*);
@@ -246,43 +243,7 @@ void* EnqueueTrenchOrder(void* actor, void* order, const void* options) {
     return accepted;
 }
 
-// Read settings beside the logic DLL. Parse with the C numeric locale so
-// a decimal point behaves identically on different Windows installations.
-float ReadSnapOutwardOffset(HMODULE module) noexcept {
-    constexpr wchar_t filename[] = L"ImmersiveTrenchesMod.ini";
-    wchar_t path[MAX_PATH];
-    const DWORD length = GetModuleFileNameW(module, path, ARRAYSIZE(path));
-    if (length == 0 || length >= ARRAYSIZE(path)) {
-        return defaultSnapOutwardOffset;
-    }
-    wchar_t* slash = std::wcsrchr(path, L'\\');
-    if (slash == nullptr || slash + 1 - path > ARRAYSIZE(path) - ARRAYSIZE(filename)) {
-        return defaultSnapOutwardOffset;
-    }
-    CopyMemory(slash + 1, filename, sizeof(filename));
-
-    wchar_t value[64];
-    const DWORD copied = GetPrivateProfileStringW(L"TrenchSnap", L"OutwardOffset", L"-5",
-                                                   value, ARRAYSIZE(value), path);
-    if (copied == 0 || copied >= ARRAYSIZE(value) - 1) {
-        return defaultSnapOutwardOffset;
-    }
-    const _locale_t numericLocale = _create_locale(LC_NUMERIC, "C");
-    if (numericLocale == nullptr) {
-        return defaultSnapOutwardOffset;
-    }
-    wchar_t* end = nullptr;
-    const float offset = _wcstof_l(value, &end, numericLocale);
-    _free_locale(numericLocale);
-    return end != value && *end == L'\0' && std::isfinite(offset) &&
-           offset >= -20.0f && offset <= 20.0f ? offset : defaultSnapOutwardOffset;
-}
-
 } // namespace
-
-void LoadTrenchSnapSettings(HMODULE module) noexcept {
-    state.SetOutwardOffset(ReadSnapOutwardOffset(module));
-}
 
 // Redirect the verified scene tail jump; the wrapper runs the original
 // scene update before refreshing caps.

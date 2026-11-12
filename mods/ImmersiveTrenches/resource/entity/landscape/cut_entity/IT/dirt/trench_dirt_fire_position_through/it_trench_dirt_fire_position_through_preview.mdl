@@ -1,0 +1,70 @@
+;Exported by:	 Alexey
+;Date:			 20.02.2017 17:29:55
+;File:			 I:\VTV_models\Models_For_WiW\-buildings\-FIELD_FORTIFICATION\trenches_bare_dirt_coop2012\-Fixed\trench_dirt_fire_position1_v04.max
+{skeleton
+	{bone "trench"
+		{parameters "commonmesh;"}
+		{orientation
+			1 	 0 	 0
+			0 	 -1 	 0
+			0 	 0 	 1
+		}
+		{VolumeView "trench.ply"
+			{DecalTargetDynamic}
+		}
+		{bone "point7"
+			{matrix34
+				0.9962 	 0.0872 	 0
+				-0.0872 	 0.9962 	 0
+				0 	 0 	 1
+				18.6485 	 -11.6914 	 -3.6684
+			}
+		}
+		{bone "point6"
+			{matrix34
+				0.9848 	 -0.1736 	 0
+				0.1736 	 0.9848 	 0
+				0 	 0 	 1
+				-21.7324 	 -12.0813 	 -3.6684
+			}
+		}
+		{bone "point5"
+			{matrix34
+				-1 	 0 	 0
+				0 	 -1 	 0
+				0 	 0 	 1
+				-29.1217 	 9.8056 	 -3.6684
+			}
+		}
+		{bone "point1"
+			{matrix34
+				0.866 	 0.5 	 0
+				-0.5 	 0.866 	 0
+				0 	 0 	 1
+				-15.9651 	 22.4179 	 -6.6684
+			}
+		}
+		{bone "point2"
+			{Position -1.0058 	 30.1316 	 -33.6684}
+		}
+		{bone "point3"
+			{matrix34
+				0.8192 	 -0.5736 	 0
+				0.5736 	 0.8192 	 0
+				0 	 0 	 1
+				11.2466 	 23.0722 	 -6.6684
+			}
+		}
+		{bone "point4"
+			{matrix34
+				0.9848 	 -0.1736 	 0
+				0.1736 	 0.9848 	 0
+				0 	 0 	 1
+				24.2561 	 12.8844 	 -3.6684
+			}
+		}
+	}
+	; Exit origin = open mesh edge plus the exit deep-edge offset (23.5509).
+	
+	
+}

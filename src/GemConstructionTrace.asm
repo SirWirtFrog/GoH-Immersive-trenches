@@ -55,6 +55,5 @@ ENDM
 TRACE_INSTALL GemTraceInstall, 0
 TRACE_INSTALL GemTraceInstallBegin, 1
 TRACE_INSTALL GemTraceInstallEnd, 2
-TRACE_INSTALL GemTraceExitSpawn, 4
 
 END

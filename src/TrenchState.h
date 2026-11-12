@@ -15,7 +15,6 @@ struct Anchor {
     TrenchVector seam;
     TrenchVector outward;
     unsigned side;
-    float overlap;
     bool completed = false; // False while the socket belongs to a queued order.
     bool hasBoneOffset = false;
     float boneOffset = 0.0f;
@@ -49,7 +48,6 @@ public:
     ~State();
     State(const State&) = delete;
     State& operator=(const State&) = delete;
-    void SetOutwardOffset(float value);
     bool PrepareTrenchPlacement(const TrenchModule& module, float modelYawOffset, unsigned char option, TrenchTarget& target, TrenchPlacement& placement) noexcept;
     const char* CheckTrenchPlacement(const TrenchPlacement& placement) noexcept;
     // Two-phase queue transition: claim before native enqueue, finish after its

@@ -15,8 +15,7 @@ struct TrenchOrderScope {
 
 extern thread_local TrenchOrderScope* activeTrenchOrder;
 
-// Adapter setup: settings, verified hook installation and post-scene refresh.
-void LoadTrenchSnapSettings(HMODULE module) noexcept;
+// Adapter setup: verified hook installation and post-scene refresh.
 const char* InitializeTrenchSnap(unsigned char* image, DWORD timestamp, DWORD entityTree, DWORD queueCall,
                                 DWORD queueEntry, DWORD orderVtable, DWORD orderDestructor,
                                 void (*log)(const char*)) noexcept;

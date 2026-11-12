@@ -1,0 +1,5 @@
+{game_entity
+	{Extension "it_trench_dirt_straight_end_preview.mdl"}
+	{obstacleID "nothing"}
+	{collider "nothing"}
+}

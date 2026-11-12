@@ -29,6 +29,7 @@
     <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="src\TrenchCatalog.cpp" />
     <ClCompile Include="src\ImmersiveTrenchesModLogic.cpp" />
     <ClCompile Include="src\GemExitSpawn.cpp" />
     <ClCompile Include="src\GemTrenchSnap.cpp" />
@@ -36,6 +37,7 @@
     <ClCompile Include="src\GemTrenchMenu.cpp" />
     <MASM Include="src\GemConstructionTrace.asm" />
   </ItemGroup>
+  <ItemDefinitionGroup><ClCompile><LanguageStandard>stdcpp17</LanguageStandard></ClCompile></ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />

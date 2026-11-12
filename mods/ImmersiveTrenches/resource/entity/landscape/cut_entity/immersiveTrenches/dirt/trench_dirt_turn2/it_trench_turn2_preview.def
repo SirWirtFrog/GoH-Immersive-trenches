@@ -1,5 +1,0 @@
-{game_entity
-	{Extension "it_trench_turn2_preview.mdl"}
-	{obstacleID "nothing"}
-	{collider "nothing"}
-}

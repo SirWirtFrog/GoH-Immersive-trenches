@@ -13,7 +13,6 @@ struct TrenchPoint {
 struct TrenchSocket {
     TrenchPoint center;
     float outwardYawDegrees;
-    float overlap = 5.0f;
 };
 
 // Indices into a module's cut outline for optional non-convex decomposition.
@@ -22,6 +21,8 @@ struct TrenchTriangle {
 };
 
 constexpr unsigned noTrenchSocket = ~0u;
+constexpr unsigned maxTrenchSockets = 4;
+constexpr unsigned maxTrenchCutVertices = 64;
 
 // Immutable catalog entry. Catalog storage outlives every placement/reservation
 // that borrows these pointers; it does not own an engine entity.
@@ -31,10 +32,13 @@ struct TrenchModule {
     const TrenchPoint* cut;
     unsigned cutSize;
     unsigned socketCount;
-    TrenchSocket sockets[3];
+    TrenchSocket sockets[maxTrenchSockets];
     const TrenchTriangle* triangles = nullptr;
     unsigned triangleCount = 0;
     unsigned defaultSocket = 0;
+    unsigned socketIds[maxTrenchSockets]{};
+    // Diagnostic throttling only; geometry remains immutable after publication.
+    mutable std::int64_t nextPreviewLog = 0;
 };
 
 // Native placement target ABI (0xa8 bytes). Preserve unknown trailing data
@@ -62,12 +66,12 @@ struct TrenchJoint {
     float overlapBehind = 0.0f, overlapAhead = 0.0f;
 };
 
-// Prepared pose plus up to three inferred connections. Preparation describes
+// Prepared pose plus up to four inferred connections. Preparation describes
 // a candidate; it does not reserve sockets until BeginOrder succeeds.
 struct TrenchPlacement {
     const TrenchModule* module = nullptr;
     TrenchTransform transform{};
-    TrenchJoint joints[3]{};
+    TrenchJoint joints[maxTrenchSockets]{};
     unsigned jointCount = 0;
 };
 

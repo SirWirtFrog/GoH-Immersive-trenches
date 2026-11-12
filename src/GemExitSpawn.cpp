@@ -30,8 +30,6 @@ struct SpawnLayout {
     DWORD stringDestructor;
     DWORD findBone;
     DWORD setType;
-    DWORD setSource;
-    DWORD setBone;
     DWORD refreshBone;
     DWORD setPosition;
     DWORD setDirection;
@@ -45,10 +43,10 @@ struct SpawnLayout {
 // The same engine helpers called by Interaction::eAction_Spawn for each host.
 constexpr SpawnLayout layouts[]{
     {0x6ab3dcc7, 0x556400, 0x556220, 0x5564e0, 0x6741b0, 0x674210,
-     0x5c0a90, 0x705990, 0x705b40, 0x705b90, 0x5c2690, 0x705a20, 0x705bc0, 0x7058f0, 0x705cd0,
+     0x5c0a90, 0x705990, 0x5c2690, 0x705a20, 0x705bc0, 0x7058f0, 0x705cd0,
      0x6fcdc0, 0x6ff260, 0x704380},
     {0x6ab3dd83, 0x3ddb00, 0x3dd8b0, 0x3ddc00, 0x4e9c20, 0x4e9c80,
-     0x4379a0, 0x57f920, 0x57fb00, 0x57fb50, 0x439610, 0x57f9e0, 0x57fb80, 0x57f880, 0x57fcd0,
+     0x4379a0, 0x57f920, 0x439610, 0x57f9e0, 0x57fb80, 0x57f880, 0x57fcd0,
      0x5767a0, 0x578e80, 0x57e110},
 };
 
@@ -58,7 +56,7 @@ struct Vector3 {
     float z;
 };
 
-struct ExitPose {
+struct SpawnPose {
     Vector3 position;
     Vector3 direction;
 };
@@ -68,7 +66,7 @@ using GroundHeight = float (*)(const TrenchVector*);
 // Sample the outer rim against terrain and lower the rigid cap only enough
 // to hide small gaps; do not pull the inner wall far below the socket.
 float TrenchCapDrop(const TrenchTransform& pose, GroundHeight groundHeight) {
-    // Outer boundary of it_trench_end_cap.ply in entity coordinates,
+    // Outer boundary of it_trench_dirt_end_cap.ply in entity coordinates,
     // including the Y reflection in the MDL. Exclude the edges inside the cut.
     constexpr TrenchVector rim[]{
         {-7.204f, 37.252f, -3.330f},
@@ -142,7 +140,7 @@ void* ResolveBone(const unsigned char* image, const SpawnLayout& layout, void* s
 // Refresh a dirty bone cache before reading its world pose. Normalize
 // the offset distance so scaled bone axes do not change the requested shift.
 bool ReadOffsetPose(const unsigned char* image, const SpawnLayout& layout, void* bone,
-                    float outwardOffset, ExitPose& pose) {
+                    float outwardOffset, SpawnPose& pose) {
     const auto* bytes = static_cast<const unsigned char*>(bone);
     // These are the same cache flag, world X axis, and position read by GEM's
     // built-in spawn request when it uses a bone with the "x" orientation mode.
@@ -158,7 +156,7 @@ bool ReadOffsetPose(const unsigned char* image, const SpawnLayout& layout, void*
         return false;
     }
 
-    // The exit mesh's positive X points back toward the trench.
+    // Preserve the bone X-axis direction for cap-height diagnostics.
     const float distance = outwardOffset / length;
     pose.position.x -= distance * x.x;
     pose.position.y -= distance * x.y;
@@ -170,11 +168,9 @@ bool ReadOffsetPose(const unsigned char* image, const SpawnLayout& layout, void*
 // Reproduce the native request lifecycle: initialize owned fields, configure,
 // execute/finalize, then destroy fields with the same engine helpers.
 void* SpawnEntity(const unsigned char* image, const SpawnLayout& layout, const NativeString& type,
-                  void* section, void* bone, const ExitPose* pose, bool clientOnly = false) {
+                  const SpawnPose* pose, bool clientOnly = false) {
     using Init = void (*)(void*);
     using SetType = void (*)(SpawnRequest*, const NativeString*);
-    using SetSource = void (*)(SpawnRequest*, void*, bool);
-    using SetBone = void (*)(SpawnRequest*, void*, int);
     using SetVector = void (*)(SpawnRequest*, const Vector3*);
     using Execute = void* (*)(SpawnRequest*);
 
@@ -189,13 +185,6 @@ void* SpawnEntity(const unsigned char* image, const SpawnLayout& layout, const N
     if (pose != nullptr) {
         reinterpret_cast<SetVector>(image + layout.setPosition)(&request, &pose->position);
         reinterpret_cast<SetVector>(image + layout.setDirection)(&request, &pose->direction);
-    }
-    if (section != nullptr) {
-        reinterpret_cast<SetSource>(image + layout.setSource)(&request, section, true);
-    }
-    if (pose == nullptr) {
-        constexpr int boneXAxis = 1;
-        reinterpret_cast<SetBone>(image + layout.setBone)(&request, bone, boneXAxis);
     }
     if (clientOnly) {
         // The game's local spawn setter bypasses the multiplayer spawn path.
@@ -225,57 +214,6 @@ bool TakeClientTrenchCapRegistration() noexcept {
     return clientOnly;
 }
 
-// Bone-based exit helper: resolve all requested anchors before spawning any
-// exit, avoiding a partial result when an expected bone is absent.
-unsigned SpawnTrenchExits(const unsigned char* image, DWORD timestamp, void* section,
-                          float outwardOffset, bool hasLeftExit, unsigned joinedSide,
-                          void* (&exits)[2]) {
-    for (const auto& layout : layouts) {
-        if (layout.timestamp != timestamp) {
-            continue;
-        }
-        void* skeleton = nullptr;
-        const auto* address = static_cast<const unsigned char*>(section) + 0xb0;
-        if (!ReadProcessMemory(GetCurrentProcess(), address, &skeleton, sizeof(skeleton), nullptr) ||
-            skeleton == nullptr) {
-            return 0;
-        }
-
-        constexpr NativeString anchors[]{
-            {"it_exit_left", 12, 15},
-            {"it_exit_right", 13, 15},
-        };
-        void* bones[ARRAYSIZE(anchors)]{};
-        ExitPose poses[ARRAYSIZE(anchors)]{};
-        const unsigned first = hasLeftExit ? 0 : 1;
-        const bool offsetRequested = outwardOffset != 0.0f;
-        for (unsigned i = first; i < ARRAYSIZE(anchors); ++i) {
-            if (i == joinedSide) {
-                continue;
-            }
-            bones[i] = ResolveBone(image, layout, skeleton, anchors[i]);
-            if (bones[i] == nullptr ||
-                (offsetRequested && !ReadOffsetPose(image, layout, bones[i], outwardOffset, poses[i]))) {
-                return 0;
-            }
-        }
-
-        constexpr NativeString exitType{"it_trench_exit", 14, 15};
-        unsigned created = 0;
-        for (unsigned i = first; i < ARRAYSIZE(anchors); ++i) {
-            if (i == joinedSide) {
-                continue;
-            }
-            exits[i] = SpawnEntity(image, layout, exitType, section, bones[i], offsetRequested ? &poses[i] : nullptr);
-            if (exits[i] != nullptr) {
-                ++created;
-            }
-        }
-        return created;
-    }
-    return 0;
-}
-
 // Use the same terrain query as completed-cap seating, with the verified host layout.
 bool ReadTrenchGroundHeight(const unsigned char* image, DWORD timestamp, TrenchVector position,
                            float& height) {
@@ -293,13 +231,13 @@ void* SpawnTrenchCap(const unsigned char* image, DWORD timestamp, TrenchVector p
                     TrenchVector inward, bool clientOnly) {
     for (const auto& layout : layouts) {
         if (layout.timestamp == timestamp) {
-            constexpr char name[] = "it_trench_end_cap";
+            constexpr char name[] = "it_trench_dirt_end_cap";
             const char* text = name;
             NativeString type{{}, sizeof(name) - 1, sizeof(name) - 1};
             // SetType copies the input string. A name longer than 15 bytes uses the pointer slot.
             CopyMemory(type.text, &text, sizeof(text));
-            const ExitPose pose{{position.x, position.y, position.z}, {inward.x, inward.y, inward.z}};
-            return SpawnEntity(image, layout, type, nullptr, nullptr, &pose, clientOnly);
+            const SpawnPose pose{{position.x, position.y, position.z}, {inward.x, inward.y, inward.z}};
+            return SpawnEntity(image, layout, type, &pose, clientOnly);
         }
     }
     return nullptr;
@@ -379,7 +317,7 @@ bool ReadStraightTrenchCapOffsets(const unsigned char* image, DWORD timestamp, c
             float sum = 0.0f;
             for (const auto& tip : tips[side]) {
                 auto* bone = ResolveBone(image, layout, skeleton, tip.name);
-                ExitPose pose{};
+                SpawnPose pose{};
                 if (bone == nullptr || !ReadOffsetPose(image, layout, bone, 0.0f, pose)) {
                     return false;
                 }
@@ -412,7 +350,7 @@ bool ReadStraightTrenchLandPose(const unsigned char* image, DWORD timestamp, con
             }
             constexpr NativeString trenchBone{"trench", 6, 15};
             auto* bone = ResolveBone(image, layout, skeleton, trenchBone);
-            ExitPose pose{};
+            SpawnPose pose{};
             if (bone == nullptr || !ReadOffsetPose(image, layout, bone, 0.0f, pose)) {
                 return false;
             }

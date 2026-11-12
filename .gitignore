@@ -74,3 +74,9 @@ Testing/
 examples/
 gameFiles/
 out/
+
+/archived_features/
+deployment/
+docs/
+scripts/
+tests/

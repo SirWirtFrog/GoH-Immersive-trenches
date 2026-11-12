@@ -1,0 +1,19 @@
+; Socket metadata for it_trench_dirt_turn_60.mdl.
+; Coordinates are model-local; +yaw rotates from +X toward +Y.
+{it_trench
+	{version 1}
+
+	{variant "it_trench_dirt_turn_60"
+		{preview "it_trench_dirt_turn_60_preview"}
+	}
+
+	{default_socket 1}
+	{socket 0
+		{position -51.417 7.438 0}
+		{yaw 150.0}
+	}
+	{socket 1
+		{position 53.56 8.038 0}
+		{yaw 30.0}
+	}
+}

@@ -10,15 +10,18 @@ struct State::Impl {
     Engine& engine;
     // Cursor-to-socket search radius in world XY units; height is checked separately.
     static constexpr float snapRadius = 120.0f;
+    // Shared cut-overlap allowance at every connected socket, in model units.
+    static constexpr float seamOverlap = 10.0f;
     static constexpr float radiansPerDegree = 0.01745329252f;
-    float snapOutwardOffset = -5.0f;
+    static constexpr float snapOutwardOffset = -8.0f;
     struct EndCap {
         Anchor anchor;
         Entity entity;
     };
 
     struct Polygon {
-        TrenchPoint vertices[13]{};
+        // Clipping a convex polygon by one half-plane can add one vertex.
+        TrenchPoint vertices[maxTrenchCutVertices + 1]{};
         unsigned size = 0;
     };
 
@@ -134,7 +137,7 @@ struct State::Impl {
         const auto& socket = module.sockets[side];
         const float yaw = std::atan2(transform.xAxis.y, transform.xAxis.x);
         const auto outward = LevelPose({}, yaw + socket.outwardYawDegrees * radiansPerDegree).xAxis;
-        return {owner, WorldSocket(transform, socket), outward, side, socket.overlap};
+        return {owner, WorldSocket(transform, socket), outward, side};
     }
 
     bool SameAnchor(const Anchor& anchor, const TrenchJoint& joint) noexcept {
@@ -484,9 +487,9 @@ struct State::Impl {
         }
     }
 
-    TrenchJoint MakeJoint(const Anchor& neighbor, unsigned side, float overlap, float axialOffset) noexcept {
+    TrenchJoint MakeJoint(const Anchor& neighbor, unsigned side, float axialOffset) noexcept {
         return {neighbor.owner, neighbor.side, side, neighbor.seam, neighbor.outward,
-                overlap + (std::max)(0.0f, -axialOffset), neighbor.overlap};
+                seamOverlap + (std::max)(0.0f, -axialOffset), seamOverlap};
     }
 
     void FindOtherJoints(TrenchPlacement& placement, unsigned primarySide,
@@ -514,8 +517,8 @@ struct State::Impl {
                 const float facing = candidate.outward.x * anchor.outward.x + candidate.outward.y * anchor.outward.y;
                 const float distance = dx * dx + dy * dy;
                 // Remote clients infer joints from the final pose. The host can use
-                // any configured axial offset, and terrain settling can move Z.
-                const float minAxial = replicated ? -21.0f : -candidate.overlap - anchor.overlap;
+                // an axial offset between sockets, and terrain settling can move Z.
+                const float minAxial = replicated ? -21.0f : -2.0f * seamOverlap;
                 const float maxAxial = replicated ? 21.0f : 3.0f;
                 const float heightTolerance = replicated ? 40.0f : 8.0f;
                 if (distance < bestDistance && facing <= -0.9848f && std::fabs(lateral) <= 3.0f &&
@@ -529,7 +532,7 @@ struct State::Impl {
                 }
             }
             if (best != nullptr) {
-                placement.joints[placement.jointCount++] = MakeJoint(*best, side, candidate.overlap, bestAxial);
+                placement.joints[placement.jointCount++] = MakeJoint(*best, side, bestAxial);
             }
         }
     }
@@ -591,13 +594,13 @@ struct State::Impl {
             }
             const auto& socket = module.sockets[side];
             // Match GEM's 10-degree rotation steps, align the chosen socket,
-            // then apply the configured axial gap/overlap to the module origin.
+            // then apply the fixed axial overlap to the module origin.
             inputYaw = QuantizedYaw(intoNeighbor - socket.outwardYawDegrees * radiansPerDegree - yawOffset);
             const auto displacement = WorldSocket(LevelPose({}, inputYaw + yawOffset), socket);
             target.first = Offset(nearest->seam, displacement, -1.0f);
             target.first = Offset(target.first, nearest->outward, snapOutwardOffset);
             target.second = Offset(target.first, {std::cos(inputYaw), std::sin(inputYaw), 0.0f}, 10.0f);
-            placement.joints[placement.jointCount++] = MakeJoint(*nearest, side, socket.overlap, snapOutwardOffset);
+            placement.joints[placement.jointCount++] = MakeJoint(*nearest, side, snapOutwardOffset);
         } else {
             // These buttons place one module. Keep the drag heading but cap its length
             // so eFortify cannot create a line of extra positions with multiple builders.
@@ -832,9 +835,6 @@ struct State::Impl {
 };
 State::State(Engine& engine) : impl(std::make_unique<Impl>(engine)) {}
 State::~State() = default;
-void State::SetOutwardOffset(float value) {
-    impl->snapOutwardOffset = value;
-}
 bool State::PrepareTrenchPlacement(const TrenchModule& module, float modelYawOffset, unsigned char option, TrenchTarget& target, TrenchPlacement& placement) noexcept {
     return impl->PrepareTrenchPlacement(module, modelYawOffset, option, target, placement);
 }

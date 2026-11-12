@@ -1,0 +1,26 @@
+; Companion metadata for it_trench_dirt_intersection_of_four.mdl.
+; Registered test variant: mesh and cut still describe the three-way junction.
+; Coordinates are model-local. Socket 3 is provisional until geometry is updated.
+{it_trench
+	{version 1}
+	{variant "it_trench_dirt_intersection_of_four"
+		{preview "it_trench_dirt_intersection_of_four_preview"}
+	}
+	{default_socket 0}
+	{socket 0
+		{position -49.259 13.229 0}
+		{yaw 180}
+	}
+	{socket 1
+		{position 50.741 13.129 0}
+		{yaw 0}
+	}
+	{socket 2
+		{position 1.316 -35.265 0}
+		{yaw -90}
+	}
+	{socket 3
+		{position 1.316 28.0379 0}
+		{yaw 90}
+	}
+}

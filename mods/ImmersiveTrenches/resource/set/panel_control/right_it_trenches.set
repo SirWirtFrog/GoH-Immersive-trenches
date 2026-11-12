@@ -1,86 +1,75 @@
 ;SDL
 {panel_control
-	{it_trench_straight
+	{it_trench_dirt_straight
 		{position 0 0}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_straight_short
+	{it_trench_dirt_straight_bridge
 		{position 1 0}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_turn
+	{it_trench_dirt_straight_short
 		{position 2 0}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_turn2
+	{it_trench_dirt_straight_end
 		{position 3 0}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_turn3
+	{it_trench_dirt_exit
 		{position 4 0}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_turn_90
-		{position 5 0}
-		{condition "human barricade disabled"}
-	}
-	{it_trench_intersection
+	{it_trench_dirt_turn_20
 		{position 0 1}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_end
+	{it_trench_dirt_turn_30
 		{position 1 1}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_exit
+	{it_trench_dirt_turn_60
 		{position 2 1}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_bridge
+	{it_trench_dirt_turn_90
 		{position 3 1}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_fire_position1
+	{it_trench_dirt_intersection_of_three
 		{position 0 2}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_fire_position2
+	{it_trench_dirt_intersection_of_four
 		{position 1 2}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_mg_nest_ger
+	{it_trench_dirt_depot
 		{position 2 2}
-		{condition "human barricade"}
+		{condition "human barricade disabled"}
 	}
-	{it_trench_mg_nest_rus
-		{position 2 2}
-		{condition "human barricade"}
-	}
-	{it_trench_mg_nest_fin
-		{position 2 2}
-		{condition "human barricade"}
-	}
-	{it_trench_mg_nest_usa
-		{position 2 2}
-		{condition "human barricade"}
-	}
-	{it_trench_mg_nest_eng
-		{position 2 2}
-		{condition "human barricade"}
-	}
-	{it_trench_emplacement
+	{it_trench_dirt_mg_nest
 		{position 3 2}
 		{condition "human barricade disabled"}
 	}
-	{it_trench_pillbox
-		{position 4 2}
-		{condition "human barricade disabled"}
-	}
-	{it_trench_depot
+	{it_trench_dirt_fire_position_through
 		{position 0 3}
 		{condition "human barricade disabled"}
 	}
+	{it_trench_dirt_fire_position_dead_end
+		{position 1 3}
+		{condition "human barricade disabled"}
+	}
+	{it_trench_dirt_emplacement
+		{position 2 3}
+		{condition "human barricade disabled"}
+	}
+	{it_trench_dirt_pillbox
+		{position 3 3}
+		{condition "human barricade disabled"}
+	}
 	{gc_cp_browse_back
-		{position 5 3}
+		{position 4 3}
+		{condition "human barricade disabled"}
 	}
 }

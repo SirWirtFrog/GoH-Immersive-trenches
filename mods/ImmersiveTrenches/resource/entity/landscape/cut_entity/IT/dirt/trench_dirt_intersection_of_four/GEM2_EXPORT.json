@@ -1,0 +1,97 @@
+{
+  "source": "D:\\dev\\GEM2 Importer for Maya 2027\\trench_dirt_intersection\\it_trench_intersection.mdl",
+  "root": "|it_trench_intersection_1:it_trench_intersection_ROOT",
+  "meshes": [
+    {
+      "file": "trench.ply",
+      "triangles": 317
+    },
+    {
+      "file": "wood.ply",
+      "triangles": 252
+    }
+  ],
+  "warnings": [
+    "MTL: tint, imported material assignments and replaced texture paths exported. Other Maya shader parameters and arbitrary node graphs are not exported in 0.2.0."
+  ],
+  "helpers": [
+    {
+      "name": "body8",
+      "role": "collision"
+    },
+    {
+      "name": "body7",
+      "role": "collision"
+    },
+    {
+      "name": "body6",
+      "role": "collision"
+    },
+    {
+      "name": "body5",
+      "role": "collision"
+    },
+    {
+      "name": "body1",
+      "role": "collision"
+    },
+    {
+      "name": "body2",
+      "role": "collision"
+    },
+    {
+      "name": "body3",
+      "role": "collision"
+    },
+    {
+      "name": "body4",
+      "role": "collision"
+    },
+    {
+      "name": "cut",
+      "role": "cut"
+    },
+    {
+      "name": "body1",
+      "role": "obstacle"
+    },
+    {
+      "name": "body2",
+      "role": "obstacle"
+    },
+    {
+      "name": "body3",
+      "role": "obstacle"
+    },
+    {
+      "name": "body4",
+      "role": "obstacle"
+    },
+    {
+      "name": "body5",
+      "role": "obstacle"
+    },
+    {
+      "name": "body6",
+      "role": "obstacle"
+    },
+    {
+      "name": "body7",
+      "role": "obstacle"
+    },
+    {
+      "name": "body8",
+      "role": "obstacle"
+    }
+  ],
+  "files": [
+    "ground.mtl",
+    "ground_alpha.mtl",
+    "it_trench_intersection.def",
+    "it_trench_intersection.mdl",
+    "trench.ply",
+    "trench_dirt_t_lm.dds",
+    "wood.ply",
+    "wood_planks.mtl"
+  ]
+}

@@ -102,26 +102,26 @@
 											<Insets left="5"/>
 											<Children>
 												<BackgroundPanel backgroundResource="/interface/scene/human/bkg6_supporter" placement="center" zoomMode="stretch" enableif="steam.supporter">
-													<PreferredSize x="326" y="248"/>
+													<PreferredSize x="278" y="248"/>
 													<Insets bottom="13"/>
 													<Children>
 														<FlowPanel placement="center" halign="center" valign="bottom">
 															<Children>
 																<SceneGameActionBar cellSize="48">
-																	<GridSize x="6" y="4"/>
+																	<GridSize x="5" y="4"/>
 																</SceneGameActionBar>
 															</Children>
 														</FlowPanel>
 													</Children>
 												</BackgroundPanel>
 												<BackgroundPanel backgroundResource="/interface/scene/human/bkg6" placement="center" zoomMode="stretch" enableif="!steam.supporter">
-													<PreferredSize x="326" y="230"/>
+													<PreferredSize x="278" y="230"/>
 													<Insets bottom="13"/>
 													<Children>
 														<FlowPanel placement="center" halign="center" valign="bottom">
 															<Children>
 																<SceneGameActionBar cellSize="48">
-																	<GridSize x="6" y="4"/>
+																	<GridSize x="5" y="4"/>
 																</SceneGameActionBar>
 															</Children>
 														</FlowPanel>

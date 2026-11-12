@@ -11,274 +11,206 @@ msgctxt "actionbar/it_trench_menu/usage"
 msgid "Open the modular trench construction menu."
 msgstr ""
 
-msgctxt "actionbar/it_trench_straight"
+msgctxt "actionbar/it_trench_dirt_straight"
 msgid "Modded trenches - Straight section"
 msgstr ""
 
-msgctxt "actionbar/it_trench_straight/action"
+msgctxt "actionbar/it_trench_dirt_straight/action"
 msgid "Dig straight trench section"
 msgstr ""
 
-msgctxt "actionbar/it_trench_straight/usage"
+msgctxt "actionbar/it_trench_dirt_straight/usage"
 msgid "Choose a position and orientation for the straight trench section."
 msgstr ""
 
-msgctxt "actionbar/it_trench_fire_position1"
+msgctxt "actionbar/it_trench_dirt_fire_position_through"
 msgid "Through firing position"
 msgstr ""
 
-msgctxt "actionbar/it_trench_fire_position1/action"
+msgctxt "actionbar/it_trench_dirt_fire_position_through/action"
 msgid "Build through firing position"
 msgstr ""
 
-msgctxt "actionbar/it_trench_fire_position1/usage"
+msgctxt "actionbar/it_trench_dirt_fire_position_through/usage"
 msgid "Choose a location and direction for a firing position with two exits."
 msgstr ""
 
-msgctxt "actionbar/it_trench_fire_position2"
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end"
 msgid "Dead-end firing position"
 msgstr ""
 
-msgctxt "actionbar/it_trench_fire_position2/action"
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end/action"
 msgid "Build dead-end firing position"
 msgstr ""
 
-msgctxt "actionbar/it_trench_fire_position2/usage"
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end/usage"
 msgid "Choose a location and direction for a firing position with one exit."
 msgstr ""
 
-msgctxt "actionbar/it_trench_straight_short"
+msgctxt "actionbar/it_trench_dirt_straight_short"
 msgid "Short straight trench"
 msgstr ""
 
-msgctxt "actionbar/it_trench_straight_short/action"
+msgctxt "actionbar/it_trench_dirt_straight_short/action"
 msgid "Build short straight trench"
 msgstr ""
 
-msgctxt "actionbar/it_trench_straight_short/usage"
+msgctxt "actionbar/it_trench_dirt_straight_short/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn"
+msgctxt "actionbar/it_trench_dirt_turn_20"
 msgid "Shallow trench bend"
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn/action"
+msgctxt "actionbar/it_trench_dirt_turn_20/action"
 msgid "Build shallow trench bend"
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn/usage"
+msgctxt "actionbar/it_trench_dirt_turn_20/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn2"
+msgctxt "actionbar/it_trench_dirt_turn_30"
 msgid "Offset trench bend"
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn2/action"
+msgctxt "actionbar/it_trench_dirt_turn_30/action"
 msgid "Build offset trench bend"
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn2/usage"
+msgctxt "actionbar/it_trench_dirt_turn_30/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn3"
+msgctxt "actionbar/it_trench_dirt_turn_60"
 msgid "Wide trench bend"
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn3/action"
+msgctxt "actionbar/it_trench_dirt_turn_60/action"
 msgid "Build wide trench bend"
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn3/usage"
+msgctxt "actionbar/it_trench_dirt_turn_60/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn_90"
+msgctxt "actionbar/it_trench_dirt_turn_90"
 msgid "90° trench corner"
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn_90/action"
+msgctxt "actionbar/it_trench_dirt_turn_90/action"
 msgid "Build 90° trench corner"
 msgstr ""
 
-msgctxt "actionbar/it_trench_turn_90/usage"
+msgctxt "actionbar/it_trench_dirt_turn_90/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_intersection"
+msgctxt "actionbar/it_trench_dirt_intersection_of_three"
 msgid "Trench junction"
 msgstr ""
 
-msgctxt "actionbar/it_trench_intersection/action"
+msgctxt "actionbar/it_trench_dirt_intersection_of_three/action"
 msgid "Build trench junction"
 msgstr ""
 
-msgctxt "actionbar/it_trench_intersection/usage"
+msgctxt "actionbar/it_trench_dirt_intersection_of_three/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_end"
+msgctxt "actionbar/it_trench_dirt_intersection_of_four"
+msgid "Four-way trench junction (test)"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_four/action"
+msgid "Build four-way trench junction"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_four/usage"
+msgid "Test variant with four sockets. Geometry is still three-way; the fourth socket is provisional."
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight_end"
 msgid "Closed trench end"
 msgstr ""
 
-msgctxt "actionbar/it_trench_end/action"
+msgctxt "actionbar/it_trench_dirt_straight_end/action"
 msgid "Build closed trench end"
 msgstr ""
 
-msgctxt "actionbar/it_trench_end/usage"
+msgctxt "actionbar/it_trench_dirt_straight_end/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_exit"
+msgctxt "actionbar/it_trench_dirt_exit"
 msgid "Trench exit ramp"
 msgstr ""
 
-msgctxt "actionbar/it_trench_exit/action"
+msgctxt "actionbar/it_trench_dirt_exit/action"
 msgid "Build trench exit ramp"
 msgstr ""
 
-msgctxt "actionbar/it_trench_exit/usage"
+msgctxt "actionbar/it_trench_dirt_exit/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_bridge"
+msgctxt "actionbar/it_trench_dirt_straight_bridge"
 msgid "Trench with a footbridge"
 msgstr ""
 
-msgctxt "actionbar/it_trench_bridge/action"
+msgctxt "actionbar/it_trench_dirt_straight_bridge/action"
 msgid "Build trench with a footbridge"
 msgstr ""
 
-msgctxt "actionbar/it_trench_bridge/usage"
+msgctxt "actionbar/it_trench_dirt_straight_bridge/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_mg_nest"
+msgctxt "actionbar/it_trench_dirt_mg_nest"
 msgid "Machine-gun nest"
 msgstr ""
 
-msgctxt "actionbar/it_trench_mg_nest/action"
+msgctxt "actionbar/it_trench_dirt_mg_nest/action"
 msgid "Build machine-gun nest"
 msgstr ""
 
-msgctxt "actionbar/it_trench_mg_nest/usage"
+msgctxt "actionbar/it_trench_dirt_mg_nest/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_emplacement"
+msgctxt "actionbar/it_trench_dirt_emplacement"
 msgid "Gun emplacement"
 msgstr ""
 
-msgctxt "actionbar/it_trench_emplacement/action"
+msgctxt "actionbar/it_trench_dirt_emplacement/action"
 msgid "Build gun emplacement"
 msgstr ""
 
-msgctxt "actionbar/it_trench_emplacement/usage"
+msgctxt "actionbar/it_trench_dirt_emplacement/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_pillbox"
+msgctxt "actionbar/it_trench_dirt_pillbox"
 msgid "Earth pillbox"
 msgstr ""
 
-msgctxt "actionbar/it_trench_pillbox/action"
+msgctxt "actionbar/it_trench_dirt_pillbox/action"
 msgid "Build earth pillbox"
 msgstr ""
 
-msgctxt "actionbar/it_trench_pillbox/usage"
+msgctxt "actionbar/it_trench_dirt_pillbox/usage"
 msgid "Choose the position and orientation."
 msgstr ""
 
-msgctxt "actionbar/it_trench_depot"
+msgctxt "actionbar/it_trench_dirt_depot"
 msgid "Trench depot"
 msgstr ""
 
-msgctxt "actionbar/it_trench_depot/action"
+msgctxt "actionbar/it_trench_dirt_depot/action"
 msgid "Build trench depot"
 msgstr ""
 
-msgctxt "actionbar/it_trench_depot/usage"
+msgctxt "actionbar/it_trench_dirt_depot/usage"
 msgid "Choose the position and orientation."
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_ger"
-msgid "Machine-gun nest (MG 34)"
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_ger/action"
-msgid "Build machine-gun nest"
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_ger/usage"
-msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_rus"
-msgid "Machine-gun nest (Maxim)"
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_rus/action"
-msgid "Build machine-gun nest"
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_rus/usage"
-msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_fin"
-msgid "Machine-gun nest (Maxim M/32–33)"
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_fin/action"
-msgid "Build machine-gun nest"
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_fin/usage"
-msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_usa"
-msgid "Machine-gun nest (Browning M1917)"
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_usa/action"
-msgid "Build machine-gun nest"
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_usa/usage"
-msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_eng"
-msgid "Machine-gun nest (Vickers)"
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_eng/action"
-msgid "Build machine-gun nest"
-msgstr ""
-
-msgctxt "actionbar/it_trench_mg_nest_eng/usage"
-msgid "After digging, select any engineer and right-click the crate to assemble the preset machine gun in 30 seconds."
-msgstr ""
-
-msgctxt "desc/entity/it_trench_fixed_mg_ger"
-msgid "MG 34 (trench emplacement)"
-msgstr ""
-
-msgctxt "desc/entity/it_trench_fixed_mg_rus"
-msgid "Maxim (trench emplacement)"
-msgstr ""
-
-msgctxt "desc/entity/it_trench_fixed_mg_fin"
-msgid "Maxim M/32–33 (trench emplacement)"
-msgstr ""
-
-msgctxt "desc/entity/it_trench_fixed_mg_usa"
-msgid "Browning M1917 (trench emplacement)"
-msgstr ""
-
-msgctxt "desc/entity/it_trench_fixed_mg_eng"
-msgid "Vickers (trench emplacement)"
 msgstr ""

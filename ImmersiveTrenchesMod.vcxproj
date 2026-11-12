@@ -52,9 +52,9 @@
            Text="Build $(Configuration)|$(Platform) before Deploy. Missing file: $(TargetPath)" />
     <Error Condition="!Exists('$(OutDir)ImmersiveTrenchesModLogic.dll')"
            Text="Build $(Configuration)|$(Platform) before Deploy. Missing file: $(OutDir)ImmersiveTrenchesModLogic.dll" />
-    <CallTarget Targets="_DeployTrenchConfig" />
     <Copy SourceFiles="$(OutDir)ImmersiveTrenchesModLogic.dll" DestinationFolder="$(GoHModDir)" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GoHBinDir)\mss" />
+    <Delete Files="$(GoHModDir)\ImmersiveTrenchesMod.ini" />
     <Message Importance="high" Text="Deployed $(Configuration)|$(Platform) loader to $(GoHBinDir)\mss and logic DLL to $(GoHModDir)" />
   </Target>
   <Target Name="DeployResources">
@@ -62,16 +62,8 @@
            Text="GEM Editor not found. Check GoHGameRoot: $(GoHGameRoot)" />
     <Error Condition="!Exists('$(TrenchResourceSource)\mod.info')"
            Text="Resource mod not found at $(TrenchResourceSource)" />
-    <ItemGroup>
-      <TrenchResourceFile Include="$(TrenchResourceSource)\**\*"
-                          Exclude="$(TrenchResourceSource)\ImmersiveTrenchesMod.ini" />
-    </ItemGroup>
-    <Copy SourceFiles="@(TrenchResourceFile)"
-          DestinationFiles="@(TrenchResourceFile->'$(GoHModDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
-    <CallTarget Targets="_DeployTrenchConfig" />
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\scripts\DeployResources.ps1&quot; -SourceRoot &quot;$(TrenchResourceSource)&quot; -DestinationRoot &quot;$(GoHModDir)&quot;" />
+    <Delete Files="$(GoHModDir)\ImmersiveTrenchesMod.ini" />
     <Message Importance="high" Text="Deployed resource mod to $(GoHModDir)" />
-  </Target>
-  <Target Name="_DeployTrenchConfig" Condition="!Exists('$(GoHModDir)\ImmersiveTrenchesMod.ini')">
-    <Copy SourceFiles="$(TrenchResourceSource)\ImmersiveTrenchesMod.ini" DestinationFolder="$(GoHModDir)" />
   </Target>
 </Project>

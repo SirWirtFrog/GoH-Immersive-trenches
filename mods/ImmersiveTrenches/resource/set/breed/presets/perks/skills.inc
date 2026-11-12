@@ -14,7 +14,7 @@
 	{"resources" "10%"}
 )
 
-(define "it_engineer_base"
+(define "engineer"
 	{fortification}
 	{barricade
 		{"fortifications" "barricade_sq"}
@@ -25,22 +25,23 @@
 
 		{"fortifications" "foxhole"}
 		{"fortifications" "foxhole_big"}
-		{"fortifications" "it_trench_straight"}
-		{"fortifications" "it_trench_straight_short"}
-		{"fortifications" "it_trench_turn"}
-		{"fortifications" "it_trench_turn2"}
-		{"fortifications" "it_trench_turn3"}
-		{"fortifications" "it_trench_turn_90"}
-		{"fortifications" "it_trench_intersection"}
-		{"fortifications" "it_trench_end"}
-		{"fortifications" "it_trench_exit"}
-		{"fortifications" "it_trench_bridge"}
-		{"fortifications" "it_trench_fire_position1"}
-		{"fortifications" "it_trench_fire_position2"}
-		{"fortifications" "%mg_nest"}
-		{"fortifications" "it_trench_emplacement"}
-		{"fortifications" "it_trench_pillbox"}
-		{"fortifications" "it_trench_depot"}
+		{"fortifications" "it_trench_dirt_straight"}
+		{"fortifications" "it_trench_dirt_straight_short"}
+		{"fortifications" "it_trench_dirt_turn_20"}
+		{"fortifications" "it_trench_dirt_turn_30"}
+		{"fortifications" "it_trench_dirt_turn_60"}
+		{"fortifications" "it_trench_dirt_turn_90"}
+		{"fortifications" "it_trench_dirt_intersection_of_three"}
+		{"fortifications" "it_trench_dirt_intersection_of_four"}
+		{"fortifications" "it_trench_dirt_straight_end"}
+		{"fortifications" "it_trench_dirt_exit"}
+		{"fortifications" "it_trench_dirt_straight_bridge"}
+		{"fortifications" "it_trench_dirt_fire_position_through"}
+		{"fortifications" "it_trench_dirt_fire_position_dead_end"}
+		{"fortifications" "it_trench_dirt_mg_nest"}
+		{"fortifications" "it_trench_dirt_emplacement"}
+		{"fortifications" "it_trench_dirt_pillbox"}
+		{"fortifications" "it_trench_dirt_depot"}
 		{"fortifications" "mortar_pit"}
 		{"fortifications" "tank_cover"}
 
@@ -54,7 +55,7 @@
 	{mechanic factor 1.0}
 )
 
-(define "it_engineer_heavy_fin_base"
+(define "engineer_heavy_fin"
 	{fortification}
 	{barricade
 		{"fortifications" "barricade_sq"}
@@ -65,22 +66,23 @@
 
 		{"fortifications" "foxhole"}
 		{"fortifications" "foxhole_big"}
-		{"fortifications" "it_trench_straight"}
-		{"fortifications" "it_trench_straight_short"}
-		{"fortifications" "it_trench_turn"}
-		{"fortifications" "it_trench_turn2"}
-		{"fortifications" "it_trench_turn3"}
-		{"fortifications" "it_trench_turn_90"}
-		{"fortifications" "it_trench_intersection"}
-		{"fortifications" "it_trench_end"}
-		{"fortifications" "it_trench_exit"}
-		{"fortifications" "it_trench_bridge"}
-		{"fortifications" "it_trench_fire_position1"}
-		{"fortifications" "it_trench_fire_position2"}
-		{"fortifications" "%mg_nest"}
-		{"fortifications" "it_trench_emplacement"}
-		{"fortifications" "it_trench_pillbox"}
-		{"fortifications" "it_trench_depot"}
+		{"fortifications" "it_trench_dirt_straight"}
+		{"fortifications" "it_trench_dirt_straight_short"}
+		{"fortifications" "it_trench_dirt_turn_20"}
+		{"fortifications" "it_trench_dirt_turn_30"}
+		{"fortifications" "it_trench_dirt_turn_60"}
+		{"fortifications" "it_trench_dirt_turn_90"}
+		{"fortifications" "it_trench_dirt_intersection_of_three"}
+		{"fortifications" "it_trench_dirt_intersection_of_four"}
+		{"fortifications" "it_trench_dirt_straight_end"}
+		{"fortifications" "it_trench_dirt_exit"}
+		{"fortifications" "it_trench_dirt_straight_bridge"}
+		{"fortifications" "it_trench_dirt_fire_position_through"}
+		{"fortifications" "it_trench_dirt_fire_position_dead_end"}
+		{"fortifications" "it_trench_dirt_mg_nest"}
+		{"fortifications" "it_trench_dirt_emplacement"}
+		{"fortifications" "it_trench_dirt_pillbox"}
+		{"fortifications" "it_trench_dirt_depot"}
 		{"fortifications" "mortar_pit"}
 		{"fortifications" "tank_cover"}
 
@@ -98,15 +100,6 @@
 	{"resources_regeneration" "0%"}
 	{mechanic factor 1.0}
 )
-
-; Faction-specific nest selection; all other engineer perks stay shared.
-(define "engineer" ("it_engineer_base" mg_nest(it_trench_mg_nest)))
-(define "engineer_heavy_fin" ("it_engineer_heavy_fin_base" mg_nest(it_trench_mg_nest_fin)))
-(define "it_engineer_ger" ("it_engineer_base" mg_nest(it_trench_mg_nest_ger)))
-(define "it_engineer_rus" ("it_engineer_base" mg_nest(it_trench_mg_nest_rus)))
-(define "it_engineer_fin" ("it_engineer_base" mg_nest(it_trench_mg_nest_fin)))
-(define "it_engineer_usa" ("it_engineer_base" mg_nest(it_trench_mg_nest_usa)))
-(define "it_engineer_eng" ("it_engineer_base" mg_nest(it_trench_mg_nest_eng)))
 
 ;/* - Repair Skills - */
 
