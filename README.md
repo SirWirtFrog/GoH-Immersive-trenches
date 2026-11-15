@@ -16,9 +16,17 @@
 
 ## Установка готовой сборки
 
-Скачайте архив [из раздела Releases](https://github.com/SirWirtFrog/GoH-Immersive-trenches/releases) и скопируйте папки `binaries` и `mods` из архива в корень игры.
+Закройте игру, GEM Editor и локальный сервер. Запустите [InstallLatest.ps1](InstallLatest.ps1) и выберите папку игры
 
-После установки запустите игру, активируйте **Immersive Trenches** в списке модов и выберите инженера. На панели команд под кнопкой **«Развернуть»** откройте **«Окопы»**.
+```powershell
+pwsh -STA -ExecutionPolicy Bypass -File .\InstallLatest.ps1
+```
+
+В Windows PowerShell 5.1 замените `pwsh` на `powershell` для классического окна выбора папки. Чтобы узнать путь к игре, откройте в Steam «Свойства → Установленные файлы → Обзор». Для установки без открытия окна передайте `-GameRoot 'D:\Games\Call to Arms - Gates of Hell'` или задайте переменную `GoHGameRoot`.
+
+Для ручной установки скачайте архив [из раздела Releases](https://github.com/SirWirtFrog/GoH-Immersive-trenches/releases) и скопируйте папки `binaries` и `mods` из архива в корень игры.
+
+После установки запустите игру, активируйте **Immersive Trenches** в списке модов.
 
 Целевая версия игры и редактора — **1.067.0 x64**, сборка `aaa36ed4d`. Для сетевой игры всем участникам нужна одна версия мода.
 
