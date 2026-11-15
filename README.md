@@ -1,46 +1,54 @@
 # Immersive Trenches
 
-Мод для **Call to Arms – Gates of Hell: Ostfront** добавляет инженерам меню врзможность строительства разных элемонтов окопов. Имеются прямые секции, повороты, развилки, выходы, земляные доты, огневые позиции и окопное депо, которое пополняет боеприпасы поблизости.
+Immersive Trenches adds a trench construction menu for engineers in **Call to Arms – Gates of Hell: Ostfront**. Engineers can build straight sections, turns, junctions, exits, earthen bunkers, firing positions, and a trench depot that resupplies nearby units with ammunition.
 
-При размещении секции прилипают к свободным стыкам и разворачиваются вдоль них. Несколько секций можно поставить в очередь строительства. Свободные торцы готовых окопов закрываются заглушками, которые снимаются при присоединении новой секции.
+Sections snap to open connections and rotate to align with them. You can queue multiple sections for construction. End caps close the open ends of completed trenches and disappear when a new section is connected.
 
-## Компиляция и установка
+## Build and install from source
 
-Для сборки нужны **Visual Studio 2026** или **Build Tools 2026** с MSVC v145 и Windows SDK. Закройте игру, GEM Editor и локальный сервер, затем откройте PowerShell в корне проекта и выполните:
+Building requires **Visual Studio 2026** or **Build Tools 2026** with MSVC v145 and the Windows SDK. Close the game, GEM Editor, and local server. Open PowerShell in the project root and run the following command.
 
 ```powershell
 .\Install.ps1 -GameRoot 'C:\Program Files (x86)\Steam\steamapps\common\Call to Arms - Gates of Hell'
 ```
 
-Если PowerShell блокирует скрипт, запустите `powershell -ExecutionPolicy Bypass -File .\Install.ps1`.
+If PowerShell blocks the script, run `powershell -ExecutionPolicy Bypass -File .\Install.ps1`.
 
-## Установка готовой сборки
+## Install a release build
 
-Скачайте архив [из раздела Releases](https://github.com/SirWirtFrog/GoH-Immersive-trenches/releases) и скопируйте папки `binaries` и `mods` из архива в корень игры.
+Close the game, GEM Editor, and local server. Run [InstallLatest.ps1](InstallLatest.ps1), then select the game folder.
 
-После установки запустите игру, активируйте **Immersive Trenches** в списке модов и выберите инженера. На панели команд под кнопкой **«Развернуть»** откройте **«Окопы»**.
+```powershell
+pwsh -STA -ExecutionPolicy Bypass -File .\InstallLatest.ps1
+```
 
-Целевая версия игры и редактора — **1.067.0 x64**, сборка `aaa36ed4d`. Для сетевой игры всем участникам нужна одна версия мода.
+In Windows PowerShell 5.1, use `powershell` in place of `pwsh` to open the classic folder picker. To find the game folder in Steam, open **Properties → Installed Files → Browse**. For unattended installation, pass `-GameRoot 'D:\Games\Call to Arms - Gates of Hell'` or set the `GoHGameRoot` environment variable.
 
-## Дополнительные команды
+To install manually, download the ZIP and copy its `binaries` and `mods` folders into the game folder. [GitHub Releases](https://github.com/SirWirtFrog/GoH-Immersive-trenches/releases)
 
-Команды запускаются из корня проекта. Перед переустановкой или удалением закройте игру, редактор и локальный сервер.
+After installation, launch the game and enable **Immersive Trenches** in the mod list.
 
-| Задача | Команда |
+The mod targets game and editor version **1.067.0 x64**, build `aaa36ed4d`. In multiplayer, all players must use the same mod version.
+
+## Additional commands
+
+Run these commands from the project root. Close the game, GEM Editor, and local server before reinstalling or uninstalling.
+
+| Task | Command |
 | --- | --- |
-| Собрать комплект для ручной установки | `.\scripts\BuildRelease.ps1` |
-| Собрать и установить Debug | `.\Install.ps1 -Configuration Debug` |
-| Переустановить мод начисто | `.\scripts\Reinstall.ps1` |
-| Посмотреть список файлов для удаления | `.\scripts\uninstall.ps1 -WhatIf` |
-| Удалить мод | `.\scripts\uninstall.ps1` |
+| Build a package for manual installation | `.\scripts\BuildRelease.ps1` |
+| Build and install a Debug build | `.\Install.ps1 -Configuration Debug` |
+| Perform a clean reinstall | `.\scripts\Reinstall.ps1` |
+| Preview which files will be removed | `.\scripts\uninstall.ps1 -WhatIf` |
+| Uninstall the mod | `.\scripts\uninstall.ps1` |
 
-Комплект для ручной установки сохраняется в `out\releases\ImmersiveTrenches-<дата-время>`. Для своего пути используйте `-OutputDirectory`. Переустановка и удаление убирают всю установленную папку мода, включая добавленные туда вручную файлы.
+The manual installation package is saved to `out\releases\ImmersiveTrenches-<timestamp>`. Use `-OutputDirectory` to choose a different location. Reinstalling or uninstalling removes the entire installed mod folder, including any files added manually.
 
 <details>
-<summary>Технические сведения и проверки для разработчиков</summary>
+<summary>Technical details and developer checks</summary>
 
-Загрузчик `ImmersiveTrenchesMod.asi` загружается через Miles Sound System из `binaries\x64\mss`. При `RIB_Main(upDown=1)` он открывает `mods\ImmersiveTrenches\ImmersiveTrenchesModLogic.dll` и вызывает `GoHModInitialize` вне `DllMain`. Карта функций и структур движка находится в [GEM_FUNCTIONS.md](GEM_FUNCTIONS.md).
+Miles Sound System loads `ImmersiveTrenchesMod.asi` from `binaries\x64\mss`. On `RIB_Main(upDown=1)`, the loader opens `mods\ImmersiveTrenches\ImmersiveTrenchesModLogic.dll` and calls `GoHModInitialize` outside `DllMain`. Engine functions and structures are documented in [GEM_FUNCTIONS.md](GEM_FUNCTIONS.md).
 
-Сборки лежат в `out\x64\<Configuration>`. Для отладки установите `Debug|x64` и запустите GEM Editor через F5 из Visual Studio. Переменная `GoHGameRoot` задаёт нестандартный путь игры для профиля F5 и скриптов установки.
+Build output is written to `out\x64\<Configuration>`. To debug, select `Debug|x64` and press F5 in Visual Studio to launch GEM Editor. Set `GoHGameRoot` to use a custom game path for the F5 profile and installation scripts.
 
-`DeployResources` архивирует распознанные устаревшие каталоги в `%LOCALAPPDATA%\ImmersiveTrenches\resource-backups`. Чтобы посмотреть план копирования без изменения файлов, передайте `-PlanOnly` скрипту `scripts\DeployResources.ps1` вместе с `-SourceRoot` и `-DestinationRoot`.
+`DeployResources` backs up recognized legacy directories to `%LOCALAPPDATA%\ImmersiveTrenches\resource-backups`. To preview the copy plan without changing files, run `scripts\DeployResources.ps1` with `-PlanOnly`, `-SourceRoot`, and `-DestinationRoot`.

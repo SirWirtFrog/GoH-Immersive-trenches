@@ -17,7 +17,7 @@
 			("items_heavy_fin")
 			("items_heavy_usa")
 		}
-		{radius 7}
+		{radius 10}
 		{resupplyPeriod 2}
 		{regenerationPeriod 10}
 		{limit 100}
