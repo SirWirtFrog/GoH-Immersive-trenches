@@ -1,0 +1,8 @@
+{material bump
+	{diffuse "texture_8c78d7219f59f33fe37a0b4543371a616766441c13c8e1d94991b2afba7ebced"}
+	{bump "$/_military/soldier_foxhole_bp"}
+	{specular "$/_military/soldier_foxhole_sp"}
+	{lightmap "trench_dirt_end_lm"}
+	{color "230 230 230 25"}
+	{blend blend}
+}

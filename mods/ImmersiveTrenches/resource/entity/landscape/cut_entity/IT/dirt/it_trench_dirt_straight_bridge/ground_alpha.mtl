@@ -1,0 +1,8 @@
+{material bump
+	{diffuse "$/_military/trench_dirt"}
+	{bump "$/_military/trench_dirt_bp"}
+	{specular "$/_military/trench_dirt_sp"}
+	{lightmap "trench_dirt_bridge2_lm"}
+	{color "230 230 230 25"}
+	{blend blend}
+}

@@ -1,0 +1,50 @@
+; GEM2 static-v1
+{skeleton
+    {bone "trench"
+        {matrix34
+            1 0 0
+            0 -1 0
+            0 0 1
+            -7.10542736e-15 0 0
+        }
+        {parameters "commonmesh;land;align;"}
+        {VolumeView "trench.ply"
+            {DecalTargetDynamic}
+        }
+        {bone "bridge"
+            {matrix34
+                1 0 0
+                0 1 0
+                0 0 1
+                -7.10542736e-15 0 0
+            }
+            {parameters "commonmesh;"}
+            {VolumeView "bridge.ply"
+            }
+        }
+        {bone "land"
+            {matrix34
+                1 0 0
+                0 1 0
+                0 0 1
+                -7.10542736e-15 0 0
+            }
+            {parameters "land;align;"}
+            {visibility 0}
+            {VolumeView "land.ply"
+                {DecalTargetDynamic}
+            }
+        }
+        {bone "wood"
+            {matrix34
+                1 0 0
+                0 1 0
+                0 0 1
+                -7.10542736e-15 0 0
+            }
+            {parameters "commonmesh;"}
+            {VolumeView "wood.ply"
+            }
+        }
+    }
+}

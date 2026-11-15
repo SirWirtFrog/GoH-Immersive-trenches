@@ -1,0 +1,8 @@
+{
+	(include "/properties/trench.inc")
+	{extension "it_trench_dirt_end_cap.mdl"}
+	{DynCmpPersistent}
+	{props "sand"}
+	("boneLand" args "trench")
+	("volume" args "body1")
+}

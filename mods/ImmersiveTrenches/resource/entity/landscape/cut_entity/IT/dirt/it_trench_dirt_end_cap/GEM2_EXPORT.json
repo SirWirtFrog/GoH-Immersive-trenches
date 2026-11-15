@@ -1,0 +1,131 @@
+{
+  "profile": "static-v1",
+  "meshes": [
+    {
+      "vertices": 112,
+      "records": 227,
+      "triangles": 182,
+      "uv_sets": 2,
+      "materials": 3,
+      "splits": 115,
+      "tangent_fallbacks": 0,
+      "file": "trench.ply",
+      "geometry": "original_209aff4203895f28836bfcd04aec9621"
+    }
+  ],
+  "warnings": [],
+  "external": [
+    "$/_military/soldier_foxhole_bp",
+    "$/_military/soldier_foxhole_sp",
+    "$/_military/trench_dirt",
+    "$/_military/trench_dirt_bp",
+    "$/_military/trench_dirt_sp",
+    "$/_tile/wood_planks",
+    "$/_tile/wood_planks_bp",
+    "$/_tile/wood_planks_sp",
+    "/properties/trench.inc"
+  ],
+  "resourceSplits": [],
+  "added": [],
+  "deleted": [],
+  "exportPreview": true,
+  "files": {
+    "ground.mtl": {
+      "bytes": 205,
+      "sha256": "8a5e1384c6482e8939f4ea2d91c152b64aa282ba3c0577b4e41735f5a935d37b"
+    },
+    "ground_alpha.mtl": {
+      "bytes": 263,
+      "sha256": "72fee4051f676263cb7ba18ebf7e843e082846210b6181c46393998be93190dd"
+    },
+    "it_trench_dirt_end_cap.def": {
+      "bytes": 171,
+      "sha256": "2603c82890d39487335099d35d1a6208815dfff5177f56c42900ba002c1cf536"
+    },
+    "it_trench_dirt_end_cap.mdl": {
+      "bytes": 1209,
+      "sha256": "1687a074daef3989cf8aa0e0ecd519bd3bd207369e539dea8459ca2638af3a43"
+    },
+    "it_trench_dirt_end_cap.trench": {
+      "bytes": 246,
+      "sha256": "bdbe2c339fb08bffbe19f0ed219563c42334a7eacb29e895dad240f07b02dac9"
+    },
+    "it_trench_dirt_end_cap_preview.def": {
+      "bytes": 111,
+      "sha256": "4503d6ac499829d44062deead597124c59420293f003fe8cb501efc54169835a"
+    },
+    "it_trench_dirt_end_cap_preview.mdl": {
+      "bytes": 277,
+      "sha256": "035697c1d7d2789e2079396ac2c9e681b416e19b6300eccfeffb548b3c520333"
+    },
+    "it_trench_dirt_straight_end.def": {
+      "bytes": 171,
+      "sha256": "2603c82890d39487335099d35d1a6208815dfff5177f56c42900ba002c1cf536"
+    },
+    "it_trench_dirt_straight_end_preview.def": {
+      "bytes": 111,
+      "sha256": "4503d6ac499829d44062deead597124c59420293f003fe8cb501efc54169835a"
+    },
+    "texture_8c78d7219f59f33fe37a0b4543371a616766441c13c8e1d94991b2afba7ebced.dds": {
+      "bytes": 786608,
+      "sha256": "8c78d7219f59f33fe37a0b4543371a616766441c13c8e1d94991b2afba7ebced"
+    },
+    "trench.ply": {
+      "bytes": 13972,
+      "sha256": "87742f804fcc0a036bdd706d80f641f59c5e8cabd698c37521b7a56b39b35eca"
+    },
+    "trench_dirt_end_lm.dds": {
+      "bytes": 43832,
+      "sha256": "a4f0ee4e537eb02c9dd900435b31504e7e4676bb09eaa3f6188cb26adcd4e5e9"
+    },
+    "wood_planks.mtl": {
+      "bytes": 193,
+      "sha256": "49bcb67dd3558d1431c21455efc4743ac4c7dd0952511bcc05e83570a32f278f"
+    }
+  },
+  "excluded": [],
+  "nodes": [
+    {
+      "node": "|g2_13:it_trench_dirt_end_cap_ROOT|g2_13:trench|g2_13:trench_view|g2_13:trench_mesh",
+      "id": "original_9d039370866d5502807df6ca3d4e10db",
+      "name": "mesh_2",
+      "role": "mesh"
+    },
+    {
+      "node": "|g2_13:it_trench_dirt_end_cap_ROOT|g2_13:trench|g2_13:trench_view",
+      "id": "original_209aff4203895f28836bfcd04aec9621",
+      "name": "view_1",
+      "role": "view"
+    },
+    {
+      "node": "|g2_13:it_trench_dirt_end_cap_ROOT|g2_13:trench|g2_13:point1|g2_13:volume_body1",
+      "id": "original_b8e3bf66324d5cc8978ec54e1f28a770",
+      "name": "body1",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_13:it_trench_dirt_end_cap_ROOT|g2_13:trench|g2_13:point1",
+      "id": "original_12dbb95fc091503d93e56bf619b74c47",
+      "name": "point1",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_13:it_trench_dirt_end_cap_ROOT|g2_13:trench",
+      "id": "original_6d05a7485c3556d78fd62f8dab44e1ef",
+      "name": "trench",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_13:it_trench_dirt_end_cap_ROOT|g2_13:GEM2_HELPERS|g2_13:area_cut",
+      "id": "original_1fa27f938d83578585245d954884a105",
+      "name": "cut",
+      "role": "area"
+    },
+    {
+      "node": "|g2_13:it_trench_dirt_end_cap_ROOT|g2_13:GEM2_HELPERS|g2_13:obstacle_body1",
+      "id": "original_9cbed3f1c9b05b5ebd1f64da0ad39b8d",
+      "name": "body1",
+      "role": "obstacle"
+    }
+  ]
+}

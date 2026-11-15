@@ -1,0 +1,228 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgctxt "actionbar/it_trench_menu"
+msgid "Trenches"
+msgstr ""
+
+msgctxt "actionbar/it_trench_menu/usage"
+msgid "Open the modular trench construction menu."
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight"
+msgid "Modded trenches - Straight section"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight/action"
+msgid "Dig straight trench section"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight/usage"
+msgid "Choose a position and orientation for the straight trench section.\nCost: 12 engineering points\nBuild time: 16 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_fire_position_through"
+msgid "Through firing position"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_fire_position_through/action"
+msgid "Build through firing position"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_fire_position_through/usage"
+msgid "Choose a location and direction for a firing position with two exits.\nCost: 16 engineering points\nBuild time: 18 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end"
+msgid "Dead-end firing position"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end/action"
+msgid "Build dead-end firing position"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end/usage"
+msgid "Choose a location and direction for a firing position with one exit.\nCost: 8 engineering points\nBuild time: 12 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight_short"
+msgid "Short straight trench"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight_short/action"
+msgid "Build short straight trench"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight_short/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 10 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_20"
+msgid "Shallow trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_20/action"
+msgid "Build shallow trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_20/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 10 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_30"
+msgid "Offset trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_30/action"
+msgid "Build offset trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_30/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 10 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_60"
+msgid "Wide trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_60/action"
+msgid "Build wide trench bend"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_60/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 12 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_90"
+msgid "90° trench corner"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_90/action"
+msgid "Build 90° trench corner"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_turn_90/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 12 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_three"
+msgid "Trench junction"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_three/action"
+msgid "Build trench junction"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_three/usage"
+msgid "Choose the position and orientation.\nCost: 12 engineering points\nBuild time: 15 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_four"
+msgid "Four-way trench junction (test)"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_four/action"
+msgid "Build four-way trench junction"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_four/usage"
+msgid "Test variant with four sockets. Geometry is still three-way; the fourth socket is provisional.\nCost: 16 engineering points\nBuild time: 20 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight_end"
+msgid "Closed trench end"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight_end/action"
+msgid "Build closed trench end"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight_end/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 12 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_exit"
+msgid "Trench exit ramp"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_exit/action"
+msgid "Build trench exit ramp"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_exit/usage"
+msgid "Choose the position and orientation.\nCost: 4 engineering points\nBuild time: 8 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight_bridge"
+msgid "Trench with a footbridge"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight_bridge/action"
+msgid "Build trench with a footbridge"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_straight_bridge/usage"
+msgid "Choose the position and orientation.\nCost: 12 engineering points\nBuild time: 16 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_mg_nest"
+msgid "Machine-gun nest"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_mg_nest/action"
+msgid "Build machine-gun nest"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_mg_nest/usage"
+msgid "Choose the position and orientation.\nCost: 20 engineering points\nBuild time: 22 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_emplacement"
+msgid "Mortar emplacement"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_emplacement/action"
+msgid "Build mortar emplacement"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_emplacement/usage"
+msgid "Choose the position and orientation.\nCost: 28 engineering points\nBuild time: 28 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_emplacement_at"
+msgid "Anti-tank gun emplacement"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_emplacement_at/action"
+msgid "Build anti-tank gun emplacement"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_emplacement_at/usage"
+msgid "Choose the position and orientation.\nCost: 24 engineering points\nBuild time: 24 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_pillbox"
+msgid "Earth pillbox"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_pillbox/action"
+msgid "Build earth pillbox"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_pillbox/usage"
+msgid "Choose the position and orientation.\nCost: 40 engineering points\nBuild time: 36 s"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_depot"
+msgid "Trench depot"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_depot/action"
+msgid "Build trench depot"
+msgstr ""
+
+msgctxt "actionbar/it_trench_dirt_depot/usage"
+msgid "Choose the position and orientation.\nCost: 48 engineering points\nBuild time: 34 s"
+msgstr ""

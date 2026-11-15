@@ -1,0 +1,45 @@
+{
+	(include "/properties/trench.inc")
+	(include "/properties/resupply.inc")
+	{extender "supply_zone"
+		{resupply
+			("items_light_generic")
+			("items_light_ger")
+			("items_light_rus")
+			("items_light_eng")
+			("items_light_usa")
+			("items_light_fin")
+			("items_light_fra")
+			("items_heavy_generic")
+			("items_heavy_ger")
+			("items_heavy_rus")
+			("items_heavy_eng")
+			("items_heavy_fin")
+			("items_heavy_usa")
+		}
+		{radius 7}
+		{resupplyPeriod 2}
+		{regenerationPeriod 10}
+		{limit 100}
+		(mod "gameclass:campaign_capture_the_flag" {regenerationPeriod 0})
+	}
+	{DecalView supply_zone {Sprite "supply_zone.ebm" {Visibility 0.25}} {Layer grounddynamic} {Visible 0}}
+	{extension "it_trench_dirt_depot.mdl"}
+	{DynCmpPersistent}
+	{props "sand"}
+	("boneLand" args "trench")
+	("volume" args "body1")
+	("volume" args "body10")
+	("volume" args "body11")
+	("volume" args "body13")
+	("volume" args "body14")
+	("volume" args "body15")
+	("volume" args "body2")
+	("volume" args "body3")
+	("volume" args "body4")
+	("volume" args "body5")
+	("volume" args "body6")
+	("volume" args "body7")
+	("volume" args "body8")
+	("volume" args "body9")
+}

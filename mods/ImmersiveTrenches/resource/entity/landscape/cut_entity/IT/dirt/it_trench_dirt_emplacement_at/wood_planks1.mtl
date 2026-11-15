@@ -1,0 +1,8 @@
+{material bump
+	{diffuse "$/_tile/wood_planks"}
+	{bump "$/_tile/wood_planks_bp"}
+	{specular "$/_tile/wood_planks_sp"}
+	{lightmap "$/_lm/euro_log_trench_dirt_emplacement2_lm"}
+	{color "230 230 230 25"}
+	{blend none}
+}

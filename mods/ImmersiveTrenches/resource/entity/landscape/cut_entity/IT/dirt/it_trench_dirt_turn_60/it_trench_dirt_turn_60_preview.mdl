@@ -1,0 +1,15 @@
+; GEM2 static-v1
+{skeleton
+    {bone "trench"
+        {matrix34
+            0.996194698 -0.0871557427 0
+            -0.0871557427 -0.996194698 0
+            0 0 1
+            1.82167491 15.0315379 0
+        }
+        {parameters "commonmesh;land;align;"}
+        {VolumeView "trench.ply"
+            {DecalTargetDynamic}
+        }
+    }
+}

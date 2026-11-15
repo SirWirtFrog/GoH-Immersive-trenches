@@ -1,0 +1,9 @@
+{material bump
+	{diffuse "textures/trench_dirt_8c78d7219f59f33f"}
+	{bump "textures/trench_dirt_bp_5d910e4c4ba3e02c"}
+	{specular "textures/trench_dirt_sp_e330ed38d023b695"}
+	{lightmap "textures/trench_dirt_end_lm_a4f0ee4e537eb02c"}
+	{color "230 230 230 25"}
+	{blend none}
+	{alpharef 127}
+}

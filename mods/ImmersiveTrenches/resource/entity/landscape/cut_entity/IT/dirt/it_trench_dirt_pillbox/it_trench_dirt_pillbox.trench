@@ -1,0 +1,11 @@
+{it_trench
+    {version 1}
+    {variant "it_trench_dirt_pillbox"
+        {preview "it_trench_dirt_pillbox_preview"}
+    }
+    {default_socket 0}
+    {socket 0
+        {position 75 -9.18485089e-15 0}
+        {yaw 0}
+    }
+}

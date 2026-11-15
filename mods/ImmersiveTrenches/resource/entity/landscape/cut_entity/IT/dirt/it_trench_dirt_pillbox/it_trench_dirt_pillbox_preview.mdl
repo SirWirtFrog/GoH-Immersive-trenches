@@ -1,0 +1,59 @@
+; GEM2 static-v1
+{skeleton
+    {bone "trench_ground"
+        {matrix34
+            1 0 0
+            -2.46519033e-32 -1 0
+            0 0 1
+            0 0 0
+        }
+        {parameters "commonmesh;land;ground;align;"}
+        {VolumeView "trench_ground.ply"
+            {Ground}
+            {DecalTargetDynamic}
+        }
+        {bone "exterior"
+            {matrix34
+                1 0 0
+                -2.46519033e-32 1 0
+                0 0 1
+                0 0 0
+            }
+            {parameters "commonmesh;align;"}
+            {VolumeView "exterior.ply"
+            }
+        }
+        {bone "ground_add"
+            {matrix34
+                1 0 0
+                -2.46519033e-32 1 0
+                0 0 1
+                0 0 0
+            }
+            {parameters "commonmesh;align;"}
+            {VolumeView "ground_add.ply"
+            }
+        }
+        {bone "wood"
+            {matrix34
+                1 0 0
+                -2.46519033e-32 1 0
+                0 0 1
+                0 0 0
+            }
+            {parameters "commonmesh;align;"}
+            {VolumeView "wood.ply"
+            }
+        }
+        {bone "wood2"
+            {matrix34
+                1 0 0
+                -2.46519033e-32 1 0
+                0 0 1
+                -24.1062 0.2099 0
+            }
+            {VolumeView "wood2.ply"
+            }
+        }
+    }
+}

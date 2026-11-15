@@ -1,0 +1,518 @@
+{
+  "profile": "static-v1",
+  "meshes": [
+    {
+      "vertices": 255,
+      "records": 421,
+      "triangles": 430,
+      "uv_sets": 2,
+      "materials": 2,
+      "splits": 166,
+      "tangent_fallbacks": 0,
+      "file": "trench.ply",
+      "geometry": "original_b1be105771cf55c89f746b87d2753cdf@view:original_b1be105771cf55c89f746b87d2753cdf"
+    },
+    {
+      "vertices": 290,
+      "records": 1302,
+      "triangles": 434,
+      "uv_sets": 2,
+      "materials": 1,
+      "splits": 1012,
+      "tangent_fallbacks": 0,
+      "file": "wood.ply",
+      "geometry": "original_b275f87589a552edaeb5b330a1cc362c"
+    }
+  ],
+  "warnings": [],
+  "external": [
+    "$/_military/trench_dirt",
+    "$/_military/trench_dirt_bp",
+    "$/_military/trench_dirt_sp",
+    "$/_tile/wood_planks",
+    "$/_tile/wood_planks_bp",
+    "$/_tile/wood_planks_sp",
+    "/properties/trench.inc"
+  ],
+  "resourceSplits": [],
+  "added": [
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body6",
+      "uuid": "6E461A33-4AD4-2DC3-53F9-0DAC8D1A24D0",
+      "id": "obstacle_6E461A334AD42DC353F90DAC8D1A24D0",
+      "name": "body_6E461A334AD42DC353F90DAC8D1A24D0",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body7",
+      "uuid": "46CBC0A9-414D-6EAA-7721-E68F9E1E0908",
+      "id": "obstacle_46CBC0A9414D6EAA7721E68F9E1E0908",
+      "name": "body_46CBC0A9414D6EAA7721E68F9E1E0908",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body8",
+      "uuid": "158BC6BF-482D-4C06-3ADA-F4B284610A39",
+      "id": "obstacle_158BC6BF482D4C063ADAF4B284610A39",
+      "name": "body_158BC6BF482D4C063ADAF4B284610A39",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body9",
+      "uuid": "3EEDCD50-4D1A-FF47-7B7A-A9B6F85645E3",
+      "id": "obstacle_3EEDCD504D1AFF477B7AA9B6F85645E3",
+      "name": "body_3EEDCD504D1AFF477B7AA9B6F85645E3",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:trench_view|g2:trench_mesh",
+      "uuid": "E35DC271-4BC3-E76E-5CAC-C3A15D7DE8D1",
+      "id": "mesh_E35DC2714BC3E76E5CACC3A15D7DE8D1",
+      "name": "mesh1",
+      "role": "mesh"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:wood|g2:wood_view|g2:wood",
+      "uuid": "7B7B5B88-4CD8-2722-FAEA-98BA52C9726E",
+      "id": "mesh_7B7B5B884CD82722FAEA98BA52C9726E",
+      "name": "mesh2",
+      "role": "mesh"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point|g2:collision_box",
+      "uuid": "9E837366-4CAD-834C-1B39-0F995A863641",
+      "id": "volume_9E8373664CAD834C1B390F995A863641",
+      "name": "body9",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point",
+      "uuid": "89AA3A56-48A7-C384-7E73-858CAB3865F0",
+      "id": "bone_89AA3A5648A7C3847E73858CAB3865F0",
+      "name": "point12",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point9|g2:collision_box2",
+      "uuid": "33B5239A-4FAD-F633-70D6-E9BE6A098550",
+      "id": "volume_33B5239A4FADF63370D6E9BE6A098550",
+      "name": "body_33B5239A4FADF63370D6E9BE6A098550",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point9",
+      "uuid": "938128D3-47AB-D7D3-040D-DDAE865382B2",
+      "id": "bone_938128D347ABD7D3040DDDAE865382B2",
+      "name": "point13",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point10|g2:collision_box3",
+      "uuid": "8FD09ED4-4021-FD52-A1B3-648CC4F70567",
+      "id": "volume_8FD09ED44021FD52A1B3648CC4F70567",
+      "name": "body_8FD09ED44021FD52A1B3648CC4F70567",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point10",
+      "uuid": "07511166-4A95-A7D2-29CF-47AD06507974",
+      "id": "bone_075111664A95A7D229CF47AD06507974",
+      "name": "point14",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point11|g2:collision_box1",
+      "uuid": "BFDEA3BB-4AD5-738E-348B-7DB91E23A0CD",
+      "id": "volume_BFDEA3BB4AD5738E348B7DB91E23A0CD",
+      "name": "body_BFDEA3BB4AD5738E348B7DB91E23A0CD",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point11",
+      "uuid": "7DBDDC1C-4DE7-F658-B947-709A1C3D8192",
+      "id": "bone_7DBDDC1C4DE7F658B947709A1C3D8192",
+      "name": "point15",
+      "role": "bone"
+    }
+  ],
+  "deleted": [
+    {
+      "id": "original_a63dcb54208c59969b803d038d6dcd66",
+      "uuid": "03844445-4574-D780-8F91-4990763C21AE",
+      "role": "mesh",
+      "name": "mesh_2",
+      "data": {},
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:trench_view|g2:trench"
+    },
+    {
+      "id": "original_80fe3f8298eb5536b81a7308edd2df0b",
+      "uuid": "56C14229-4A17-E925-83EB-00BC295AFA8E",
+      "role": "bone",
+      "name": "point7",
+      "data": {
+        "parameters": [],
+        "properties": []
+      },
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point7"
+    },
+    {
+      "id": "original_37024767ca0552b9863bfd883efd49c0",
+      "uuid": "4FF7DCDC-4C9D-32DE-6E3D-FBA32DC28BFB",
+      "role": "bone",
+      "name": "point6",
+      "data": {
+        "parameters": [],
+        "properties": []
+      },
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point6"
+    },
+    {
+      "id": "original_01b5cec9d92f52b196c48fbf9a683f36",
+      "uuid": "49241405-4551-EF2C-3C2A-33ABB1CCA31B",
+      "role": "bone",
+      "name": "point5",
+      "data": {
+        "parameters": [],
+        "properties": []
+      },
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point5"
+    },
+    {
+      "id": "original_da393eba43325e9f86aa8615cd02a8a1",
+      "uuid": "8874687A-4B63-AAEC-1906-44B8A13935C7",
+      "role": "mesh",
+      "name": "mesh_13",
+      "data": {},
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:wood|g2:wood_view|g2:wood"
+    },
+    {
+      "id": "original_25e32cf1fca7521b8823ead0bf2f134f",
+      "uuid": "FC94C14C-4894-05F5-A162-83862B49CC58",
+      "role": "volume",
+      "name": "body5",
+      "data": {
+        "kind": "box",
+        "root_bound": false,
+        "properties": [],
+        "anchor": "original_01b5cec9d92f52b196c48fbf9a683f36",
+        "registerInEntity": true
+      },
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point5|g2:volume_body5"
+    },
+    {
+      "id": "original_1bd4fbd988775b03b3e9f82a1031d747",
+      "uuid": "9F7DD59F-49F2-84BC-56BE-64BF75A97ADF",
+      "role": "volume",
+      "name": "body6",
+      "data": {
+        "kind": "box",
+        "root_bound": false,
+        "properties": [],
+        "anchor": "original_37024767ca0552b9863bfd883efd49c0",
+        "registerInEntity": true
+      },
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point6|g2:volume_body6"
+    },
+    {
+      "id": "original_f0971e5e96345390ab7a6b7f5ce9c672",
+      "uuid": "746F334F-46A8-35F2-AD27-FC958C4E7F5F",
+      "role": "volume",
+      "name": "body7",
+      "data": {
+        "kind": "box",
+        "root_bound": false,
+        "properties": [],
+        "anchor": "original_80fe3f8298eb5536b81a7308edd2df0b",
+        "registerInEntity": true
+      },
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point7|g2:volume_body7"
+    },
+    {
+      "id": "original_d33fdf3b4d0e5031a6b219c415b0ad52",
+      "uuid": "3F2C0886-4165-7812-BEE4-8A91D746CC6D",
+      "role": "obstacle",
+      "name": "body5",
+      "data": {
+        "rotate": true,
+        "tags": []
+      },
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body5"
+    },
+    {
+      "id": "original_864ea3add4805f619a0e8bb441540f14",
+      "uuid": "3980E6F0-4AA9-A474-3C70-ED9C515EFC61",
+      "role": "obstacle",
+      "name": "body6",
+      "data": {
+        "rotate": true,
+        "tags": []
+      },
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body6"
+    },
+    {
+      "id": "original_02708eafcb6759c5863182309d9995f5",
+      "uuid": "81E6EB77-489A-D3CD-E7A0-EC849D905BEE",
+      "role": "obstacle",
+      "name": "body7",
+      "data": {
+        "rotate": true,
+        "tags": []
+      },
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body7"
+    }
+  ],
+  "exportPreview": true,
+  "files": {
+    "ground.mtl": {
+      "bytes": 203,
+      "sha256": "4a50aab2fdd2f1738f1e0f4bb1ea60f2b3e406abf51ed4aa65e94932c68493dc"
+    },
+    "ground_alpha.mtl": {
+      "bytes": 204,
+      "sha256": "0e3f29e274f71607bfbab6ab12c5cca900d3ff47f7b33ada0b894872d9b609d9"
+    },
+    "it_trench_dirt_intersection_of_four.def": {
+      "bytes": 480,
+      "sha256": "568e68903103b77bc90b6e88a3c7f6c73c61e1203d62fc06f780788ca67922ec"
+    },
+    "it_trench_dirt_intersection_of_four.mdl": {
+      "bytes": 6662,
+      "sha256": "a540a7552a5c492b26b740a1f251556064803ae3806d17543bde4f905f598730"
+    },
+    "it_trench_dirt_intersection_of_four.trench": {
+      "bytes": 482,
+      "sha256": "cb535a152d56e4cfd85f12c47e9dbd400a7431df2866d5eccc4f7df294dcaed7"
+    },
+    "it_trench_dirt_intersection_of_four_preview.def": {
+      "bytes": 124,
+      "sha256": "6e8a5486d492c965e7296152ce3844918dfb796543167cbb919f5c79883fd8d6"
+    },
+    "it_trench_dirt_intersection_of_four_preview.mdl": {
+      "bytes": 524,
+      "sha256": "a54b1575450729d4ebba340636c76ee1cd3a750b77c14879513296a7dc34d18a"
+    },
+    "trench.ply": {
+      "bytes": 26284,
+      "sha256": "0cdfbe9b6177fb428d04757082f18f860e9a74a551a5ddccde2fd28bc8365364"
+    },
+    "trench_dirt_t_lm.dds": {
+      "bytes": 43832,
+      "sha256": "304cb0675379a21754c1c289ccd6833583a625d0007ff305b1d6b252e5b6f281"
+    },
+    "wood.ply": {
+      "bytes": 75608,
+      "sha256": "ed559a411dc143899e18ed3586a730e86644b026899a3edc38655d8455e43cbf"
+    },
+    "wood_planks.mtl": {
+      "bytes": 191,
+      "sha256": "d6ae6b2723e586df2457edb7999a16fef8c8d54675914b25d235ebea65ed8882"
+    }
+  },
+  "excluded": [],
+  "nodes": [
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:area_cut",
+      "id": "original_ca38309615595cde93200f425b2507dd",
+      "name": "cut",
+      "role": "area"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body1",
+      "id": "original_b9a9f4e7c8bc5e2ead29d987c995e42b",
+      "name": "body1",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body2",
+      "id": "original_14fa9fa69c375febb9604221858e9eaa",
+      "name": "body2",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body3",
+      "id": "original_af173f64a8c5593d93502ee42e974c29",
+      "name": "body3",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body4",
+      "id": "original_06dc2a5b39d95850a703e1c9f612a4fe",
+      "name": "body4",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body5",
+      "id": "original_29b76f44ddd15e6f9a2512a7048c372e",
+      "name": "body8",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body6",
+      "id": "obstacle_6E461A334AD42DC353F90DAC8D1A24D0",
+      "name": "body_6E461A334AD42DC353F90DAC8D1A24D0",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body7",
+      "id": "obstacle_46CBC0A9414D6EAA7721E68F9E1E0908",
+      "name": "body_46CBC0A9414D6EAA7721E68F9E1E0908",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body8",
+      "id": "obstacle_158BC6BF482D4C063ADAF4B284610A39",
+      "name": "body_158BC6BF482D4C063ADAF4B284610A39",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:GEM2_HELPERS|g2:obstacle_body9",
+      "id": "obstacle_3EEDCD504D1AFF477B7AA9B6F85645E3",
+      "name": "body_3EEDCD504D1AFF477B7AA9B6F85645E3",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:trench_view|g2:trench_mesh",
+      "id": "mesh_E35DC2714BC3E76E5CACC3A15D7DE8D1",
+      "name": "mesh1",
+      "role": "mesh"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:trench_view",
+      "id": "original_b1be105771cf55c89f746b87d2753cdf",
+      "name": "view_1",
+      "role": "view"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point8|g2:volume_body8",
+      "id": "original_3bc8d6802a4b546ba6e8ae255b5c1c28",
+      "name": "body8",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point8",
+      "id": "original_73aeb28867b95878927299a3bc9fa571",
+      "name": "point8",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point1|g2:volume_body1",
+      "id": "original_fc51f1237fb55480839c3ba439eeae4b",
+      "name": "body1",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point1",
+      "id": "original_6d17946f14dc5d54bec879961b2a6855",
+      "name": "point1",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point2|g2:volume_body2",
+      "id": "original_a4996ac47c155075bd7bf0482b58fc09",
+      "name": "body2",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point2",
+      "id": "original_f5240eb0cb8856dc94cfc0e7601ac4c0",
+      "name": "point2",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point3|g2:volume_body3",
+      "id": "original_fa423f94e0265dc5825ed250ac59ac48",
+      "name": "body3",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point3",
+      "id": "original_347ad417c3c75046ae8fb39e3dcb1312",
+      "name": "point3",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point4|g2:volume_body4",
+      "id": "original_462fd3d740c4507db7a2a77633172ee4",
+      "name": "body4",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point4",
+      "id": "original_4d90666412f958018f4c1c160a5148ad",
+      "name": "point4",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:wood|g2:wood_view|g2:wood",
+      "id": "mesh_7B7B5B884CD82722FAEA98BA52C9726E",
+      "name": "mesh2",
+      "role": "mesh"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:wood|g2:wood_view",
+      "id": "original_b275f87589a552edaeb5b330a1cc362c",
+      "name": "view_12",
+      "role": "view"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:wood",
+      "id": "original_35203f3cc07c545584571440df2c53d6",
+      "name": "wood",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point|g2:collision_box",
+      "id": "volume_9E8373664CAD834C1B390F995A863641",
+      "name": "body9",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point",
+      "id": "bone_89AA3A5648A7C3847E73858CAB3865F0",
+      "name": "point12",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point9|g2:collision_box2",
+      "id": "volume_33B5239A4FADF63370D6E9BE6A098550",
+      "name": "body_33B5239A4FADF63370D6E9BE6A098550",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point9",
+      "id": "bone_938128D347ABD7D3040DDDAE865382B2",
+      "name": "point13",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point10|g2:collision_box3",
+      "id": "volume_8FD09ED44021FD52A1B3648CC4F70567",
+      "name": "body_8FD09ED44021FD52A1B3648CC4F70567",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point10",
+      "id": "bone_075111664A95A7D229CF47AD06507974",
+      "name": "point14",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point11|g2:collision_box1",
+      "id": "volume_BFDEA3BB4AD5738E348B7DB91E23A0CD",
+      "name": "body_BFDEA3BB4AD5738E348B7DB91E23A0CD",
+      "role": "volume"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench|g2:point11",
+      "id": "bone_7DBDDC1C4DE7F658B947709A1C3D8192",
+      "name": "point15",
+      "role": "bone"
+    },
+    {
+      "node": "|g2:it_trench_dirt_intersection_of_four_ROOT|g2:trench",
+      "id": "original_414ac3b9450b5b4bae5d5d0c9958b37f",
+      "name": "trench",
+      "role": "bone"
+    }
+  ]
+}

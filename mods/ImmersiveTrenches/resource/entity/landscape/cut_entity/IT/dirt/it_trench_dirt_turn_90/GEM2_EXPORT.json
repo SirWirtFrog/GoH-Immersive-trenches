@@ -1,0 +1,189 @@
+{
+  "profile": "static-v1",
+  "meshes": [
+    {
+      "vertices": 213,
+      "records": 421,
+      "triangles": 339,
+      "uv_sets": 2,
+      "materials": 3,
+      "splits": 208,
+      "tangent_fallbacks": 0,
+      "file": "trench.ply",
+      "geometry": "original_8dfe7ad2af89519d8ca0c91d8919c56a"
+    }
+  ],
+  "warnings": [],
+  "external": [
+    "$/_military/trench_dirt",
+    "$/_military/trench_dirt_bp",
+    "$/_military/trench_dirt_sp",
+    "$/_tile/wood_planks",
+    "$/_tile/wood_planks_bp",
+    "$/_tile/wood_planks_sp",
+    "/properties/trench.inc"
+  ],
+  "resourceSplits": [],
+  "added": [],
+  "deleted": [],
+  "exportPreview": true,
+  "files": {
+    "ground.mtl": {
+      "bytes": 211,
+      "sha256": "8adf10a7c7de2086147946c0ed38222306a99fbdb795bd57ea8c3e634fe00224"
+    },
+    "ground_alpha.mtl": {
+      "bytes": 212,
+      "sha256": "3e8e84727ddfea1482c52386503afbef4c1a238112c7f250215b911a0bcb6a4d"
+    },
+    "it_trench_dirt_turn_90.def": {
+      "bytes": 271,
+      "sha256": "158606b921d80175ee8379512a188c851f35e236edf09c4bcb688ef8204b1f1e"
+    },
+    "it_trench_dirt_turn_90.mdl": {
+      "bytes": 3217,
+      "sha256": "5c1f1feee61a641fb1668b8e2c363ef0960d41b5f44ac595e4520090132f0b6e"
+    },
+    "it_trench_dirt_turn_90.trench": {
+      "bytes": 288,
+      "sha256": "69766c5a54d4dbde9dfc04e383880443443adc3e2445eb7ebf992bc7ff479640"
+    },
+    "it_trench_dirt_turn_90_preview.def": {
+      "bytes": 111,
+      "sha256": "9373b18de0070e768f1ad6880873dbeca80a1a03d1858470102829eeff2b3132"
+    },
+    "it_trench_dirt_turn_90_preview.mdl": {
+      "bytes": 277,
+      "sha256": "035697c1d7d2789e2079396ac2c9e681b416e19b6300eccfeffb548b3c520333"
+    },
+    "trench.ply": {
+      "bytes": 25778,
+      "sha256": "fb948c281a9364e4db5bfe76fbae819135db4e02b97224ad4f5ebf55a9d5af22"
+    },
+    "trench_dirt_turn_90-1_lm.dds": {
+      "bytes": 43832,
+      "sha256": "5c7a0805f1d53299b6bc76eff215d574857ab80cc308d075152dcef8833abf24"
+    },
+    "wood_planks.mtl": {
+      "bytes": 199,
+      "sha256": "911575552ffc0cda094a3e59e7ad1d8410febbcde65a3109c8c37a44fdabf23c"
+    }
+  },
+  "excluded": [],
+  "nodes": [
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:trench_view|g2_4:trench_mesh",
+      "id": "original_22e34e18e5995d199a943d62a2687327",
+      "name": "mesh_2",
+      "role": "mesh"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:trench_view",
+      "id": "original_8dfe7ad2af89519d8ca0c91d8919c56a",
+      "name": "view_1",
+      "role": "view"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:point1|g2_4:volume_body1",
+      "id": "original_96fcd505c8405c7d83ec3f5e16ac47cb",
+      "name": "body1",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:point1",
+      "id": "original_6313a8c04e1f5a5e888576a4292a4128",
+      "name": "point1",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:point2|g2_4:volume_body2",
+      "id": "original_a8aa66fcaed553e6b05e0da3fe20ad8e",
+      "name": "body2",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:point2",
+      "id": "original_f3b55d1e58d65ad1897d0b8e676e9398",
+      "name": "point2",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:point3|g2_4:volume_body3",
+      "id": "original_08ca25467bf051ca9a8fc26959e554c2",
+      "name": "body3",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:point3",
+      "id": "original_656bc3e6101254ee95d41136e1e69c61",
+      "name": "point3",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:point4|g2_4:volume_body4",
+      "id": "original_83c5ceade87b594a87efb68d9f3642da",
+      "name": "body4",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:point4",
+      "id": "original_1fdcabc08d975c56850f6ebf9e3198c3",
+      "name": "point4",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:point5|g2_4:volume_body5",
+      "id": "original_3a8f217ce1ee529094b02cae894955c5",
+      "name": "body5",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench|g2_4:point5",
+      "id": "original_8236b3fd8ac85a05bdd0f10d518e7cd6",
+      "name": "point5",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:trench",
+      "id": "original_2b7fa0b798c85cff9e1794ac521bfc0e",
+      "name": "trench",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:GEM2_HELPERS|g2_4:area_cut",
+      "id": "original_528516932b9159f188bf1a0b78adccab",
+      "name": "cut",
+      "role": "area"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:GEM2_HELPERS|g2_4:obstacle_body1",
+      "id": "original_71663e3f593d5507aaa88b3c81f55853",
+      "name": "body1",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:GEM2_HELPERS|g2_4:obstacle_body2",
+      "id": "original_a8ae0a28efdb51b0bb7a6d180c707be9",
+      "name": "body2",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:GEM2_HELPERS|g2_4:obstacle_body3",
+      "id": "original_19ad73c1e7375d25b050fc005f5930b0",
+      "name": "body3",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:GEM2_HELPERS|g2_4:obstacle_body4",
+      "id": "original_a27802498a1b5157971bae94d3fed09a",
+      "name": "body4",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_4:it_trench_dirt_turn_90_ROOT|g2_4:GEM2_HELPERS|g2_4:obstacle_body5",
+      "id": "original_98c3a3d9f61b5b69979f890f19daf3d2",
+      "name": "body5",
+      "role": "obstacle"
+    }
+  ]
+}

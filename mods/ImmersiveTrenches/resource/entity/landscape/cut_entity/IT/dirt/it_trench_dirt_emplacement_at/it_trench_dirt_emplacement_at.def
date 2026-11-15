@@ -1,0 +1,20 @@
+{
+	(include "/properties/trench.inc")
+	{extension "it_trench_dirt_emplacement_at.mdl"}
+	{DynCmpPersistent}
+	{props "sand"}
+	{obstacleID "it_trench_at_wall"}
+	("boneLand" args "trench")
+	("volume" args "body01_vol002")
+	("volume" args "body02_vol002")
+	("volume" args "body03_vol002")
+	("volume" args "body04_vol003")
+	("volume" args "body05_vol003")
+	("volume" args "body06_vol001")
+	("volume" args "body07_vol002")
+	("volume" args "body08_vol002")
+	("volume" args "body09_vol002")
+	("volume" args "body1")
+	("volume" args "body2")
+	("volume" args "body3")
+}

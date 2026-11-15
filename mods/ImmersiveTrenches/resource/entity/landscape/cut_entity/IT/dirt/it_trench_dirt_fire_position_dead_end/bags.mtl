@@ -1,0 +1,9 @@
+{material bump
+	{diffuse "textures/sandbag_new_d2753dc62b7bee44"}
+	{bump "textures/sandbag_new_bp_994097a2f4aa493b"}
+	{specular "textures/sandbag_new_sp_d9b072be50d16e01"}
+	{lightmap "textures/trench_dirt_firepos2_lm_fd7cc18ea99dd63d"}
+	{color "230 230 230 25"}
+	{blend none}
+	{alpharef 127}
+}

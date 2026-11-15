@@ -1,0 +1,19 @@
+{it_trench
+    {version 1}
+    {variant "it_trench_dirt_intersection_of_three"
+        {preview "it_trench_dirt_intersection_of_three_preview"}
+    }
+    {default_socket 0}
+    {socket 0
+        {position 50 50 0}
+        {yaw 90}
+    }
+    {socket 1
+        {position 50 -50 0}
+        {yaw -90}
+    }
+    {socket 2
+        {position 5.63148674e-08 -1.12199139e-12 0}
+        {yaw -180}
+    }
+}

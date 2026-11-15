@@ -1,0 +1,26 @@
+; GEM2 static-v1
+{skeleton
+    {bone "trench"
+        {matrix34
+            1 0 0
+            0 -1 0
+            0 0 1
+            0 0 0
+        }
+        {parameters "commonmesh;land;align;"}
+        {VolumeView "trench.ply"
+            {DecalTargetDynamic}
+        }
+        {bone "wood"
+            {matrix34
+                1 0 0
+                0 1 0
+                0 0 1
+                0 13.1994899 0
+            }
+            {parameters "align;"}
+            {VolumeView "wood.ply"
+            }
+        }
+    }
+}

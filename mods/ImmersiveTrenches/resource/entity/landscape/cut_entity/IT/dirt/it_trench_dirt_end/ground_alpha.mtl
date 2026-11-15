@@ -1,0 +1,9 @@
+{material bump
+	{diffuse "textures/soldier_foxhole_21258712c979009e"}
+	{bump "textures/soldier_foxhole_bp_148f0f6a27f1128b"}
+	{specular "textures/soldier_foxhole_sp_cd7100e42fe9057a"}
+	{lightmap "textures/trench_dirt_end_lm_a4f0ee4e537eb02c"}
+	{color "230 230 230 25"}
+	{blend blend}
+	{alpharef 127}
+}

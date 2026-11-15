@@ -1,0 +1,343 @@
+{
+  "profile": "static-v1",
+  "meshes": [
+    {
+      "vertices": 380,
+      "records": 1659,
+      "triangles": 651,
+      "uv_sets": 2,
+      "materials": 3,
+      "splits": 1279,
+      "tangent_fallbacks": 0,
+      "file": "trench.ply",
+      "geometry": "original_f4a01875b0fd53169e7a5c57f469811a"
+    }
+  ],
+  "warnings": [],
+  "external": [
+    "$/_lm/euro_log_trench_dirt_emplacement2_lm",
+    "$/_military/trench_dirt",
+    "$/_military/trench_dirt_bp",
+    "$/_military/trench_dirt_sp",
+    "$/_tile/wood_planks",
+    "$/_tile/wood_planks_bp",
+    "$/_tile/wood_planks_sp",
+    "/properties/trench.inc"
+  ],
+  "resourceSplits": [],
+  "added": [],
+  "deleted": [],
+  "exportPreview": true,
+  "files": {
+    "ground.mtl": {
+      "bytes": 229,
+      "sha256": "6480a4928a3fb139f7835f4ffdc9703d16aa7c0003cdb2494e3f7c18ab4a775a"
+    },
+    "ground_alpha.mtl": {
+      "bytes": 230,
+      "sha256": "0ff831bda5b6e629bed1141e07564f2ed45504ee9909d918252e9d7b9c493905"
+    },
+    "it_trench_dirt_emplacement_at.def": {
+      "bytes": 559,
+      "sha256": "50ffc7a930cdb2023b15eff7c61951d0fb8a619a78a497481020925a8e3405bc"
+    },
+    "it_trench_dirt_emplacement_at.mdl": {
+      "bytes": 8484,
+      "sha256": "e315b48441ef6d8f82552e2ee02ea8436f878c4669af37861fbcdd2644619103"
+    },
+    "it_trench_dirt_emplacement_at.trench": {
+      "bytes": 238,
+      "sha256": "3113e9ef370d4b4c6891e1f040c4d972c7559c79387fa4a2cf082cd446d5030a"
+    },
+    "it_trench_dirt_emplacement_at_preview.def": {
+      "bytes": 118,
+      "sha256": "b5fca6252c7c6d8aa4d8873084d2e1268616e72c85e05c258c7177cfee89bdf7"
+    },
+    "it_trench_dirt_emplacement_at_preview.mdl": {
+      "bytes": 253,
+      "sha256": "b26482f9924b741e1e9b1279e21fbfbe2c55a3353a14eaa586579b882b4efef9"
+    },
+    "trench.ply": {
+      "bytes": 96979,
+      "sha256": "0eec6fea974fd0db22ce36368efb062f21f5ea92fa9ae74fd6c152afbe511950"
+    },
+    "wood_planks1.mtl": {
+      "bytes": 217,
+      "sha256": "0e8b4c9c2f9075e5071b2a18da10599ce23921cfd3213e8450b779b41e44fa8d"
+    }
+  },
+  "excluded": [],
+  "nodes": [
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:area_cut",
+      "id": "original_a43c7cf04a435ea5903dd399122f4020",
+      "name": "cut",
+      "role": "area"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body01_vol002",
+      "id": "original_da1ee25f8a0752e6a8396a2d67769929",
+      "name": "body01_vol002",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body02_vol002",
+      "id": "original_b81d733b9890550d8471323d178a9ecb",
+      "name": "body02_vol002",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body03_vol002",
+      "id": "original_d085b9e0e47956fab76695abe29ff9ed",
+      "name": "body03_vol002",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body04_vol003",
+      "id": "original_0398a5da1e1c5970a7a13dd2684880d2",
+      "name": "body04_vol003",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body05_vol003",
+      "id": "original_080dab7934c45f74bb1d6c082989790f",
+      "name": "body05_vol003",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body06_vol001",
+      "id": "original_97880b1ef853553b800dad9d667c3d4c",
+      "name": "body06_vol001",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body07_vol002",
+      "id": "original_7e130d507cc95e1fa58917b4bc9b44c7",
+      "name": "body07_vol002",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body08_vol002",
+      "id": "original_596218710bb25fd184a88e119ab6e6b4",
+      "name": "body08_vol002",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body09_vol002",
+      "id": "original_3eec358121c95ccfb786646094ec24cd",
+      "name": "body09_vol002",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body1",
+      "id": "original_7b0c9be8d4ca5ff2a1ea8367edb96453",
+      "name": "body1",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body2",
+      "id": "original_97be72b51cff51fe92680666b940c432",
+      "name": "body2",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:GEM2_HELPERS|g2_14:obstacle_body3",
+      "id": "original_c6c9e4b25020504ba707831c6ac14cfc",
+      "name": "body3",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:trench_view|g2_14:trench_mesh",
+      "id": "original_1c1c602d68285c0d97294e3491356acd",
+      "name": "mesh_2",
+      "role": "mesh"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:trench_view",
+      "id": "original_f4a01875b0fd53169e7a5c57f469811a",
+      "name": "view_1",
+      "role": "view"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point1|g2_14:volume_body1",
+      "id": "original_3e2face5fc3f5fd99b894c58ecc4d0f2",
+      "name": "body1",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point1",
+      "id": "original_f7d811569c0e56c1be04287cff2c5c0a",
+      "name": "point1",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point192|g2_14:volume_body05_vol003",
+      "id": "original_b98c7578c8965c068388b438ba240d03",
+      "name": "body05_vol003",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point192",
+      "id": "original_db7a975981aa5bb09f7bcfb03af04f8b",
+      "name": "point192",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point193|g2_14:volume_body06_vol001",
+      "id": "original_031bbdb5cfc959b99865a270d3a1703a",
+      "name": "body06_vol001",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point193",
+      "id": "original_4b0c476c5f8a53bbb886f69b30cbbee2",
+      "name": "point193",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point194|g2_14:volume_body01_vol002",
+      "id": "original_8b31e0bde4d35d5788177cd9b3ed16f5",
+      "name": "body01_vol002",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point194",
+      "id": "original_5d27fbcb63445d3a8dd4d0aa7de2263b",
+      "name": "point194",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point195|g2_14:volume_body02_vol002",
+      "id": "original_59c4929fa0a35277a67c3836008b9097",
+      "name": "body02_vol002",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point195",
+      "id": "original_af8ea33e335352d18adc00afc295ffca",
+      "name": "point195",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point196|g2_14:volume_body03_vol002",
+      "id": "original_a616a6392aaa56a79723abe0d13a7692",
+      "name": "body03_vol002",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point196",
+      "id": "original_97d074e723af56f2bc40e578690f9b2a",
+      "name": "point196",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point197|g2_14:volume_body04_vol003",
+      "id": "original_034a60eeb0c45359b5ef4477df2f2a13",
+      "name": "body04_vol003",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point197",
+      "id": "original_84d67102156158e7a107fda2afff9428",
+      "name": "point197",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point198|g2_14:volume_body08_vol002",
+      "id": "original_580b816d0c3658dfa773a9c4dd651bab",
+      "name": "body08_vol002",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point198",
+      "id": "original_ffc2de4c08b8553b9e2fb010ab9c5ba0",
+      "name": "point198",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point199|g2_14:volume_body07_vol002",
+      "id": "original_cb1c308688d5537ea767e0096ca5d40b",
+      "name": "body07_vol002",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point199",
+      "id": "original_09d7445afae159a7aacd1ade89584264",
+      "name": "point199",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point2|g2_14:volume_body2",
+      "id": "original_d3cb60575cf85f6c94ca5f49c9017386",
+      "name": "body2",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point2",
+      "id": "original_a61b5476fdec59279001cb47133512b3",
+      "name": "point2",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point209|g2_14:volume_body09_vol002",
+      "id": "original_d8939311f54e5835acc16e45598b95fe",
+      "name": "body09_vol002",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point209",
+      "id": "original_0c2fb8ec08bd5eefb9c6c4d46b35adca",
+      "name": "point209",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point3|g2_14:volume_body3",
+      "id": "original_9c0e3a396cd054a7988d53a2bde7a468",
+      "name": "body3",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench|g2_14:point3",
+      "id": "original_12ae3c9eee71512693faa4a564f55e9a",
+      "name": "point3",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_14:it_trench_dirt_emplacement_at_ROOT|g2_14:trench",
+      "id": "original_8b4f67c4781f5a8d8a68224fcd38dd67",
+      "name": "trench",
+      "role": "bone"
+    }
+  ],
+  "lastRename": {
+    "oldName": "trench_dirt_emplacement_at",
+    "newName": "it_trench_dirt_emplacement_at",
+    "changes": [
+      {
+        "kind": "Основной файл",
+        "before": "trench_dirt_emplacement_at.mdl",
+        "after": "it_trench_dirt_emplacement_at.mdl"
+      },
+      {
+        "kind": "Основной файл",
+        "before": "trench_dirt_emplacement_at.def",
+        "after": "it_trench_dirt_emplacement_at.def"
+      },
+      {
+        "kind": "Сокеты/строительство",
+        "before": "trench_dirt_emplacement_at.trench",
+        "after": "it_trench_dirt_emplacement_at.trench"
+      },
+      {
+        "kind": "Превью (если включено)",
+        "before": "trench_dirt_emplacement_at_preview.mdl",
+        "after": "it_trench_dirt_emplacement_at_preview.mdl"
+      },
+      {
+        "kind": "Превью (если включено)",
+        "before": "trench_dirt_emplacement_at_preview.def",
+        "after": "it_trench_dirt_emplacement_at_preview.def"
+      }
+    ]
+  }
+}

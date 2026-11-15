@@ -1,0 +1,9 @@
+{material bump
+	{diffuse "textures/wood_planks_11bdafe8f243df43"}
+	{bump "textures/wood_planks_bp_d055deff03cd9538"}
+	{specular "textures/wood_planks_sp_d8875e252ef7024e"}
+	{lightmap "textures/trench_dirt_firepos2_lm_fd7cc18ea99dd63d"}
+	{color "230 230 230 25"}
+	{blend none}
+	{alpharef 127}
+}

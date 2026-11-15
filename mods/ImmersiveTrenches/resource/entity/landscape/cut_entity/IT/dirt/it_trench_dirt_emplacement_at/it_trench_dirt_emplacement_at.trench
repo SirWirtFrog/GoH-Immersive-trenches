@@ -1,0 +1,11 @@
+{it_trench
+    {version 1}
+    {variant "it_trench_dirt_emplacement_at"
+        {preview "it_trench_dirt_emplacement_at_preview"}
+    }
+    {default_socket 0}
+    {socket 0
+        {position 100 -4.39093206e-14 0}
+        {yaw 0}
+    }
+}

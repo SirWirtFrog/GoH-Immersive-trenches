@@ -1,0 +1,8 @@
+{material bump
+	{diffuse "trench_dirt"}
+	{bump "trench_dirt_bp"}
+	{specular "trench_dirt_sp"}
+	{lightmap "pillbox_trench_lm"}
+	{color "230 230 230 25"}
+	{blend blend}
+}

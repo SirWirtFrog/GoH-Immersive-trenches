@@ -1,0 +1,77 @@
+; GEM2 static-v1
+{skeleton
+    {bone "trench"
+        {matrix34
+            1 0 0
+            0 -1 0
+            0 0 1
+            0 0 0
+        }
+        {parameters "commonmesh;land;align;"}
+        {VolumeView "trench.ply"
+            {DecalTargetDynamic}
+        }
+        {bone "point1"
+            {matrix34
+                1 0 0
+                0 1 0
+                0 0 1
+                11.5774 -14.7956 -3
+            }
+        }
+        {bone "point2"
+            {matrix34
+                -1 0 0
+                0 -1 0
+                0 0 1
+                11.4622 12.4964 -3
+            }
+        }
+    }
+}
+{area "cut"
+    {polygon2
+        {radius 0}
+        {vertex -38.8866997 19.2717991}
+        {vertex -38.5793991 -20.0783005}
+        {vertex 27 -18.8973007}
+        {vertex 27 19.7000999}
+    }
+    {rotate}
+}
+{obstacle "body1"
+    {obb2
+        {center 9.34174013 17.1616001}
+        {extent 25.8611884 2.37894921}
+        {axis 0.999391444 0.0348818195}
+    }
+    {rotate}
+}
+{obstacle "body2"
+    {obb2
+        {center 9.13128996 -15.9911997}
+        {extent 2.29084855 26.2023918}
+        {axis 0.0356775206 0.999363355}
+    }
+    {rotate}
+}
+{volume "body1"
+    {box 51.6828995 7.08343983 24.9930992}
+    {bone "point1"}
+    {matrix34
+        -0.9995 0.0311 2.77416978e-17
+        -0.0309 -0.9921 -0.1218
+        -0.0038 -0.1218 0.9926
+        -2.2357 -4.366 -10.2782
+    }
+}
+{volume "body2"
+    {box 52.3485985 6.81045008 24.9930992}
+    {bone "point2"}
+    {matrix34
+        -0.9995 -0.0301 -1.85505572e-34
+        0.0299 -0.9921 -0.1218
+        0.0037 -0.1218 0.9926
+        2.3309 -5.4948 -10.2781
+    }
+}

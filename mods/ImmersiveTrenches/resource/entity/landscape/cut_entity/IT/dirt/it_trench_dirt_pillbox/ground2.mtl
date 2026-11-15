@@ -1,0 +1,6 @@
+{material multiply
+	{diffuse "clay_19"}
+	{diffuse1 "pillbox_trench_lm"}
+	{blend none}
+	{modulate2x}
+}

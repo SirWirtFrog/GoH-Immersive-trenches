@@ -1,0 +1,228 @@
+msgid ""
+msgstr ""
+"Language: ru\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgctxt "actionbar/it_trench_menu"
+msgid "Trenches"
+msgstr "Окопы"
+
+msgctxt "actionbar/it_trench_menu/usage"
+msgid "Open the modular trench construction menu."
+msgstr "Открыть меню строительства модульных окопов."
+
+msgctxt "actionbar/it_trench_dirt_straight"
+msgid "Straight section"
+msgstr "Прямая секция"
+
+msgctxt "actionbar/it_trench_dirt_straight/action"
+msgid "Dig straight trench section"
+msgstr "Выкопать прямую секцию окопа"
+
+msgctxt "actionbar/it_trench_dirt_straight/usage"
+msgid "Choose a position and orientation for the straight trench section.\nCost: 12 engineering points\nBuild time: 16 s"
+msgstr "Выберите место и направление для строительства прямой секции окопа.\nСтоимость: 12 инж. очк.\nВремя строительства: 16 с"
+
+msgctxt "actionbar/it_trench_dirt_fire_position_through"
+msgid "Through firing position"
+msgstr "Проходная огневая позиция"
+
+msgctxt "actionbar/it_trench_dirt_fire_position_through/action"
+msgid "Build through firing position"
+msgstr "Построить огневую позицию с двумя выходами"
+
+msgctxt "actionbar/it_trench_dirt_fire_position_through/usage"
+msgid "Choose a location and direction for a firing position with two exits.\nCost: 16 engineering points\nBuild time: 18 s"
+msgstr "Выберите место и направление для огневой позиции с двумя выходами.\nСтоимость: 16 инж. очк.\nВремя строительства: 18 с"
+
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end"
+msgid "Dead-end firing position"
+msgstr "Тупиковая огневая позиция"
+
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end/action"
+msgid "Build dead-end firing position"
+msgstr "Построить огневую позицию с одним выходом"
+
+msgctxt "actionbar/it_trench_dirt_fire_position_dead_end/usage"
+msgid "Choose a location and direction for a firing position with one exit.\nCost: 8 engineering points\nBuild time: 12 s"
+msgstr "Выберите место и направление для огневой позиции с одним выходом.\nСтоимость: 8 инж. очк.\nВремя строительства: 12 с"
+
+msgctxt "actionbar/it_trench_dirt_straight_short"
+msgid "Short straight trench"
+msgstr "Короткая прямая"
+
+msgctxt "actionbar/it_trench_dirt_straight_short/action"
+msgid "Build short straight trench"
+msgstr "Построить: короткая прямая"
+
+msgctxt "actionbar/it_trench_dirt_straight_short/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 10 s"
+msgstr "Стоимость: 8 инж. очк.\nВремя строительства: 10 с"
+
+msgctxt "actionbar/it_trench_dirt_turn_20"
+msgid "Trench bend 20°"
+msgstr "Изгиб 20°"
+
+msgctxt "actionbar/it_trench_dirt_turn_20/action"
+msgid "Build trench bend 20°"
+msgstr "Построить: Изгиб 20°"
+
+msgctxt "actionbar/it_trench_dirt_turn_20/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 10 s"
+msgstr "Стоимость: 8 инж. очк.\nВремя строительства: 10 с"
+
+msgctxt "actionbar/it_trench_dirt_turn_30"
+msgid "30° Trench bend"
+msgstr "Изгиб 30°"
+
+msgctxt "actionbar/it_trench_dirt_turn_30/action"
+msgid "Build 30° trench bend"
+msgstr "Построить: Изгиб 30°"
+
+msgctxt "actionbar/it_trench_dirt_turn_30/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 10 s"
+msgstr "Стоимость: 8 инж. очк.\nВремя строительства: 10 с"
+
+msgctxt "actionbar/it_trench_dirt_turn_60"
+msgid "60° Trench bend"
+msgstr "Изгиб 60°"
+
+msgctxt "actionbar/it_trench_dirt_turn_60/action"
+msgid "Build 60° trench bend"
+msgstr "Построить: Изгиб 60°"
+
+msgctxt "actionbar/it_trench_dirt_turn_60/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 12 s"
+msgstr "Стоимость: 8 инж. очк.\nВремя строительства: 12 с"
+
+msgctxt "actionbar/it_trench_dirt_turn_90"
+msgid "90° trench corner"
+msgstr "Поворот на 90°"
+
+msgctxt "actionbar/it_trench_dirt_turn_90/action"
+msgid "Build 90° trench corner"
+msgstr "Построить: поворот на 90°"
+
+msgctxt "actionbar/it_trench_dirt_turn_90/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 12 s"
+msgstr "Стоимость: 8 инж. очк.\nВремя строительства: 12 с"
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_three"
+msgid "Trench junction"
+msgstr "Развилка окопа"
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_three/action"
+msgid "Build trench junction"
+msgstr "Построить: развилка окопа"
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_three/usage"
+msgid "Choose the position and orientation.\nCost: 12 engineering points\nBuild time: 15 s"
+msgstr "Стоимость: 12 инж. очк.\nВремя строительства: 15 с"
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_four"
+msgid "Four-way trench junction"
+msgstr "Четырёхсторонний перекрёсток"
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_four/action"
+msgid "Build four-way trench junction"
+msgstr "Построить четырёхсторонний перекрёсток"
+
+msgctxt "actionbar/it_trench_dirt_intersection_of_four/usage"
+msgid "Cost: 16 engineering points\nBuild time: 20 s"
+msgstr "Стоимость: 16 инж. очк.\nВремя строительства: 20 с"
+
+msgctxt "actionbar/it_trench_dirt_straight_end"
+msgid "Closed trench end"
+msgstr "Закрытый торец"
+
+msgctxt "actionbar/it_trench_dirt_straight_end/action"
+msgid "Build closed trench end"
+msgstr "Построить: закрытый торец"
+
+msgctxt "actionbar/it_trench_dirt_straight_end/usage"
+msgid "Choose the position and orientation.\nCost: 8 engineering points\nBuild time: 12 s"
+msgstr "Стоимость: 8 инж. очк.\nВремя строительства: 12 с"
+
+msgctxt "actionbar/it_trench_dirt_exit"
+msgid "Trench exit ramp"
+msgstr "Выход из окопа"
+
+msgctxt "actionbar/it_trench_dirt_exit/action"
+msgid "Build trench exit ramp"
+msgstr "Построить: выход из окопа"
+
+msgctxt "actionbar/it_trench_dirt_exit/usage"
+msgid "Choose the position and orientation.\nCost: 4 engineering points\nBuild time: 8 s"
+msgstr "Стоимость: 4 инж. очк.\nВремя строительства: 8 с"
+
+msgctxt "actionbar/it_trench_dirt_straight_bridge"
+msgid "Trench with a footbridge"
+msgstr "Окоп с мостиком"
+
+msgctxt "actionbar/it_trench_dirt_straight_bridge/action"
+msgid "Build trench with a footbridge"
+msgstr "Построить: окоп с мостиком"
+
+msgctxt "actionbar/it_trench_dirt_straight_bridge/usage"
+msgid "Choose the position and orientation.\nCost: 12 engineering points\nBuild time: 16 s"
+msgstr "Стоимость: 12 инж. очк.\nВремя строительства: 16 с"
+
+msgctxt "actionbar/it_trench_dirt_mg_nest"
+msgid "Machine-gun nest"
+msgstr "Пулемётное гнездо"
+
+msgctxt "actionbar/it_trench_dirt_mg_nest/action"
+msgid "Build machine-gun nest"
+msgstr "Построить: пулемётное гнездо"
+
+msgctxt "actionbar/it_trench_dirt_mg_nest/usage"
+msgid "Choose the position and orientation.\nCost: 20 engineering points\nBuild time: 22 s"
+msgstr "Стоимость: 20 инж. очк.\nВремя строительства: 22 с"
+
+msgctxt "actionbar/it_trench_dirt_emplacement"
+msgid "Mortar emplacement"
+msgstr "Позиция для миномёта"
+
+msgctxt "actionbar/it_trench_dirt_emplacement/action"
+msgid "Build mortar emplacement"
+msgstr "Построить позицию для миномёта"
+
+msgctxt "actionbar/it_trench_dirt_emplacement/usage"
+msgid "Choose the position and orientation.\nCost: 28 engineering points\nBuild time: 28 s"
+msgstr "Стоимость: 28 инж. очк.\nВремя строительства: 28 с"
+
+msgctxt "actionbar/it_trench_dirt_emplacement_at"
+msgid "Anti-tank gun emplacement"
+msgstr "Позиция для ПТО"
+
+msgctxt "actionbar/it_trench_dirt_emplacement_at/action"
+msgid "Build anti-tank gun emplacement"
+msgstr "Построить: позиция для ПТО"
+
+msgctxt "actionbar/it_trench_dirt_emplacement_at/usage"
+msgid "Choose the position and orientation.\nCost: 24 engineering points\nBuild time: 24 s"
+msgstr "Стоимость: 24 инж. очк.\nВремя строительства: 24 с"
+
+msgctxt "actionbar/it_trench_dirt_pillbox"
+msgid "Earth pillbox"
+msgstr "Земляной ДОТ"
+
+msgctxt "actionbar/it_trench_dirt_pillbox/action"
+msgid "Build earth pillbox"
+msgstr "Построить: земляной дот"
+
+msgctxt "actionbar/it_trench_dirt_pillbox/usage"
+msgid "Choose the position and orientation.\nCost: 40 engineering points\nBuild time: 36 s"
+msgstr "Стоимость: 40 инж. очк.\nВремя строительства: 36 с"
+
+msgctxt "actionbar/it_trench_dirt_depot"
+msgid "Trench depot"
+msgstr "Окопное депо"
+
+msgctxt "actionbar/it_trench_dirt_depot/action"
+msgid "Build trench depot"
+msgstr "Построить: окопное депо"
+
+msgctxt "actionbar/it_trench_dirt_depot/usage"
+msgid "Choose the position and orientation.\nCost: 48 engineering points\nBuild time: 34 s"
+msgstr "Стоимость: 48 инж. очк.\nВремя строительства: 34 с"

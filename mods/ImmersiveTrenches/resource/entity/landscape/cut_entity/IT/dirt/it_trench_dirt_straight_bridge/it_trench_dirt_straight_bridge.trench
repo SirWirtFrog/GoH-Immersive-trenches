@@ -1,0 +1,15 @@
+{it_trench
+    {version 1}
+    {variant "it_trench_dirt_straight_bridge"
+        {preview "it_trench_dirt_straight_bridge_preview"}
+    }
+    {default_socket 1}
+    {socket 0
+        {position -60 -1.88737914e-15 0}
+        {yaw 180}
+    }
+    {socket 1
+        {position 60 6.18949336e-15 0}
+        {yaw 0}
+    }
+}

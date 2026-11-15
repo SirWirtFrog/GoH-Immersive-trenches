@@ -1,0 +1,16 @@
+{
+	(include "/properties/trench.inc")
+	{extension "it_trench_dirt_intersection_of_four.mdl"}
+	{DynCmpPersistent}
+	{props "sand"}
+	("boneLand" args "trench")
+	("volume" args "body1")
+	("volume" args "body2")
+	("volume" args "body3")
+	("volume" args "body4")
+	("volume" args "body8")
+	("volume" args "body9")
+	("volume" args "body_33B5239A4FADF63370D6E9BE6A098550")
+	("volume" args "body_8FD09ED44021FD52A1B3648CC4F70567")
+	("volume" args "body_BFDEA3BB4AD5738E348B7DB91E23A0CD")
+}

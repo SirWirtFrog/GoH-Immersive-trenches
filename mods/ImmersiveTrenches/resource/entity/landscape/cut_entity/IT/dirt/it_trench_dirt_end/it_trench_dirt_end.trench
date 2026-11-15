@@ -1,0 +1,11 @@
+{it_trench
+    {version 1}
+    {variant "it_trench_dirt_end"
+        {preview "it_trench_dirt_end_preview"}
+    }
+    {default_socket 0}
+    {socket 0
+        {position -45 1.10218214e-14 0}
+        {yaw 180}
+    }
+}

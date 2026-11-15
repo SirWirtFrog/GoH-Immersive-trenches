@@ -1,0 +1,232 @@
+{
+  "profile": "static-v1",
+  "meshes": [
+    {
+      "vertices": 486,
+      "records": 973,
+      "triangles": 881,
+      "uv_sets": 2,
+      "materials": 4,
+      "splits": 487,
+      "tangent_fallbacks": 0,
+      "file": "trench.ply",
+      "geometry": "original_894f841c40fa5b448f587136787be9c6"
+    }
+  ],
+  "warnings": [],
+  "external": [
+    "$/_military/sandbag_new",
+    "$/_military/sandbag_new_bp",
+    "$/_military/sandbag_new_sp",
+    "$/_military/trench_dirt",
+    "$/_military/trench_dirt_bp",
+    "$/_military/trench_dirt_sp",
+    "$/_tile/wood_planks",
+    "$/_tile/wood_planks_bp",
+    "$/_tile/wood_planks_sp",
+    "/properties/trench.inc"
+  ],
+  "resourceSplits": [],
+  "added": [],
+  "deleted": [],
+  "exportPreview": true,
+  "files": {
+    "bags.mtl": {
+      "bytes": 210,
+      "sha256": "dfea088b0fe4a5acdb81cc20009fcc65581c235296af7e21b929cdb7b28e49dd"
+    },
+    "ground.mtl": {
+      "bytes": 210,
+      "sha256": "a00fe2b9c8ca32fde59e9e709e77da55c83afc5ffe6115dfe9a7d60fcbc68362"
+    },
+    "ground_alpha.mtl": {
+      "bytes": 211,
+      "sha256": "d0f786cd516a30587e81f8c571c6d142020129502ec60360d2ff9440412653a3"
+    },
+    "it_trench_dirt_fire_position_through.def": {
+      "bytes": 335,
+      "sha256": "e06dab2598948acf9647b4f7a5878902f41302e836c88fa8d4d81f04e10cb950"
+    },
+    "it_trench_dirt_fire_position_through.mdl": {
+      "bytes": 4599,
+      "sha256": "072e411ef9429dbb5394b97f8b10ec7edcf418d3361a02649c9f1e870a56710e"
+    },
+    "it_trench_dirt_fire_position_through.trench": {
+      "bytes": 332,
+      "sha256": "90190458ae316b8e02da11f2d52395d625d11d87cb625d81384dcedba469cb3a"
+    },
+    "it_trench_dirt_fire_position_through_preview.def": {
+      "bytes": 125,
+      "sha256": "60a03cc34e784bb59b059ef851ac74e4f7a5ea76c9386726a191d20986c30b0d"
+    },
+    "it_trench_dirt_fire_position_through_preview.mdl": {
+      "bytes": 277,
+      "sha256": "035697c1d7d2789e2079396ac2c9e681b416e19b6300eccfeffb548b3c520333"
+    },
+    "trench.ply": {
+      "bytes": 59975,
+      "sha256": "310558b885c7b7ee786860e26f16fbdc8f4a4a024d3a9bac7c321eac70f07522"
+    },
+    "trench_dirt_firepos1_lm.dds": {
+      "bytes": 43832,
+      "sha256": "0a438c28f1f26e386bfe6e92f1ab7a7954aba89f437a727e085108dd19289e08"
+    },
+    "wood_planks.mtl": {
+      "bytes": 198,
+      "sha256": "15fd7846740387259dd25120c848b7ee2573e57a90fd1fb132a7a7007159d52a"
+    }
+  },
+  "excluded": [],
+  "nodes": [
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:trench_view|g2_11:trench_mesh",
+      "id": "original_d5e2e5335eb35550a3530f9e1943ca82",
+      "name": "mesh_2",
+      "role": "mesh"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:trench_view",
+      "id": "original_894f841c40fa5b448f587136787be9c6",
+      "name": "view_1",
+      "role": "view"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point7|g2_11:volume_body7",
+      "id": "original_b6a20153fb5d58878d8a5e0a37351b3a",
+      "name": "body7",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point7",
+      "id": "original_975780116b3f5816993a57cbc7faf97a",
+      "name": "point7",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point6|g2_11:volume_body6",
+      "id": "original_745b2020b23b5db383c361cab1d3f4dc",
+      "name": "body6",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point6",
+      "id": "original_39fcf8ccb1b752ee8862d7c37a137e31",
+      "name": "point6",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point5|g2_11:volume_body5",
+      "id": "original_846eb999d0085347a9a8b323ca4e0c2b",
+      "name": "body5",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point5",
+      "id": "original_712ff2a870c75412a653f7e6419cc8ba",
+      "name": "point5",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point1|g2_11:volume_body1",
+      "id": "original_1398d0934919551486eddefba93e2208",
+      "name": "body1",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point1",
+      "id": "original_832e0d5f645354ad908d6c1cb2ea25be",
+      "name": "point1",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point2|g2_11:volume_body2",
+      "id": "original_712020c1fafa53adb1e5b06f4410e28c",
+      "name": "body2",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point2",
+      "id": "original_69f9087b6a1851e6a6e6c99876971408",
+      "name": "point2",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point3|g2_11:volume_body3",
+      "id": "original_8943b26889bf555c8c00cc682a046681",
+      "name": "body3",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point3",
+      "id": "original_e7a82e88638d5ae68f2305b42e0c0851",
+      "name": "point3",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point4|g2_11:volume_body4",
+      "id": "original_0962e2b21b07546493512fa70997268f",
+      "name": "body4",
+      "role": "volume"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench|g2_11:point4",
+      "id": "original_0b93bff7d53a58d68e23616a4c75c902",
+      "name": "point4",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:trench",
+      "id": "original_eaab7009f50a5635955f33c1c0cc1de5",
+      "name": "trench",
+      "role": "bone"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:GEM2_HELPERS|g2_11:area_cut",
+      "id": "original_80aa3dbae5765ff7a85cc86efa80d55a",
+      "name": "cut",
+      "role": "area"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:GEM2_HELPERS|g2_11:obstacle_body1",
+      "id": "original_0afec028b790500fad0fb3ee0d07a71c",
+      "name": "body1",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:GEM2_HELPERS|g2_11:obstacle_body2",
+      "id": "original_382128e2f3b256e2b8216662bfe36450",
+      "name": "body2",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:GEM2_HELPERS|g2_11:obstacle_body3",
+      "id": "original_8284b659554c50be81bae43bb36bf273",
+      "name": "body3",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:GEM2_HELPERS|g2_11:obstacle_body4",
+      "id": "original_bb7eca35ca4f5c11b7d53ff02d09cea2",
+      "name": "body4",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:GEM2_HELPERS|g2_11:obstacle_body5",
+      "id": "original_b1c31bd24244546b84c71f038a179fed",
+      "name": "body5",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:GEM2_HELPERS|g2_11:obstacle_body6",
+      "id": "original_37a3d1e4927a5ab386b0ae20586531db",
+      "name": "body6",
+      "role": "obstacle"
+    },
+    {
+      "node": "|g2_11:it_trench_dirt_fire_position_through_ROOT|g2_11:GEM2_HELPERS|g2_11:obstacle_body7",
+      "id": "original_d2fe333bfb735875935a12f7bc83163f",
+      "name": "body7",
+      "role": "obstacle"
+    }
+  ]
+}

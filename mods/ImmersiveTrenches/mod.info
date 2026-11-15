@@ -1,0 +1,6 @@
+{mod
+	{name "Immersive Trenches"}
+	{desc "Adds modular trench construction to the engineer command panel."}
+	{minGameVersion "any"}
+	{maxGameVersion "any"}
+}
