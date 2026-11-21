@@ -1,0 +1,21 @@
+{action
+	{cursor "dig"}
+	{fx "flashred"}
+	{item "trench"}
+	{item_in_box}
+	{target volume "it_trench_upgrade_target" able touch}
+	{RequireSelect}
+	{button}
+	{instructions
+		{bind range 1}
+		{disable_action_restart}
+		{free_hands}
+		{take_item}
+		{reserve_hands}
+		{animations "dig_pickaxe_01" random loop totaltime 4}
+		{effect_object "it_finish_trench_upgrade"}
+		{unreserve_hands}
+		{free_hands}
+		{fsm_request nocheck "hold-nothing"}
+	}
+}

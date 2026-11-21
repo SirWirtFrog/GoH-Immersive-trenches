@@ -11,6 +11,18 @@ msgctxt "actionbar/it_trench_menu/usage"
 msgid "Open the modular trench construction menu."
 msgstr ""
 
+msgctxt "actionbar/it_trench_upgrade"
+msgid "Reinforce trench"
+msgstr ""
+
+msgctxt "actionbar/it_trench_upgrade/action"
+msgid "Reinforce trench"
+msgstr ""
+
+msgctxt "actionbar/it_trench_upgrade/usage"
+msgid "Choose a completed straight trench to add timber lining."
+msgstr ""
+
 msgctxt "actionbar/it_trench_dirt_straight"
 msgid "Modded trenches - Straight section"
 msgstr ""

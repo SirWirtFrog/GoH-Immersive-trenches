@@ -1,5 +1,6 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <intrin.h>
 
 #include <cstdio>
 #include <cstring>
@@ -95,14 +96,14 @@ struct ConstructionLayout {
 // Execution slots for the three install instructions, followed by the
 // eInstruction_install callback reached only after an entity has been created.
 constexpr ConstructionLayout constructionLayouts[]{
-    {"call_to_arms.exe", 0x6ab3dcc7, 0x1707000,
-     {0x11203e0, 0x1120420, 0x1120468, 0x11203f0}, {0xb63070, 0xb63070, 0xb63630, 0xb63020},
-     0x111fa80, 0x1b08e0, 0x111fa58, 0x1b0200,
-     0x159c390, 0x1b07d7, 0x7efa10, 0x10e8a38, 0x8ea070, 0x984f70, 0xa1d859, 0xa1b320},
-    {"call_to_arms_ed.exe", 0x6ab3dd83, 0x1533000,
-     {0xfa14f8, 0xfa1530, 0xfa1570, 0xfa1500}, {0xa927c0, 0xa927c0, 0xa92c80, 0xa92770},
-     0xfa0b90, 0x139ac0, 0xfa0b68, 0x139420,
-     0x1404120, 0x1399f7, 0x671b00, 0xf4e030, 0x770260, 0x80d9e0, 0x8a5169, 0x8a2fb0},
+    {"call_to_arms.exe", 0x6afc6d57, 0x1737000,
+     {0x1143d18, 0x1143d58, 0x1143da0, 0x1143d28}, {0xb806a0, 0xb806a0, 0xb80c60, 0xb80650},
+     0x1143818, 0x1b78e0, 0x11437f0, 0x1b7200,
+     0x15ca080, 0x1b77d7, 0x8047c0, 0x110bad8, 0x901330, 0x9a3480, 0xa3c2b1, 0xa39c70},
+    {"call_to_arms_ed.exe", 0x6afc6e14, 0x1557000,
+     {0xfbf548, 0xfbf580, 0xfbf5c0, 0xfbf550}, {0xaa9ff0, 0xaa9ff0, 0xaaa4b0, 0xaa9fa0},
+     0xfbec38, 0x13d830, 0xfbec10, 0x13d190,
+     0x1425e70, 0x13d767, 0x67e750, 0xf6b960, 0x77f420, 0x823590, 0x8bb1f1, 0x8b8f50},
 };
 
 // Decode the verified MSVC string layout without assuming heap storage:
@@ -136,6 +137,52 @@ bool ReadEntityName(const void* object, SIZE_T offset, char (&actual)[64], bool 
     }
     actual[copied] = '\0';
     return true;
+}
+
+using CheckActionTarget = bool (*)(const void*, const void*);
+CheckActionTarget originalCustomTargetCheck = nullptr;
+const void* automaticTargetReturn = nullptr;
+
+bool CheckCustomActionTarget(const void* action, const void* target) noexcept {
+    // The fallback scan omits RequireSelect. The explicitly selected action
+    // uses the same predicate from a different call site.
+    if (_ReturnAddress() == automaticTargetReturn && action != nullptr &&
+        (static_cast<const unsigned char*>(action)[0x3fc] & 4) != 0) {
+        const DWORD lastError = GetLastError();
+        char name[64];
+        const bool upgrade = ReadEntityName(action, 0x440, name) && std::strcmp(name, "it_trench_upgrade") == 0;
+        SetLastError(lastError);
+        if (upgrade) return false;
+    }
+    return originalCustomTargetCheck(action, target);
+}
+
+void InstallUpgradeSelectionGate(unsigned char* image, bool isEditor) noexcept {
+    const auto scan = image + (isEditor ? 0xaa2b60 : 0xb7b6b3);
+    constexpr unsigned char expected[]{0x48, 0x8b, 0x0f, 0x49, 0x8b, 0xd6, 0x48, 0x8b, 0x01,
+                                       0xff, 0x50, 0x58, 0x84, 0xc0, 0x74, 0x74};
+    auto** slot = reinterpret_cast<void**>(image + (isEditor ? 0xfbeac8 : 0x11436a8));
+    auto* original = image + (isEditor ? 0xaa57d0 : 0xb7e4e0);
+    if (std::memcmp(scan, expected, sizeof(expected)) != 0 || *slot != original) {
+        WriteLog("[GEM upgrade] Selection gate skipped: unexpected target scan or table.\r\n");
+        return;
+    }
+
+    DWORD protection = 0;
+    if (!VirtualProtect(slot, sizeof(*slot), PAGE_READWRITE, &protection)) {
+        WriteLog("[GEM upgrade] Selection gate skipped: could not unlock target table.\r\n");
+        return;
+    }
+    originalCustomTargetCheck = reinterpret_cast<CheckActionTarget>(original);
+    automaticTargetReturn = scan + 12;
+    const bool installed = InterlockedCompareExchangePointer(slot, reinterpret_cast<void*>(&CheckCustomActionTarget),
+                                                            original) == original;
+    DWORD ignored = 0;
+    if (!VirtualProtect(slot, sizeof(*slot), protection, &ignored)) {
+        WriteLog("[GEM upgrade] Could not restore target table protection.\r\n");
+    }
+    WriteLog(installed ? "[GEM upgrade] Selection gate enabled.\r\n"
+                       : "[GEM upgrade] Selection gate skipped: target table changed during setup.\r\n");
 }
 
 constexpr char straightTrench[] = "it_trench_dirt_straight";
@@ -635,10 +682,10 @@ bool InstallNetworkCall(unsigned char* image, DWORD callRva, DWORD originalRva, 
 // Enable dependent features only when their required hooks succeeded.
 // The editor does not use these game-only network addresses.
 void InstallNetworkTrace(unsigned char* image) noexcept {
-    void* const writer = image + 0xb78a90;
+    void* const writer = image + 0xb98f20;
     originalWriteNetworkCommand = reinterpret_cast<WriteNetworkCommand>(writer);
     unsigned installed = 0;
-    constexpr DWORD writerSlots[]{0x1024e90, 0x104ff48};
+    constexpr DWORD writerSlots[]{0x10461d0, 0x1071568};
     for (const DWORD rva : writerSlots) {
         auto** slot = reinterpret_cast<void**>(image + rva);
         DWORD protection = 0;
@@ -651,12 +698,12 @@ void InstallNetworkTrace(unsigned char* image) noexcept {
         VirtualProtect(slot, sizeof(*slot), protection, &ignored);
     }
     // This predicate selects the multiplayer client branch in GEM's spawn path.
-    isNetworkClient = reinterpret_cast<decltype(isNetworkClient)>(image + 0xc0b630);
-    isNetworkHost = reinterpret_cast<decltype(isNetworkHost)>(image + 0xc0b5d0);
+    isNetworkClient = reinterpret_cast<decltype(isNetworkClient)>(image + 0xc2b7a0);
+    isNetworkHost = reinterpret_cast<decltype(isNetworkHost)>(image + 0xc2b740);
     // The two command variants share the native send predicate. Validate both
     // slots before changing either; the editor never installs these game RVAs.
-    constexpr DWORD sendSlots[]{0x1024eb0, 0x104ff68};
-    void* const canSend = image + 0x1ebdd0;
+    constexpr DWORD sendSlots[]{0x10461f0, 0x1071588};
+    void* const canSend = image + 0x1f2dd0;
     bool sendGateReady = true;
     for (const auto rva : sendSlots) {
         sendGateReady &= *reinterpret_cast<void**>(image + rva) == canSend;
@@ -678,18 +725,18 @@ void InstallNetworkTrace(unsigned char* image) noexcept {
     WriteLog(sendGates == ARRAYSIZE(sendSlots)
         ? "[GEM placement] Network send placement gate enabled (2/2).\r\n"
         : "[GEM placement] Network send placement gate incomplete; check command slots.\r\n");
-    const bool sceneTrace = InstallNetworkCall(image, 0x7063ef, 0xa60150, &TraceSceneEntity, originalAddSceneEntity);
+    const bool sceneTrace = InstallNetworkCall(image, 0x7195ff, 0xa7ecc0, &TraceSceneEntity, originalAddSceneEntity);
     networkSnapEnabled = installed == ARRAYSIZE(writerSlots) && sceneTrace &&
-        InstallNetworkCall(image, 0xb78b6b, 0x794320, &WriteSnappedNetworkTarget, originalWriteNetworkTarget);
+        InstallNetworkCall(image, 0xb98ffb, 0x7a74c0, &WriteSnappedNetworkTarget, originalWriteNetworkTarget);
     // eOrderFortifyVisualizingCommand receives type 0 (positions) and type 2 (remove).
     networkPreviewEnabled = networkSnapEnabled &&
-        InstallNetworkCall(image, 0xae717, 0xb76450, &TrackReceivedFortifyPreview, originalAddFortifyPreview) &&
-        InstallNetworkCall(image, 0xae57c, 0xb76590, &ReleaseReceivedFortifyPreview, originalRemoveFortifyPreview);
-    const bool receivedSections = InstallNetworkCall(image, 0x15380e, 0x7058f0,
+        InstallNetworkCall(image, 0xaed17, 0xb968e0, &TrackReceivedFortifyPreview, originalAddFortifyPreview) &&
+        InstallNetworkCall(image, 0xaeb7c, 0xb96a20, &ReleaseReceivedFortifyPreview, originalRemoveFortifyPreview);
+    const bool receivedSections = InstallNetworkCall(image, 0x15a0ce, 0x718b00,
                                                      &TrackReceivedTrenchSection, originalSpawnReceivedEntity);
-    const bool localSpawn = sceneTrace && InstallNetworkCall(image, 0x70606b, 0xc0b5d0,
+    const bool localSpawn = sceneTrace && InstallNetworkCall(image, 0x71927b, 0xc2b740,
                                                            &UseAuthoritativeSpawn, isNetworkHost);
-    const bool networkCleanup = InstallNetworkCall(image, 0xaf5ca7, 0xb768b0,
+    const bool networkCleanup = InstallNetworkCall(image, 0xb146c7, 0xb96d40,
                                                    &ClearNetworkTrenchCaps, originalClearFortifyPreviews);
     const bool networkCaps = EnableNetworkTrenchCaps(receivedSections && localSpawn && networkCleanup);
     WriteLog(networkCaps ? "[GEM caps] Multiplayer local scene entities enabled.\r\n"
@@ -752,8 +799,19 @@ bool LogCompletedPlacement(const void* entity, const TrenchModule& module,
 // instruction slot before replacing it. Roll back a partially changed table.
 void InstallConstructionTrace() noexcept {
     auto* image = reinterpret_cast<unsigned char*>(GetModuleHandleW(nullptr));
+    constexpr char supportedBuild[] = "1.0.6.9-fd5c5ce0f";
     const auto* dos = reinterpret_cast<const IMAGE_DOS_HEADER*>(image);
+    if (dos->e_magic != IMAGE_DOS_SIGNATURE || dos->e_lfanew < sizeof(IMAGE_DOS_HEADER) ||
+        dos->e_lfanew > 0x100000) {
+        WriteLog("[GEM construction] Trace skipped: invalid host DOS header.\r\n");
+        return;
+    }
     const auto* pe = reinterpret_cast<const IMAGE_NT_HEADERS64*>(image + dos->e_lfanew);
+    if (pe->Signature != IMAGE_NT_SIGNATURE || pe->FileHeader.Machine != IMAGE_FILE_MACHINE_AMD64 ||
+        pe->OptionalHeader.Magic != IMAGE_NT_OPTIONAL_HDR64_MAGIC) {
+        WriteLog("[GEM construction] Trace skipped: invalid host x64 PE header.\r\n");
+        return;
+    }
 
     const ConstructionLayout* layout = nullptr;
     for (const auto& candidate : constructionLayouts) {
@@ -764,10 +822,17 @@ void InstallConstructionTrace() noexcept {
         }
     }
     if (layout == nullptr) {
-        WriteLog("[GEM construction] Trace skipped: unsupported executable build.\r\n");
+        char message[256];
+        std::snprintf(message, sizeof(message),
+                      "[GEM construction] Trace skipped: unsupported executable build "
+                      "(timestamp=0x%08lx, image_size=0x%lx). Expected %s x64.\r\n",
+                      pe->FileHeader.TimeDateStamp, pe->OptionalHeader.SizeOfImage, supportedBuild);
+        WriteLog(message);
         return;
     }
-    InstallTrenchMenu(image, std::strcmp(layout->host, "call_to_arms_ed.exe") == 0, WriteLog);
+    const bool isEditor = std::strcmp(layout->host, "call_to_arms_ed.exe") == 0;
+    InstallTrenchMenu(image, isEditor, WriteLog);
+    InstallUpgradeSelectionGate(image, isEditor);
 
     void** slots[ARRAYSIZE(layout->slots)]{};
     for (unsigned i = 0; i < ARRAYSIZE(slots); ++i) {

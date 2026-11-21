@@ -2,7 +2,7 @@
 	(include "/properties/trench.inc")
 	{extension "it_trench_dirt_straight.mdl"}
 	{DynCmpPersistent}
-	{props "sand"}
+	{props "sand" "it_trench_upgradeable"}
 	("boneLand" args "trench")
 	("volume" args "body1")
 	("volume" args "body2")
@@ -12,4 +12,12 @@
 	("volume" args "body6")
 	("volume" args "body7")
 	("volume" args "body8")
+	{volume "upgrade_left"
+		{tags "it_trench_upgrade_target"}
+		{able clear {touch 1}}
+	}
+	{volume "upgrade_right"
+		{tags "it_trench_upgrade_target"}
+		{able clear {touch 1}}
+	}
 }

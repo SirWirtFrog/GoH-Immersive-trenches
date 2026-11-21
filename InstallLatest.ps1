@@ -7,6 +7,25 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $showInstallResult = [string]::IsNullOrWhiteSpace($GameRoot)
+$logName = 'ImmersiveTrenches-install-{0}-{1}.log' -f (Get-Date -Format 'yyyyMMdd-HHmmss-fff'), $PID
+$logPath = Join-Path ([IO.Path]::GetTempPath()) $logName
+$installStage = 'Starting installer'
+$logUnavailable = $false
+
+function Write-InstallLog([string]$Message) {
+    if ($script:logUnavailable) { return }
+    try {
+        Add-Content -LiteralPath $logPath -Encoding UTF8 -Value ('{0:yyyy-MM-dd HH:mm:ss.fff zzz} {1}' -f (Get-Date), $Message)
+    } catch {
+        $script:logUnavailable = $true
+        Write-Warning "Could not write installer log '$logPath'. $($_.Exception.Message)"
+    }
+}
+
+function Set-InstallStage([string]$Stage) {
+    $script:installStage = $Stage
+    Write-InstallLog $Stage
+}
 
 function Show-InstallResult([string]$Message, [switch]$Failed) {
     Add-Type -AssemblyName System.Windows.Forms
@@ -15,8 +34,15 @@ function Show-InstallResult([string]$Message, [switch]$Failed) {
 }
 
 trap {
+    $failure = $_
+    Write-InstallLog "ERROR during $installStage"
+    for ($cause = $failure.Exception; $null -ne $cause; $cause = $cause.InnerException) {
+        Write-InstallLog "$($cause.GetType().FullName) - $($cause.Message)"
+    }
+    if ($failure.ScriptStackTrace) { Write-InstallLog $failure.ScriptStackTrace }
+    $message = "Installation failed.`r`n`r`nStage: $installStage`r`n$($failure.Exception.Message)"
+    if (-not $logUnavailable) { $message += "`r`n`r`nLog: $logPath" }
     if ($showInstallResult) {
-        $message = "Installation failed.`r`n`r`n$($_.Exception.Message)"
         try {
             Show-InstallResult $message -Failed
         } catch {
@@ -25,6 +51,9 @@ trap {
     }
     break
 }
+
+Write-InstallLog "Installer started with PowerShell $($PSVersionTable.PSVersion)."
+if (-not $logUnavailable) { Write-Host "Installer log: $logPath" }
 
 function Assert-GameClosed {
     $gamePrefix = $GameRoot.TrimEnd('\') + '\'
@@ -72,13 +101,17 @@ function Select-GameRoot {
 }
 
 if ($showInstallResult) {
+    Set-InstallStage 'Selecting the game folder'
     $GameRoot = Select-GameRoot
     if ([string]::IsNullOrWhiteSpace($GameRoot)) {
+        Write-InstallLog 'Installation canceled by user.'
         Write-Host 'Installation canceled.'
         return
     }
 }
+Set-InstallStage 'Validating the game folder'
 $GameRoot = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($GameRoot.Trim().Trim('"'))
+Write-InstallLog "Game folder: $GameRoot"
 if (-not (Test-GameRoot $GameRoot)) {
     throw "Game installation not found at '$GameRoot'. Pass the game folder with -GameRoot."
 }
@@ -92,6 +125,7 @@ $items = @(
 )
 
 # Hold the lock while downloading and replacing files in this game installation.
+Set-InstallStage 'Acquiring the installation lock'
 $lockPath = Join-Path $GameRoot '.ImmersiveTrenches-install.lock'
 $lock = [IO.FileStream]::new($lockPath, [IO.FileMode]::OpenOrCreate, [IO.FileAccess]::ReadWrite,
     [IO.FileShare]::None, 4096, [IO.FileOptions]::DeleteOnClose)
@@ -99,7 +133,10 @@ try {
     $repository = 'SirWirtFrog/GoH-Immersive-trenches'
     [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
     $headers = @{ Accept = 'application/vnd.github+json'; 'X-GitHub-Api-Version' = '2022-11-28' }
-    $release = Invoke-RestMethod -Uri "https://api.github.com/repos/$repository/releases/latest" -Headers $headers -TimeoutSec 30
+    $releaseUrl = "https://api.github.com/repos/$repository/releases/latest"
+    Set-InstallStage "Requesting the latest release metadata from $releaseUrl"
+    $release = Invoke-RestMethod -Uri $releaseUrl -Headers $headers -TimeoutSec 30
+    Set-InstallStage "Selecting the ZIP asset for release $($release.tag_name)"
     $assetName = "ImmersiveTrenches-$($release.tag_name)-x64.zip"
     $assets = @($release.assets | Where-Object { $_.name -ceq $assetName -and $_.state -eq 'uploaded' })
     if ($assets.Count -ne 1 -or $assets[0].digest -notmatch '^sha256:[0-9a-f]{64}$') {
@@ -108,6 +145,7 @@ try {
     $asset = $assets[0]
 
     # Stage on the game volume so that installation and rollback use file renames.
+    Set-InstallStage 'Preparing the temporary installation directory'
     $work = Join-Path $GameRoot ('.ImmersiveTrenches-install-' + [guid]::NewGuid().ToString('N'))
     $null = New-Item -ItemType Directory -Path $work
     $zip = Join-Path $work 'release.zip'
@@ -116,12 +154,15 @@ try {
     $rollbackFailed = $false
     try {
         Write-Host "Downloading Immersive Trenches $($release.tag_name)..."
+        Set-InstallStage "Downloading the release ZIP from $($asset.browser_download_url)"
         Invoke-WebRequest -UseBasicParsing -Uri $asset.browser_download_url -OutFile $zip -TimeoutSec 180
+        Set-InstallStage 'Verifying the downloaded ZIP SHA-256'
         $hash = (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash
         if ("sha256:$hash" -ine $asset.digest) {
             throw "SHA-256 mismatch for $assetName."
         }
 
+        Set-InstallStage 'Checking the ZIP contents'
         Add-Type -AssemblyName System.IO.Compression.FileSystem
         $archive = [IO.Compression.ZipFile]::OpenRead($zip)
         try {
@@ -136,6 +177,7 @@ try {
         } finally {
             $archive.Dispose()
         }
+        Set-InstallStage 'Extracting the release ZIP'
         [IO.Compression.ZipFile]::ExtractToDirectory($zip, $package)
         foreach ($relative in @($loaderPath, "$modPath\ImmersiveTrenchesModLogic.dll", "$modPath\mod.info")) {
             if (-not (Test-Path -LiteralPath (Join-Path $package $relative) -PathType Leaf)) {
@@ -143,6 +185,7 @@ try {
             }
         }
 
+        Set-InstallStage 'Checking the installation destination'
         Assert-GameClosed
         foreach ($relative in @('binaries', 'binaries\x64', 'binaries\x64\mss', 'mods', $modPath, $loaderPath)) {
             $path = Join-Path $GameRoot $relative
@@ -153,6 +196,7 @@ try {
         }
         try {
             foreach ($item in $items) {
+                Set-InstallStage "Installing $($item.Relative)"
                 $target = Join-Path $GameRoot $item.Relative
                 $saved = Join-Path $backup $item.Relative
                 $null = New-Item -ItemType Directory -Path (Split-Path -Parent $target) -Force
@@ -166,6 +210,7 @@ try {
             }
         } catch {
             $installError = $_
+            Write-InstallLog "Rolling back after failure during ${installStage}. $($installError.Exception.Message)"
             for ($index = $items.Count - 1; $index -ge 0; $index--) {
                 $item = $items[$index]
                 $target = Join-Path $GameRoot $item.Relative
@@ -178,6 +223,7 @@ try {
                     }
                 } catch {
                     $rollbackFailed = $true
+                    Write-InstallLog "Rollback failed for '$target'. Recovery directory: $work. $($_.Exception.Message)"
                     Write-Warning "Could not roll back '$target'. Recovery directory: $work. $_"
                 }
             }
@@ -186,6 +232,7 @@ try {
             }
             throw $installError
         }
+        Set-InstallStage 'Removing temporary files'
     } finally {
         if (-not $rollbackFailed) {
             $resolvedWork = (Resolve-Path -LiteralPath $work).ProviderPath
@@ -201,6 +248,7 @@ try {
 }
 
 $message = "Successfully installed Immersive Trenches $($release.tag_name).`r`n`r`nGame folder: $GameRoot"
+Write-InstallLog "Successfully installed Immersive Trenches $($release.tag_name)."
 Write-Host $message
 if ($showInstallResult) {
     Show-InstallResult $message

@@ -242,3 +242,23 @@
         -4.1045 -2.9142 -11.1258
     }
 }
+{volume "upgrade_left"
+    {box 176 12 16}
+    {bone "trench"}
+    {matrix34
+        1 0 0
+        0 1 0
+        0 0 1
+        0 -18 1
+    }
+}
+{volume "upgrade_right"
+    {box 176 12 16}
+    {bone "trench"}
+    {matrix34
+        1 0 0
+        0 1 0
+        0 0 1
+        0 18 1
+    }
+}

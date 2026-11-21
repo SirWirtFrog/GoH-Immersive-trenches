@@ -133,4 +133,8 @@
 		{position 0 3}
 		{condition "human barricade disabled"}
 	}
+	{it_trench_upgrade
+		{position 1 3}
+		{condition "human barricade disabled"}
+	}
 }

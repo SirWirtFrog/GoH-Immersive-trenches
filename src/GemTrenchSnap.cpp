@@ -189,7 +189,7 @@ bool IsAt(Entity entity, TrenchVector origin) noexcept {
 
 bool IsNetworkPreviewLive(std::uint64_t key) noexcept {
     // The GEM visualizer map orders nodes by (local flag, preview key).
-    constexpr DWORD treeRva = 0x15a2700;
+    constexpr DWORD treeRva = 0x15d03e8;
     struct Node {
         const Node* left;
         const Node* parent;

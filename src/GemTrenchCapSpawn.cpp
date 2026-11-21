@@ -44,12 +44,12 @@ struct SpawnLayout {
 
 // The same engine helpers called by Interaction::eAction_Spawn for each host.
 constexpr SpawnLayout layouts[]{
-    {0x6ab3dcc7, 0x556400, 0x556220, 0x5564e0, 0x6741b0, 0x674210,
-     0x5c0a90, 0x705990, 0x5c2690, 0x705a20, 0x705bc0, 0x7058f0, 0x705cd0,
-     0x6fcdc0, 0x6ff260},
-    {0x6ab3dd83, 0x3ddb00, 0x3dd8b0, 0x3ddc00, 0x4e9c20, 0x4e9c80,
-     0x4379a0, 0x57f920, 0x439610, 0x57f9e0, 0x57fb80, 0x57f880, 0x57fcd0,
-     0x5767a0, 0x578e80},
+    {0x6afc6d57, 0x564f30, 0x564d50, 0x565010, 0x686cd0, 0x686d30,
+     0x5cf590, 0x718ba0, 0x5d11a0, 0x718c30, 0x718dd0, 0x718b00, 0x718ee0,
+     0x70ffd0, 0x712470},
+    {0x6afc6e14, 0x3e45e0, 0x3e4390, 0x3e46e0, 0x4f4a70, 0x4f4ad0,
+     0x43e450, 0x58ae20, 0x4400d0, 0x58aee0, 0x58b080, 0x58ad80, 0x58b1d0,
+     0x581ca0, 0x584380},
 };
 
 struct Vector3 {
@@ -144,7 +144,7 @@ void* SpawnEntity(const unsigned char* image, const SpawnLayout& layout, const N
     if (clientOnly) {
         // The game's local spawn setter bypasses the multiplayer spawn path.
         using SetLocal = SpawnRequest* (*)(SpawnRequest*);
-        reinterpret_cast<SetLocal>(image + 0x705cc0)(&request);
+        reinterpret_cast<SetLocal>(image + 0x718ed0)(&request);
     }
     const bool previousRegistration = registerClientTrenchCap;
     registerClientTrenchCap = clientOnly;
@@ -206,7 +206,7 @@ void DeleteTrenchCap(const unsigned char* image, DWORD timestamp, const void* en
         if (layout.timestamp == timestamp) {
             // The entity removal routine called by ia:delete with mode zero.
             using Delete = void (*)(const void*, unsigned);
-            const DWORD entry = clientOnly ? 0x6febc0 : layout.deleteEntity;
+            const DWORD entry = clientOnly ? 0x711dd0 : layout.deleteEntity;
             reinterpret_cast<Delete>(image + entry)(entity, 0);
             return;
         }

@@ -16,12 +16,12 @@ struct Layout {
     DWORD lifetimeCall, lifetimeEntry, lifetimeVtable;
 };
 constexpr Layout layouts[]{
-    {0x6ab3dcc7, 0x1707000, 0xa6c6ac, 0xa1a7d0, 0xa68aa4, 0xa19ff0,
+    {0x6afc6d57, 0x1737000, 0xa8b1ac, 0xa39120, 0xa87614, 0xa38940,
      {0x40, 0x55, 0x56, 0x41, 0x57, 0x48, 0x8d}, {0x48, 0x89, 0x5c, 0x24, 0x18},
-     0xa603c4, 0x6532b0, 0x10ffa50},
-    {0x6ab3dd83, 0x1533000, 0x8f5e54, 0x8a2490, 0x8f1cdb, 0x8a1cb0,
+     0xa7ef34, 0x663360, 0x11237d0},
+    {0x6afc6e14, 0x1557000, 0x90bff4, 0x8b8430, 0x907e7b, 0x8b7c50,
      {0x48, 0x8b, 0xc4, 0x48, 0x89, 0x58, 0x08}, {0x48, 0x89, 0x5c, 0x24, 0x08},
-     0x8e8f89, 0x4c8730, 0xf666c8},
+     0x8ff129, 0x4d0940, 0xf84738},
 };
 SceneMethod originalInit = nullptr, originalDestroy = nullptr;
 GemSceneLifecycleCallbacks activeCallbacks{};
@@ -61,7 +61,7 @@ void EntityLifetime(void* event, void* context) {
     unsigned char added = 0;
     const void* entity = nullptr;
     if (bytes == nullptr || !Read(bytes, vtable) || vtable != lifetimeImage + lifetimeVtableRva ||
-        !Read(bytes + 0x08, type) || type != 0x1050 || !Read(bytes + 0x38, added) || added > 1 ||
+        !Read(bytes + 0x08, type) || type != 0x1056 || !Read(bytes + 0x38, added) || added > 1 ||
         !Read(bytes + 0x40, entity) || entity == nullptr) {
         SetLastError(incomingError);
         lifetimeCallback(nullptr, false);

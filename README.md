@@ -28,7 +28,7 @@ To install manually, download the ZIP and copy its `binaries` and `mods` folders
 
 After installation, launch the game and enable **Immersive Trenches** in the mod list.
 
-The mod targets game and editor version **1.067.0 x64**, build `aaa36ed4d`. In multiplayer, all players must use the same mod version.
+The mod supports only **1.0.6.9-fd5c5ce0f x64** for the game and GEM Editor. Native hooks require an exact match for the executable’s PE timestamp and image size. In multiplayer, all players must use the same mod version.
 
 ## Additional commands
 
